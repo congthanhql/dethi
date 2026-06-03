@@ -86,7 +86,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
   .card-table thead th{padding:10px 16px;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
   .card-table thead th:last-child{text-align:center}
   .card-table tbody tr{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .2s}
-  /* FIX: removed transform:translateY(-2px) — it creates a stacking context that traps the dropdown */
   .card-table tbody tr:hover{box-shadow:var(--shadow-md)}
   .card-table tbody td{padding:14px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:middle}
   .card-table tbody td:first-child{border-left:1px solid var(--border);border-radius:var(--radius) 0 0 var(--radius);color:var(--text3);font-size:.8rem;width:44px}
@@ -109,9 +108,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .price-paid{font-weight:700;color:var(--gold);font-size:.9rem}
 .price-free{font-weight:600;color:var(--green);font-size:.9rem}
 
-/* FIX: xem-wrap gets z-index so dropdown can escape above sibling rows */
 .xem-wrap{position:relative;display:inline-block;z-index:10}
-/* Elevate the wrap when its dropdown is open */
 .xem-wrap.open{z-index:9999}
 
 .btn-xem{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-sm);background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-size:.8rem;font-weight:600;transition:opacity .18s,transform .15s;white-space:nowrap}
@@ -147,7 +144,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .admin-body{max-width:960px;margin:0 auto;padding:20px 16px 80px}
 @media(min-width:640px){.admin-body{padding:28px 24px 80px}}
  
-/* Admin tabs */
 .admin-tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
 .admin-tab{padding:8px 18px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--font-body);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 .admin-tab.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-sm)}
@@ -176,7 +172,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 [data-theme="dark"] .btn-reject{background:rgba(239,68,68,.12)}
 .action-btn:hover{opacity:.75}
  
-/* Payment request card */
 .pay-req-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;transition:background .3s}
 .pay-req-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
 .pay-req-name{font-weight:700;font-size:.9rem;color:var(--text)}
@@ -202,7 +197,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .btn-close{background:var(--bg2);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
 .btn-close:hover{background:var(--red-soft);color:var(--red);border-color:var(--red)}
  
-/* Payment modal */
 .pay-amount{text-align:center;font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:4px}
 .pay-desc{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:16px}
 .qr-wrap{background:#fff;border-radius:14px;padding:12px;width:fit-content;margin:0 auto 14px;box-shadow:var(--shadow-sm)}
@@ -212,7 +206,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .timer-bar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:var(--text3);margin-bottom:16px}
 .timer-val{color:var(--red);font-weight:700;font-variant-numeric:tabular-nums}
  
-/* Waiting for admin */
 .pay-waiting{text-align:center;padding:16px 0}
 .pay-waiting .clock{font-size:3rem;margin-bottom:10px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
@@ -223,14 +216,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .pay-waiting .contact-box a{color:var(--accent);font-weight:700;text-decoration:none}
 .pay-waiting .contact-box a:hover{text-decoration:underline}
 
-/* Code reveal / step 4 */
 .code-reveal-box{background:var(--green-soft);border:1px solid var(--green);border-radius:10px;padding:14px;margin-top:12px;text-align:center}
 [data-theme="dark"] .code-reveal-box{background:rgba(34,197,94,.08)}
 .code-reveal-box .code-label{font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .code-reveal-box .code-val{font-size:1.4rem;font-weight:700;color:var(--green);letter-spacing:.15em;font-family:var(--font-display)}
 .code-reveal-box .code-hint{font-size:.75rem;color:var(--text2);margin-top:4px}
 
-/* Step 4: code input to unlock link */
 .code-gate{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 16px;margin-top:14px}
 .code-gate-title{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:4px}
 .code-gate-hint{font-size:.75rem;color:var(--text3);margin-bottom:10px}
@@ -253,7 +244,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .btn-retry{padding:10px 22px;margin-top:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.87rem;font-weight:700;cursor:pointer;transition:opacity .2s}
 .btn-retry:hover{opacity:.85}
  
-/* Submitted step info bar */
 .step-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px}
 .step-item{flex:1;padding:8px 6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text3);border-right:1px solid var(--border);transition:all .3s}
 .step-item:last-child{border-right:none}
@@ -270,22 +260,24 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .toast.err{border-left:3px solid var(--red);color:var(--red)}
 .toast.info{border-left:3px solid var(--accent);color:var(--accent)}
  
-/* Pay req count badge */
 .notif-badge{display:inline-block;background:var(--red);color:#fff;border-radius:999px;font-size:.65rem;font-weight:700;padding:1px 6px;margin-left:5px;vertical-align:middle}
  
 @media(max-width:380px){.brand-name{display:none}}
  
-/* confirm code input in admin */
 .code-input-row{display:flex;gap:8px;align-items:center;margin-top:8px}
 .code-input-row .a-input{flex:1}
 .btn-send-code{padding:9px 14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s}
 .btn-send-code:hover{opacity:.85}
 
-/* Resume pending banner */
+/* Resume banner – dùng chung cho cả QR session và pending session */
 .resume-banner{background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:10px 14px;margin:12px 16px 0;font-size:.82rem;color:var(--gold);display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;transition:opacity .2s}
 [data-theme="dark"] .resume-banner{background:rgba(245,200,66,.1)}
 .resume-banner:hover{opacity:.85}
 .resume-banner strong{color:var(--gold)}
+
+/* QR session saved indicator inside modal */
+.qr-saved-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-soft);border:1px solid var(--green);border-radius:6px;padding:3px 10px;font-size:.72rem;color:var(--green);font-weight:600;margin-bottom:10px}
+[data-theme="dark"] .qr-saved-badge{background:rgba(34,197,94,.1)}
 </style>
 </head>
 <body>
@@ -303,10 +295,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
     </div>
   </nav>
 
-  <!-- Resume pending payment banner -->
-  <div class="resume-banner" id="resume-banner" style="display:none" onclick="resumePendingPayment()">
-    <span>⏳ Bạn có yêu cầu thanh toán đang chờ xác nhận. <strong>Bấm để theo dõi →</strong></span>
-    <button onclick="clearPendingSession(event)" style="background:none;border:none;color:var(--gold);font-size:1rem;cursor:pointer;padding:0 4px;line-height:1">✕</button>
+  <!-- Resume banner: hiển thị khi có session chưa hoàn tất -->
+  <div class="resume-banner" id="resume-banner" style="display:none" onclick="resumeAnySession()">
+    <span id="resume-banner-text">⏳ Bạn có phiên thanh toán chưa hoàn tất. <strong>Bấm để tiếp tục →</strong></span>
+    <button onclick="dismissResumeBanner(event)" style="background:none;border:none;color:var(--gold);font-size:1rem;cursor:pointer;padding:0 4px;line-height:1">✕</button>
   </div>
 
   <div class="hero">
@@ -512,11 +504,41 @@ const payReqRef = ref(db, 'payment_requests');
 let items = {};
 let payRequests = {};
 
-// ══════════════════════ SESSION PERSISTENCE ══════════════════════
+// ══════════════════════════════════════════════════════════
+// SESSION PERSISTENCE
+// Có 2 loại session:
+//  A) QR Session  – user đang ở step 2 (chưa bấm "Đã chuyển khoản")
+//  B) Pending Session – user đã submit, đang chờ admin duyệt (step 3)
+// ══════════════════════════════════════════════════════════
+
+const QR_TTL = 600_000; // 10 phút (ms)
+
+// --- QR SESSION (step 2) ---
+function saveQRSession(itemKey, action, price, itemName, desc) {
+  const sess = { itemKey, action, price, itemName, desc, startedAt: Date.now() };
+  localStorage.setItem('bio_qr_session', JSON.stringify(sess));
+}
+
+function loadQRSession() {
+  try {
+    const raw = localStorage.getItem('bio_qr_session');
+    if (!raw) return null;
+    const sess = JSON.parse(raw);
+    const elapsed = Date.now() - (sess.startedAt || 0);
+    if (elapsed >= QR_TTL) { clearQRSession(); return null; }
+    return sess; // còn hạn
+  } catch { clearQRSession(); return null; }
+}
+
+function clearQRSession() {
+  localStorage.removeItem('bio_qr_session');
+}
+
+// --- PENDING SESSION (step 3+) ---
 function savePendingSession(reqKey, itemKey, action, itemName) {
-  localStorage.setItem('bio_pending_reqKey', reqKey);
-  localStorage.setItem('bio_pending_itemKey', itemKey);
-  localStorage.setItem('bio_pending_action', action);
+  localStorage.setItem('bio_pending_reqKey',   reqKey);
+  localStorage.setItem('bio_pending_itemKey',  itemKey);
+  localStorage.setItem('bio_pending_action',   action);
   localStorage.setItem('bio_pending_itemName', itemName || '');
 }
 
@@ -530,28 +552,68 @@ function loadPendingSession() {
 }
 
 window.clearPendingSession = function(e) {
-  if (e) { e.stopPropagation(); }
+  if (e) e.stopPropagation();
   localStorage.removeItem('bio_pending_reqKey');
   localStorage.removeItem('bio_pending_itemKey');
   localStorage.removeItem('bio_pending_action');
   localStorage.removeItem('bio_pending_itemName');
   currentReqKey = null;
+};
+
+// --- BANNER: kiểm tra & hiển thị ---
+function checkResumeBanner() {
+  const pending = loadPendingSession();
+  const qr      = loadQRSession();
+  const banner  = document.getElementById('resume-banner');
+  const text    = document.getElementById('resume-banner-text');
+
+  // Ưu tiên pending (step 3) hơn QR (step 2)
+  if (pending && payRequests[pending.reqKey]) {
+    const req = payRequests[pending.reqKey];
+    if (req.status === 'pending' || req.status === 'confirmed' || req.status === 'rejected') {
+      text.innerHTML = `⏳ Đang chờ xác nhận thanh toán "<strong>${esc(pending.itemName||'')}</strong>". <strong>Bấm để xem →</strong>`;
+      banner.style.display = 'flex';
+      return;
+    }
+  }
+
+  if (qr) {
+    const secsLeft = Math.floor((QR_TTL - (Date.now() - qr.startedAt)) / 1000);
+    const minLeft  = Math.ceil(secsLeft / 60);
+    text.innerHTML = `🕐 QR thanh toán "<strong>${esc(qr.itemName||'')}</strong>" còn hiệu lực ~${minLeft} phút. <strong>Bấm để tiếp tục →</strong>`;
+    banner.style.display = 'flex';
+    return;
+  }
+
+  banner.style.display = 'none';
+}
+
+window.dismissResumeBanner = function(e) {
+  e.stopPropagation();
+  clearQRSession();
+  clearPendingSession(null);
   document.getElementById('resume-banner').style.display = 'none';
 };
 
-function checkResumeBanner() {
-  const sess = loadPendingSession();
-  if (!sess) return;
-  const req = payRequests[sess.reqKey];
-  if (!req) return;
-  document.getElementById('resume-banner').style.display = 'flex';
-}
+window.resumeAnySession = function() {
+  // Ưu tiên pending
+  const pending = loadPendingSession();
+  if (pending && payRequests[pending.reqKey]) {
+    resumePendingSession(pending);
+    return;
+  }
+  // Fallback: QR session còn hạn
+  const qr = loadQRSession();
+  if (qr) {
+    resumeQRSession(qr);
+    return;
+  }
+  document.getElementById('resume-banner').style.display = 'none';
+};
 
-window.resumePendingPayment = function() {
-  const sess = loadPendingSession();
-  if (!sess) return;
+function resumePendingSession(sess) {
   const req = payRequests[sess.reqKey];
-  if (!req) { clearPendingSession(null); return; }
+  if (!req) { clearPendingSession(null); checkResumeBanner(); return; }
 
   currentReqKey = sess.reqKey;
   currentKey    = sess.itemKey;
@@ -560,16 +622,33 @@ window.resumePendingPayment = function() {
   const actionLabel = currentAction === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
   document.getElementById('pay-title').textContent = actionLabel;
 
-  if (req.status === 'confirmed') {
-    showConfirmedByAdmin(req);
-  } else if (req.status === 'rejected') {
-    showRejectedByAdmin();
-  } else {
-    showWaitingForAdmin();
-  }
-  document.getElementById('pay-overlay').classList.add('open');
-};
+  if (req.status === 'confirmed')    showConfirmedByAdmin(req);
+  else if (req.status === 'rejected') showRejectedByAdmin();
+  else                                showWaitingForAdmin();
 
+  document.getElementById('pay-overlay').classList.add('open');
+}
+
+function resumeQRSession(qr) {
+  const it = items[qr.itemKey];
+  if (!it) { clearQRSession(); checkResumeBanner(); return; }
+
+  currentKey    = qr.itemKey;
+  currentAction = qr.action;
+  currentReqKey = null;
+
+  const actionLabel = qr.action === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
+  document.getElementById('pay-title').textContent = actionLabel;
+
+  // Tính số giây còn lại
+  const secsRemaining = Math.max(1, Math.floor((QR_TTL - (Date.now() - qr.startedAt)) / 1000));
+  renderQRStep(it, qr.price, qr.desc, secsRemaining);
+  document.getElementById('pay-overlay').classList.add('open');
+}
+
+// ══════════════════════════════════════════════════════════
+// FIREBASE LISTENERS
+// ══════════════════════════════════════════════════════════
 onValue(itemsRef, (snap) => {
   items = snap.val() || {};
   renderUserTable();
@@ -585,7 +664,9 @@ onValue(payReqRef, (snap) => {
   checkResumeBanner();
 });
 
-/* ══════════════════════ RENDER USER TABLE ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// RENDER USER TABLE
+// ══════════════════════════════════════════════════════════
 window.renderUserTable = function() {
   const q = (document.getElementById('search-input')?.value || '').toLowerCase();
   const data = Object.entries(items);
@@ -644,7 +725,9 @@ window.renderUserTable = function() {
   }
 };
  
-/* ══════════════════════ RENDER ADMIN TABLE ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// RENDER ADMIN TABLE
+// ══════════════════════════════════════════════════════════
 window.renderAdminTable = function() {
   const data = Object.entries(items);
   document.getElementById('admin-count').textContent = data.length;
@@ -672,7 +755,9 @@ window.renderAdminTable = function() {
   `).join('');
 };
  
-/* ══════════════════════ PAYMENT REQUESTS ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// PAYMENT REQUESTS (admin)
+// ══════════════════════════════════════════════════════════
 window.renderPayRequests = function() {
   const list = document.getElementById('pay-req-list');
   const data = Object.entries(payRequests).filter(([,v]) => v.status === 'pending');
@@ -727,10 +812,8 @@ window.confirmPayReq = async function(reqKey, itemKey, action) {
   const codeEl = document.getElementById('code-inp-'+reqKey);
   const code = codeEl?.value.trim();
   if (!code) { showToast('Vui lòng nhập mã tài liệu!','err'); return; }
- 
   const updateData = { status: 'confirmed', confirmedAt: Date.now(), codeProvided: code };
   await update(ref(db, 'payment_requests/'+reqKey), updateData);
- 
   const it = items[itemKey] || {};
   const codeField = action === 'preview' ? 'codePreview' : 'codeDownload';
   if (!it[codeField]) {
@@ -745,7 +828,9 @@ window.rejectPayReq = async function(reqKey) {
   showToast('Đã từ chối yêu cầu.','err');
 };
  
-/* ══════════════════════ CHECK CURRENT PAY STATUS (realtime) ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// CHECK CURRENT PAY STATUS (realtime polling từ firebase)
+// ══════════════════════════════════════════════════════════
 let currentReqKey = null;
  
 function checkCurrentPayStatus() {
@@ -761,7 +846,9 @@ function checkCurrentPayStatus() {
   }
 }
 
-/* ══════════════════════ STEP 4: CODE-GATED ACCESS ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// STEP 4: CODE-GATED ACCESS
+// ══════════════════════════════════════════════════════════
 function showCodeAndGate(req) {
   const it = items[currentKey] || {};
   const isPreview = currentAction === 'preview';
@@ -800,14 +887,17 @@ function showCodeAndGate(req) {
     ` : `<p style="text-align:center;font-size:.8rem;color:var(--text3);margin-top:14px">Liên hệ admin để nhận link tài liệu.</p>`}
     <button class="btn-retry" onclick="closeModal()" style="margin-top:16px;display:block;margin-left:auto;margin-right:auto">Đóng</button>
   `;
+  // Xoá cả 2 session vì đã xong
+  clearQRSession();
   clearPendingSession(null);
+  checkResumeBanner();
 }
 
 window.tryUnlock = function(correctCode, targetLink, linkLabel) {
   const input = document.getElementById('unlock-input');
   const errEl = document.getElementById('unlock-err');
   if (!input || !errEl) return;
-  const entered = input.value.trim().toUpperCase();
+  const entered  = input.value.trim().toUpperCase();
   const expected = correctCode.trim().toUpperCase();
   if (entered === expected) {
     errEl.textContent = '';
@@ -825,12 +915,12 @@ window.tryUnlock = function(correctCode, targetLink, linkLabel) {
   }
 };
 
-function showConfirmedByAdmin(req) {
-  showCodeAndGate(req);
-}
+function showConfirmedByAdmin(req) { showCodeAndGate(req); }
 
 function showRejectedByAdmin() {
+  clearQRSession();
   clearPendingSession(null);
+  checkResumeBanner();
   document.getElementById('pay-body').innerHTML = `
     <div class="pay-expired">
       <div style="font-size:2.5rem;margin-bottom:10px">❌</div>
@@ -843,7 +933,9 @@ function showRejectedByAdmin() {
   `;
 }
  
-/* ══════════════════════ PAYMENT FLOW ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// PAYMENT FLOW
+// ══════════════════════════════════════════════════════════
 let payTimer = null;
 let currentKey = null;
 let currentAction = null;
@@ -854,7 +946,7 @@ const ACCT_NAME = 'HUYNH CONG THANH';
  
 window.openPay = function(key, action) {
   closeDropdowns();
-  currentKey = key;
+  currentKey    = key;
   currentAction = action;
   const it = items[key];
   if (!it) return;
@@ -864,10 +956,21 @@ window.openPay = function(key, action) {
     document.getElementById('pay-overlay').classList.add('open');
     return;
   }
- 
+
   document.getElementById('pay-title').textContent =
     action === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
-  startPayFlow(it);
+
+  // Kiểm tra có QR session cũ còn hạn cho đúng item+action không
+  const existingQR = loadQRSession();
+  if (existingQR && existingQR.itemKey === key && existingQR.action === action) {
+    const secsRemaining = Math.max(1, Math.floor((QR_TTL - (Date.now() - existingQR.startedAt)) / 1000));
+    renderQRStep(it, existingQR.price, existingQR.desc, secsRemaining);
+  } else {
+    // Tạo phiên mới
+    clearQRSession();
+    startPayFlow(it);
+  }
+
   document.getElementById('pay-overlay').classList.add('open');
 };
  
@@ -875,11 +978,22 @@ window.startPayFlow = function(it) {
   clearTimers();
   currentReqKey = null;
  
-  const ts = Date.now();
-  const orderCode = (ts % 1000000) * 1000 + Math.floor(Math.random() * 999);
-  const desc = 'BIO' + orderCode;
-  const qrUrl = buildQR(it.price, desc);
- 
+  const ts        = Date.now();
+  const orderCode = (ts % 1_000_000) * 1000 + Math.floor(Math.random() * 999);
+  const desc      = 'BIO' + orderCode;
+
+  // Lưu QR session ngay khi tạo
+  saveQRSession(currentKey, currentAction, it.price, it.name, desc);
+  checkResumeBanner();
+
+  renderQRStep(it, it.price, desc, 600);
+};
+
+// Render bước QR (tách riêng để dùng lại khi resume)
+function renderQRStep(it, price, desc, secsInitial) {
+  clearTimers();
+  const qrUrl = buildQR(price, desc);
+
   document.getElementById('pay-body').innerHTML = `
     <div class="step-bar">
       <div class="step-item done">1 · QR</div>
@@ -887,7 +1001,10 @@ window.startPayFlow = function(it) {
       <div class="step-item">3 · Chờ duyệt</div>
       <div class="step-item">4 · Nhận mã</div>
     </div>
-    <div class="pay-amount">${fmt(it.price)}</div>
+    <div style="text-align:center;margin-bottom:6px">
+      <span class="qr-saved-badge">💾 Đã lưu – thoát rồi quay lại vẫn còn mã này</span>
+    </div>
+    <div class="pay-amount">${fmt(price)}</div>
     <div class="pay-desc">${esc(it.name)}</div>
     <div class="qr-wrap"><img src="${qrUrl}" alt="QR thanh toán"/></div>
     <div class="bank-info">
@@ -899,24 +1016,25 @@ window.startPayFlow = function(it) {
       <div class="a-label" style="margin-bottom:5px">Số điện thoại / Zalo để liên hệ (tuỳ chọn)</div>
       <input class="a-input" id="user-contact" placeholder="VD: 0901234567" style="font-size:.87rem"/>
     </div>
-    <div class="timer-bar">⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">10:00</span></div>
-    <button class="btn-add" style="width:100%;margin-top:0;padding:12px" onclick="submitPayRequest('${it.price}','${desc}','${esc(it.name)}','${currentKey}','${currentAction}')">
+    <div class="timer-bar">⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">${fmtTimer(secsInitial)}</span></div>
+    <button class="btn-add" style="width:100%;margin-top:0;padding:12px"
+      onclick="submitPayRequest('${price}','${desc}','${esc(it.name)}','${currentKey}','${currentAction}')">
       ✅ Tôi đã chuyển khoản xong – Thông báo Admin
     </button>
     <p style="text-align:center;font-size:.75rem;color:var(--text3);margin-top:10px">
       Sau khi bấm, Admin sẽ xem xét và gửi mã tài liệu cho bạn
     </p>
   `;
- 
-  let secs = 600;
+
+  let secs = secsInitial;
   payTimer = setInterval(() => {
     secs--;
     const el = document.getElementById('pay-timer');
     if (!el) { clearTimers(); return; }
-    if (secs <= 0) { clearTimers(); showExpired(it); return; }
+    if (secs <= 0) { clearTimers(); clearQRSession(); checkResumeBanner(); showExpired(it); return; }
     el.textContent = fmtTimer(secs);
   }, 1000);
-};
+}
  
 window.submitPayRequest = async function(amount, transferCode, itemName, itemKey, action) {
   const contact = document.getElementById('user-contact')?.value.trim() || '';
@@ -924,15 +1042,18 @@ window.submitPayRequest = async function(amount, transferCode, itemName, itemKey
     itemKey,
     itemName,
     action,
-    amount: Number(amount),
+    amount:       Number(amount),
     transferCode,
     contact,
-    status: 'pending',
-    createdAt: Date.now()
+    status:       'pending',
+    createdAt:    Date.now()
   });
   currentReqKey = reqRef.key;
+  // Chuyển từ QR session sang Pending session
+  clearQRSession();
   savePendingSession(reqRef.key, itemKey, action, itemName);
   clearTimers();
+  checkResumeBanner();
   showWaitingForAdmin();
 };
  
@@ -948,7 +1069,8 @@ function showWaitingForAdmin() {
       <div class="clock">⏳</div>
       <h3>Đã ghi nhận yêu cầu!</h3>
       <p>Admin đang kiểm tra giao dịch của bạn.<br/>
-         Trang này sẽ tự cập nhật khi được xác nhận.</p>
+         Trang này sẽ tự cập nhật khi được xác nhận.<br/>
+         <strong>Bạn có thể đóng trang và quay lại sau</strong> — yêu cầu vẫn được lưu.</p>
       <div class="contact-box">
         💬 Để nhận mã <strong>nhanh hơn</strong>, liên hệ:<br/>
         <a href="mailto:bioverify@googlegroups.com">bioverify@googlegroups.com</a>
@@ -995,7 +1117,9 @@ function clearTimers() {
 window.closeModal = function() {
   clearTimers();
   document.getElementById('pay-overlay').classList.remove('open');
+  // KHÔNG xoá QR session khi đóng modal — user có thể quay lại
 };
+
 window.overlayClick = function(e) {
   if (e.target === document.getElementById('pay-overlay')) closeModal();
 };
@@ -1004,16 +1128,20 @@ function buildQR(amount, desc) {
   return `https://img.vietqr.io/image/${BANK_BIN}-${BANK_NO}-compact.png?amount=${amount}&addInfo=${encodeURIComponent(desc)}&accountName=${encodeURIComponent(ACCT_NAME)}`;
 }
  
-/* ══════════════════════ STATS ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════════════════════
 window.updateStats = function() {
   const data = Object.values(items);
   document.getElementById('stat-total').textContent = data.length;
   document.getElementById('stat-free').textContent = data.filter(v => !v.price).length;
 };
  
-/* ══════════════════════ DROPDOWN ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// DROPDOWN
+// ══════════════════════════════════════════════════════════
 window.toggleDrop = function(key) {
-  const dd = document.getElementById('dd-'+key);
+  const dd   = document.getElementById('dd-'+key);
   const wrap = document.getElementById('xw-'+key);
   const wasOpen = dd.style.display === 'block';
   closeDropdowns();
@@ -1030,15 +1158,17 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.xem-wrap')) closeDropdowns();
 });
  
-/* ══════════════════════ ADMIN CRUD ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// ADMIN CRUD
+// ══════════════════════════════════════════════════════════
 window.addItem = function() {
-  const name        = document.getElementById('a-name').value.trim();
-  const creator     = document.getElementById('a-creator').value.trim();
-  const price       = parseInt(document.getElementById('a-price').value) || 0;
-  const preview     = document.getElementById('a-preview').value.trim();
-  const download    = document.getElementById('a-download').value.trim();
-  const codePreview = document.getElementById('a-code-preview').value.trim();
-  const codeDownload= document.getElementById('a-code-download').value.trim();
+  const name         = document.getElementById('a-name').value.trim();
+  const creator      = document.getElementById('a-creator').value.trim();
+  const price        = parseInt(document.getElementById('a-price').value) || 0;
+  const preview      = document.getElementById('a-preview').value.trim();
+  const download     = document.getElementById('a-download').value.trim();
+  const codePreview  = document.getElementById('a-code-preview').value.trim();
+  const codeDownload = document.getElementById('a-code-download').value.trim();
   if (!name || !creator) { showToast('Vui lòng nhập đủ thông tin!','err'); return; }
   push(itemsRef, { name, creator, price, preview, download, codePreview, codeDownload, createdAt: Date.now() });
   ['a-name','a-price','a-preview','a-download','a-code-preview','a-code-download'].forEach(id => {
@@ -1066,13 +1196,15 @@ window.editItem = function(key) {
   update(ref(db, 'dethi/'+key), {
     name: name.trim(), price: parseInt(priceStr)||0,
     creator: creator.trim(),
-    codePreview: codeP?.trim() || '',
+    codePreview:  codeP?.trim() || '',
     codeDownload: codeD?.trim() || ''
   });
   showToast('Đã cập nhật!','ok');
 };
  
-/* ══════════════════════ ADMIN TABS ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// ADMIN TABS
+// ══════════════════════════════════════════════════════════
 window.switchAdminTab = function(tabId, btn) {
   document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
@@ -1080,7 +1212,9 @@ window.switchAdminTab = function(tabId, btn) {
   btn.classList.add('active');
 };
  
-/* ══════════════════════ AUTH ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════════════════
 const ADMIN_EMAIL = 'bioverify@googlegroups.com';
 const ADMIN_PASS  = 'Thanh123@';
  
@@ -1099,11 +1233,13 @@ window.doLogin = function() {
 };
 window.doLogout = function() { showPage('page-user'); };
  
-/* ══════════════════════ THEME ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════════════════════
 window.toggleTheme = function() {
-  const html = document.documentElement;
+  const html   = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
-  const next = isDark ? 'light' : 'dark';
+  const next   = isDark ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
   document.querySelectorAll('.theme-btn').forEach(b => b.textContent = isDark ? '🌙' : '☀️');
@@ -1117,7 +1253,9 @@ window.toggleTheme = function() {
   });
 })();
  
-/* ══════════════════════ HELPERS ══════════════════════ */
+// ══════════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════════
 window.showPage = function(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
