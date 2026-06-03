@@ -1,1073 +1,820 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="vi">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Bio Công Thành – Kho Đề Thi</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Bio Công Thành – Tài Liệu</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 <style>
-/* ============================================================
-   TOKENS
-============================================================ */
-:root {
-  --radius: 14px;
-  --trans: .22s ease;
+  :root {
+    --bg: #0d0f1a;
+    --surface: #141726;
+    --card: #1a1f35;
+    --border: #2a3050;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --gold: #f5c842;
+    --text: #e8ecf5;
+    --muted: #8a93b0;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --radius: 14px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-  /* Light */
-  --bg:       #f5f3ef;
-  --surface:  #ffffff;
-  --card:     #faf9f7;
-  --border:   #e4e0d8;
-  --shadow:   0 2px 20px rgba(0,0,0,.07);
-  --shadow-lg:0 8px 40px rgba(0,0,0,.12);
-  --text:     #1a1714;
-  --muted:    #8a8279;
-  --accent:   #2563eb;
-  --accent2:  #7c3aed;
-  --gold:     #b45309;
-  --success:  #15803d;
-  --danger:   #dc2626;
-  --nav-bg:   rgba(245,243,239,.88);
-}
-[data-theme="dark"] {
-  --bg:       #0e0f14;
-  --surface:  #16181f;
-  --card:     #1c1f29;
-  --border:   #2a2e40;
-  --shadow:   0 2px 20px rgba(0,0,0,.3);
-  --shadow-lg:0 8px 40px rgba(0,0,0,.5);
-  --text:     #e8e6e1;
-  --muted:    #7a7d8f;
-  --accent:   #60a5fa;
-  --accent2:  #a78bfa;
-  --gold:     #fbbf24;
-  --success:  #34d399;
-  --danger:   #f87171;
-  --nav-bg:   rgba(14,15,20,.88);
-}
+  /* ---- BACKGROUND MESH ---- */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 10%, rgba(79,142,247,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(124,92,252,.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-/* ============================================================
-   RESET & BASE
-============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background var(--trans), color var(--trans);
-}
-a { color: inherit; text-decoration: none; }
+  /* ---- PAGES ---- */
+  .page { display: none; position: relative; z-index: 1; min-height: 100vh; }
+  .page.active { display: block; }
 
-/* ============================================================
-   PAGES
-============================================================ */
-.page { display: none; position: relative; min-height: 100vh; }
-.page.active { display: block; }
+  /* ---- NAVBAR ---- */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(20,23,38,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: #fff;
+  }
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-right { display: flex; gap: 12px; align-items: center; }
+  .btn-nav {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-family: inherit;
+    font-size: .85rem; cursor: pointer; transition: all .2s;
+  }
+  .btn-nav:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-nav.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none;
+  }
+  .btn-nav.primary:hover { opacity: .88; }
 
-/* ============================================================
-   NAVBAR
-============================================================ */
-nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 40px;
-  background: var(--nav-bg);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-  transition: background var(--trans), border-color var(--trans);
-}
-.brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.brand-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 800; color: #fff;
-  font-family: 'Instrument Serif', serif;
-  flex-shrink: 0;
-}
-.brand-name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.15rem;
-  color: var(--text);
-}
-.nav-actions { display: flex; align-items: center; gap: 10px; }
+  /* ---- HERO ---- */
+  .hero {
+    text-align: center; padding: 64px 20px 40px;
+  }
+  .hero-badge {
+    display: inline-block; padding: 5px 16px;
+    border: 1px solid rgba(79,142,247,.4);
+    border-radius: 999px; font-size: .78rem;
+    color: var(--accent); margin-bottom: 18px;
+    background: rgba(79,142,247,.07);
+    letter-spacing: .05em;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1.15; margin-bottom: 14px;
+  }
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: .98rem; max-width: 520px; margin: 0 auto; }
 
-/* Theme toggle */
-.theme-btn {
-  width: 38px; height: 38px; border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  cursor: pointer; font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all var(--trans); flex-shrink: 0;
-}
-.theme-btn:hover { border-color: var(--accent); }
+  /* ---- STATS ---- */
+  .stats {
+    display: flex; justify-content: center; gap: 40px;
+    padding: 20px 40px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: .78rem; color: var(--muted); margin-top: 2px; }
 
-.btn-nav {
-  padding: 8px 16px; border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--surface); color: var(--muted);
-  font-family: inherit; font-size: .84rem; font-weight: 500;
-  cursor: pointer; transition: all var(--trans);
-  white-space: nowrap;
-}
-.btn-nav:hover { border-color: var(--accent); color: var(--accent); }
-.btn-nav.primary {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
-.btn-nav.primary:hover { opacity: .88; }
+  /* ---- SEARCH ---- */
+  .search-bar {
+    max-width: 520px; margin: 0 auto 32px;
+    padding: 0 20px;
+    position: relative;
+  }
+  .search-bar input {
+    width: 100%; padding: 12px 20px 12px 44px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: inherit; font-size: .9rem; outline: none;
+    transition: border-color .2s;
+  }
+  .search-bar input:focus { border-color: var(--accent); }
+  .search-bar .icon {
+    position: absolute; left: 34px; top: 50%;
+    transform: translateY(-50%); color: var(--muted); font-size: 1rem;
+  }
 
-/* ============================================================
-   HERO
-============================================================ */
-.hero {
-  padding: 72px 20px 48px;
-  text-align: center;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 70% 60% at 50% 0%,
-    rgba(37,99,235,.08) 0%, transparent 70%);
-}
-.hero-eyebrow {
-  display: inline-block;
-  font-size: .76rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 16px;
-}
-.hero h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  line-height: 1.12;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-.hero h1 em {
-  font-style: italic;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero p {
-  color: var(--muted); font-size: .96rem;
-  max-width: 480px; margin: 0 auto; line-height: 1.6;
-}
+  /* ---- TABLE ---- */
+  .table-wrap {
+    max-width: 1000px; margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0 8px;
+  }
+  thead th {
+    padding: 12px 18px; text-align: left;
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); background: transparent;
+  }
+  thead th:last-child { text-align: center; }
+  tbody tr {
+    background: var(--card);
+    border-radius: var(--radius);
+    transition: transform .18s, box-shadow .18s;
+    cursor: default;
+  }
+  tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(79,142,247,.10);
+  }
+  tbody td {
+    padding: 16px 18px; font-size: .92rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td:first-child {
+    border-left: 1px solid var(--border);
+    border-radius: var(--radius) 0 0 var(--radius);
+    color: var(--muted); font-size: .82rem;
+  }
+  tbody td:last-child {
+    border-right: 1px solid var(--border);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    text-align: center;
+  }
+  .subject-name { font-weight: 600; }
+  .subject-sub { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+  .creator-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(124,92,252,.12); border: 1px solid rgba(124,92,252,.25);
+    border-radius: 6px; padding: 3px 10px; font-size: .8rem; color: #a78bfa;
+  }
+  .price-tag {
+    font-weight: 700; color: var(--gold);
+    font-size: .95rem;
+  }
+  .price-free { color: var(--success); }
 
-/* ============================================================
-   STATS
-============================================================ */
-.stats {
-  display: flex; justify-content: center; gap: 48px;
-  padding: 8px 20px 36px; flex-wrap: wrap;
-}
-.stat { text-align: center; }
-.stat-val {
-  font-family: 'Instrument Serif', serif;
-  font-size: 2rem; color: var(--accent); line-height: 1;
-}
-.stat-label { font-size: .75rem; color: var(--muted); margin-top: 3px; font-weight: 500; }
+  /* ---- XEM NGAY BUTTON ---- */
+  .xem-wrap { position: relative; display: inline-block; }
+  .btn-xem {
+    padding: 8px 18px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; cursor: pointer;
+    font-family: inherit; font-size: .83rem; font-weight: 600;
+    transition: opacity .2s, transform .15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-xem:hover { opacity: .88; transform: scale(1.04); }
+  .dropdown {
+    position: absolute; right: 0; top: calc(100% + 8px);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; min-width: 160px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    z-index: 50; overflow: hidden;
+    animation: fadeDown .18s ease;
+  }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  .dropdown button {
+    display: flex; align-items: center; gap: 8px;
+    width: 100%; padding: 11px 16px;
+    background: none; border: none; color: var(--text);
+    font-family: inherit; font-size: .87rem; cursor: pointer;
+    transition: background .15s;
+  }
+  .dropdown button:hover { background: rgba(79,142,247,.1); color: var(--accent); }
+  .dropdown button + button { border-top: 1px solid var(--border); }
 
-/* ============================================================
-   SEARCH
-============================================================ */
-.search-wrap {
-  max-width: 500px; margin: 0 auto 36px;
-  padding: 0 20px; position: relative;
-}
-.search-wrap input {
-  width: 100%; padding: 12px 16px 12px 44px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 11px; color: var(--text);
-  font-family: inherit; font-size: .9rem; outline: none;
-  transition: border-color var(--trans), box-shadow var(--trans);
-  box-shadow: var(--shadow);
-}
-.search-wrap input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
-}
-.search-icon {
-  position: absolute; left: 34px; top: 50%;
-  transform: translateY(-50%); color: var(--muted); pointer-events: none;
-  font-size: .95rem;
-}
+  /* ---- MODAL ---- */
+  .overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(8,10,20,.75); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .overlay.open { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px; max-width: 440px; width: 90%;
+    box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    animation: modalIn .25s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px;
+  }
+  .modal-title { font-size: 1.1rem; font-weight: 700; }
+  .btn-close {
+    background: none; border: none; color: var(--muted);
+    font-size: 1.3rem; cursor: pointer; transition: color .15s;
+  }
+  .btn-close:hover { color: var(--danger); }
+  .qr-box {
+    background: #fff; border-radius: 14px;
+    padding: 14px; margin: 0 auto 18px;
+    width: fit-content;
+  }
+  .qr-box img { display: block; width: 200px; height: 200px; border-radius: 8px; }
+  .payment-info { font-size: .85rem; color: var(--muted); text-align: center; margin-bottom: 14px; line-height: 1.7; }
+  .payment-amount { font-size: 1.4rem; font-weight: 800; color: var(--gold); text-align: center; margin-bottom: 6px; }
+  .timer-row {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: .82rem; color: var(--muted); margin-bottom: 20px;
+  }
+  .timer-val { color: var(--danger); font-weight: 700; }
+  .status-approved {
+    text-align: center; padding: 24px 0 8px;
+  }
+  .status-approved .icon-ok {
+    font-size: 3.5rem; display: block; margin-bottom: 10px;
+  }
+  .status-approved h3 { font-size: 1.3rem; color: var(--success); margin-bottom: 6px; }
+  .status-approved p { color: var(--muted); font-size: .88rem; }
+  .status-expired { text-align: center; padding: 16px 0; }
+  .status-expired h3 { color: var(--danger); margin-bottom: 8px; }
+  .btn-retry {
+    margin-top: 14px; padding: 10px 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 8px;
+    font-family: inherit; font-size: .88rem; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-retry:hover { opacity: .85; }
+  .preview-area {
+    background: var(--bg); border-radius: 10px;
+    padding: 18px; font-size: .85rem; color: var(--muted);
+    text-align: center; margin-top: 14px;
+  }
 
-/* ============================================================
-   TABLE
-============================================================ */
-.table-wrap {
-  max-width: 1020px; margin: 0 auto;
-  padding: 0 20px 80px;
-}
-table {
-  width: 100%; border-collapse: separate; border-spacing: 0 8px;
-}
-thead th {
-  padding: 10px 18px;
-  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--muted);
-}
-thead th:last-child { text-align: center; }
-tbody tr {
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  transition: transform var(--trans), box-shadow var(--trans);
-}
-tbody tr:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-tbody td {
-  padding: 16px 18px; font-size: .91rem;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  transition: border-color var(--trans);
-}
-tbody td:first-child {
-  border-left: 1px solid var(--border);
-  border-radius: var(--radius) 0 0 var(--radius);
-  color: var(--muted); font-size: .8rem; width: 48px;
-  text-align: center;
-}
-tbody td:last-child {
-  border-right: 1px solid var(--border);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  text-align: center;
-}
-.subject-name { font-weight: 600; font-size: .93rem; }
-.subject-sub { font-size: .76rem; color: var(--muted); margin-top: 2px; }
-.creator-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(124,92,252,.1); border: 1px solid rgba(124,92,252,.2);
-  border-radius: 6px; padding: 3px 10px;
-  font-size: .78rem; color: var(--accent2); font-weight: 500;
-}
-.price-tag { font-weight: 700; color: var(--gold); font-size: .92rem; }
-.price-free { font-weight: 700; color: var(--success); font-size: .92rem; }
+  /* ---- ADMIN LOGIN ---- */
+  .login-wrap {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  }
+  .login-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 44px 40px; width: 380px; max-width: 94vw;
+    box-shadow: 0 24px 80px rgba(0,0,0,.4);
+  }
+  .login-logo { text-align: center; margin-bottom: 28px; }
+  .login-logo .brand-icon { width: 54px; height: 54px; font-size: 24px; margin: 0 auto 12px; border-radius: 14px; }
+  .login-logo h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .login-logo p { color: var(--muted); font-size: .82rem; margin-top: 4px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: .8rem; font-weight: 600; color: var(--muted); margin-bottom: 7px; letter-spacing: .05em; text-transform: uppercase; }
+  .form-group input {
+    width: 100%; padding: 11px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-family: inherit; font-size: .9rem; outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input:focus { border-color: var(--accent); }
+  .btn-login {
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 9px;
+    font-family: inherit; font-size: .95rem; font-weight: 700;
+    cursor: pointer; transition: opacity .2s; margin-top: 6px;
+  }
+  .btn-login:hover { opacity: .88; }
+  .login-err { color: var(--danger); font-size: .82rem; margin-top: 10px; text-align: center; }
 
-/* XEM NGAY */
-.xem-wrap { position: relative; display: inline-block; }
-.btn-xem {
-  padding: 8px 16px; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border: none; cursor: pointer;
-  font-family: inherit; font-size: .81rem; font-weight: 600;
-  transition: opacity .2s, transform .15s;
-  display: flex; align-items: center; gap: 5px;
-}
-.btn-xem:hover { opacity: .88; transform: scale(1.03); }
+  /* ---- ADMIN PAGE ---- */
+  .admin-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 36px;
+    background: rgba(20,23,38,.9);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .admin-badge {
+    background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3);
+    color: #f87171; border-radius: 6px; padding: 3px 12px;
+    font-size: .75rem; font-weight: 700; letter-spacing: .06em;
+  }
+  .admin-content { max-width: 980px; margin: 0 auto; padding: 36px 20px 60px; }
+  .admin-section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 28px;
+  }
+  .admin-section h3 {
+    font-size: 1rem; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .admin-input {
+    padding: 10px 13px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-family: inherit; font-size: .88rem; outline: none;
+    transition: border-color .2s; width: 100%;
+  }
+  .admin-input:focus { border-color: var(--accent); }
+  .admin-label { font-size: .78rem; color: var(--muted); margin-bottom: 5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .btn-add {
+    padding: 10px 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 8px;
+    font-family: inherit; font-size: .88rem; font-weight: 700;
+    cursor: pointer; transition: opacity .2s; margin-top: 18px;
+  }
+  .btn-add:hover { opacity: .85; }
+  .admin-table-wrap table { border-spacing: 0 6px; }
+  .admin-table-wrap thead th { font-size: .72rem; }
+  .action-btn {
+    padding: 5px 12px; border-radius: 6px; border: none;
+    font-family: inherit; font-size: .78rem; font-weight: 600;
+    cursor: pointer; transition: opacity .2s; margin: 0 3px;
+  }
+  .btn-edit { background: rgba(79,142,247,.15); color: var(--accent); }
+  .btn-delete { background: rgba(239,68,68,.15); color: #f87171; }
+  .action-btn:hover { opacity: .75; }
+  .empty-state { text-align: center; color: var(--muted); padding: 30px; font-size: .88rem; }
+  .toast {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 22px;
+    font-size: .88rem; font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    display: none; animation: fadeDown .2s ease;
+  }
+  .toast.show { display: block; }
+  .toast.ok { border-left: 4px solid var(--success); color: var(--success); }
+  .toast.err { border-left: 4px solid var(--danger); color: var(--danger); }
 
-/* ============================================================
-   MODAL / OVERLAY
-============================================================ */
-.overlay {
-  display: none; position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
-  align-items: center; justify-content: center;
-  padding: 20px;
-}
-.overlay.open { display: flex; }
-.modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 32px; width: 100%; max-width: 420px;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn .2s ease;
-  position: relative;
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(.94) translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-.modal-head {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
-}
-.modal-title { font-family: 'Instrument Serif', serif; font-size: 1.2rem; }
-.btn-close {
-  background: none; border: none; color: var(--muted);
-  font-size: 1.2rem; cursor: pointer; transition: color var(--trans);
-  line-height: 1;
-}
-.btn-close:hover { color: var(--danger); }
+  /* ---- LOADING ---- */
+  .loading-spin {
+    width: 28px; height: 28px; border: 3px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin .7s linear infinite; margin: 0 auto 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-/* QR */
-.qr-box {
-  background: #fff; border-radius: 14px;
-  padding: 12px; margin: 0 auto 16px; width: fit-content;
-  box-shadow: 0 2px 12px rgba(0,0,0,.1);
-}
-.qr-box img { display: block; width: 190px; height: 190px; border-radius: 6px; }
-.pay-amount {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.8rem; color: var(--gold);
-  text-align: center; margin-bottom: 4px;
-}
-.pay-info {
-  font-size: .83rem; color: var(--muted);
-  text-align: center; line-height: 1.7; margin-bottom: 14px;
-}
-.timer-row {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  font-size: .8rem; color: var(--muted); margin-bottom: 18px;
-}
-.timer-val { color: var(--danger); font-weight: 700; }
-.divider {
-  border: none; border-top: 1px solid var(--border);
-  margin: 18px 0;
-}
-
-/* CODE INPUT */
-.code-section { margin-top: 4px; }
-.code-label {
-  font-size: .78rem; font-weight: 700; letter-spacing: .07em;
-  text-transform: uppercase; color: var(--muted);
-  margin-bottom: 8px; display: block;
-}
-.code-row { display: flex; gap: 8px; }
-.code-input {
-  flex: 1; padding: 10px 14px;
-  background: var(--card); border: 1.5px solid var(--border);
-  border-radius: 9px; color: var(--text);
-  font-family: 'DM Sans', monospace; font-size: .95rem;
-  font-weight: 600; letter-spacing: .1em;
-  outline: none; transition: border-color var(--trans);
-  text-transform: uppercase;
-}
-.code-input:focus { border-color: var(--accent); }
-.code-input.error { border-color: var(--danger); }
-.btn-unlock {
-  padding: 10px 18px;
-  background: var(--accent); color: #fff;
-  border: none; border-radius: 9px;
-  font-family: inherit; font-size: .85rem; font-weight: 700;
-  cursor: pointer; transition: opacity .2s;
-}
-.btn-unlock:hover { opacity: .85; }
-.code-err {
-  color: var(--danger); font-size: .78rem;
-  margin-top: 6px; min-height: 18px;
-}
-
-/* success / expired states */
-.state-success { text-align: center; padding: 8px 0; }
-.state-success .icon-big { font-size: 3rem; display: block; margin-bottom: 10px; }
-.state-success h3 { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--success); margin-bottom: 6px; }
-.state-success p { color: var(--muted); font-size: .86rem; }
-.link-box {
-  margin-top: 16px;
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px 18px;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-}
-.link-box span { font-size: .82rem; color: var(--muted); word-break: break-all; flex: 1; }
-.btn-open {
-  padding: 8px 16px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border: none; border-radius: 8px;
-  font-family: inherit; font-size: .82rem; font-weight: 700;
-  cursor: pointer; white-space: nowrap; transition: opacity .2s;
-  text-decoration: none;
-}
-.btn-open:hover { opacity: .85; }
-.state-expired { text-align: center; padding: 8px 0; }
-.state-expired h3 { color: var(--danger); font-size: 1.1rem; margin: 10px 0 8px; }
-.state-expired p { color: var(--muted); font-size: .84rem; }
-.btn-retry {
-  margin-top: 14px; padding: 10px 22px;
-  background: var(--accent); color: #fff; border: none; border-radius: 9px;
-  font-family: inherit; font-size: .86rem; font-weight: 700;
-  cursor: pointer; transition: opacity .2s;
-}
-.btn-retry:hover { opacity: .85; }
-
-/* ============================================================
-   ADMIN LOGIN
-============================================================ */
-.login-screen {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: var(--bg); padding: 20px;
-}
-.login-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 44px 40px; width: 380px; max-width: 100%;
-  box-shadow: var(--shadow-lg);
-}
-.login-top { text-align: center; margin-bottom: 32px; }
-.login-top .brand-icon { width: 52px; height: 52px; font-size: 22px; margin: 0 auto 14px; border-radius: 14px; }
-.login-top h2 { font-family: 'Instrument Serif', serif; font-size: 1.4rem; }
-.login-top p { color: var(--muted); font-size: .82rem; margin-top: 5px; }
-.field { margin-bottom: 16px; }
-.field label {
-  display: block; font-size: .76rem; font-weight: 700;
-  letter-spacing: .07em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 7px;
-}
-.field input {
-  width: 100%; padding: 11px 14px;
-  background: var(--bg); border: 1.5px solid var(--border);
-  border-radius: 9px; color: var(--text);
-  font-family: inherit; font-size: .9rem; outline: none;
-  transition: border-color var(--trans);
-}
-.field input:focus { border-color: var(--accent); }
-.btn-login-submit {
-  width: 100%; padding: 12px;
-  background: var(--accent); color: #fff; border: none;
-  border-radius: 10px; font-family: inherit; font-size: .95rem;
-  font-weight: 700; cursor: pointer; transition: opacity .2s; margin-top: 4px;
-}
-.btn-login-submit:hover { opacity: .88; }
-.login-err { color: var(--danger); font-size: .81rem; text-align: center; margin-top: 10px; min-height: 20px; }
-.back-link {
-  display: block; text-align: center; margin-top: 18px;
-  font-size: .82rem; color: var(--muted); cursor: pointer;
-  transition: color var(--trans);
-}
-.back-link:hover { color: var(--accent); }
-
-/* ============================================================
-   ADMIN DASHBOARD
-============================================================ */
-.admin-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 40px;
-  background: var(--nav-bg); backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-}
-.admin-tag {
-  font-size: .7rem; font-weight: 800; letter-spacing: .1em;
-  text-transform: uppercase;
-  background: rgba(220,38,38,.1); color: var(--danger);
-  border: 1px solid rgba(220,38,38,.25); border-radius: 6px;
-  padding: 3px 10px;
-}
-.admin-body { max-width: 980px; margin: 0 auto; padding: 36px 20px 80px; }
-
-.panel {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 28px; margin-bottom: 24px;
-  box-shadow: var(--shadow);
-}
-.panel-title {
-  font-size: .92rem; font-weight: 700; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 8px; color: var(--text);
-}
-
-.form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
-/* NEW: code field full row */
-.form-grid-code { margin-top: 12px; }
-
-.a-label {
-  font-size: .74rem; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
-}
-.a-input {
-  width: 100%; padding: 10px 12px;
-  background: var(--bg); border: 1.5px solid var(--border);
-  border-radius: 8px; color: var(--text);
-  font-family: inherit; font-size: .87rem; outline: none;
-  transition: border-color var(--trans);
-}
-.a-input:focus { border-color: var(--accent); }
-.btn-add {
-  margin-top: 18px; padding: 10px 24px;
-  background: var(--accent); color: #fff; border: none;
-  border-radius: 9px; font-family: inherit; font-size: .87rem;
-  font-weight: 700; cursor: pointer; transition: opacity .2s;
-}
-.btn-add:hover { opacity: .85; }
-
-/* admin table */
-.admin-tbl-wrap table { border-spacing: 0 6px; }
-.admin-tbl-wrap thead th { font-size: .69rem; }
-.act-btn {
-  padding: 5px 12px; border-radius: 6px; border: none;
-  font-family: inherit; font-size: .77rem; font-weight: 600;
-  cursor: pointer; transition: opacity .2s; margin: 0 2px;
-}
-.act-edit { background: rgba(37,99,235,.12); color: var(--accent); }
-.act-del  { background: rgba(220,38,38,.1);  color: var(--danger); }
-.act-btn:hover { opacity: .7; }
-.empty-row { text-align: center; color: var(--muted); padding: 30px; font-size: .86rem; }
-
-/* Code badge */
-.code-chip {
-  display: inline-block;
-  font-family: monospace; font-size: .78rem; font-weight: 700;
-  letter-spacing: .1em;
-  background: rgba(37,99,235,.1); border: 1px solid rgba(37,99,235,.2);
-  color: var(--accent); border-radius: 5px; padding: 2px 8px;
-}
-
-/* ============================================================
-   TOAST
-============================================================ */
-.toast {
-  position: fixed; bottom: 26px; right: 26px; z-index: 9999;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 11px; padding: 13px 20px;
-  font-size: .87rem; font-weight: 600;
-  box-shadow: var(--shadow-lg);
-  display: none; pointer-events: none;
-}
-.toast.show { display: block; animation: slideUp .2s ease; }
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-.toast.ok  { border-left: 4px solid var(--success); color: var(--success); }
-.toast.err { border-left: 4px solid var(--danger);  color: var(--danger); }
-
-/* ============================================================
-   MISC
-============================================================ */
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (max-width: 640px) {
-  nav, .admin-bar { padding: 12px 16px; }
-  .admin-body, .table-wrap { padding-left: 12px; padding-right: 12px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .form-grid-2 { grid-template-columns: 1fr; }
-  .hero { padding: 48px 16px 32px; }
-  .login-card { padding: 32px 22px; }
-  .stats { gap: 24px; }
-}
+  @media (max-width: 600px) {
+    nav, .admin-nav { padding: 14px 16px; }
+    .form-row, .form-row.triple { grid-template-columns: 1fr; }
+    .hero { padding: 40px 16px 24px; }
+    .stats { gap: 22px; }
+    .admin-content, .table-wrap { padding-left: 12px; padding-right: 12px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- =====================================================================
-     USER PAGE
-===================================================================== -->
+<!-- ===================== USER PAGE ===================== -->
 <div class="page active" id="page-user">
   <nav>
-    <div class="brand" onclick="showPage('page-user')">
+    <div class="brand">
       <div class="brand-icon">B</div>
       <span class="brand-name">Bio Công Thành</span>
     </div>
-    <div class="nav-actions">
-      <button class="theme-btn" id="theme-toggle" title="Đổi giao diện" onclick="toggleTheme()">🌙</button>
+    <div class="nav-right">
       <button class="btn-nav primary" onclick="showPage('page-login')">🔐 Admin</button>
     </div>
   </nav>
 
   <div class="hero">
-    <div class="hero-eyebrow">📚 Tài liệu chính thức</div>
-    <h1>Kho Đề Thi<br/><em>Bio Công Thành</em></h1>
+    <div class="hero-badge">📚 Tài liệu chính thức</div>
+    <h1>Kho Đề Thi<br/><span>Bio Công Thành</span></h1>
     <p>Tài liệu ôn tập chất lượng cao, được tuyển chọn kỹ lưỡng bởi đội ngũ giáo viên giàu kinh nghiệm.</p>
   </div>
 
   <div class="stats">
-    <div class="stat">
-      <div class="stat-val" id="stat-total">0</div>
-      <div class="stat-label">Đề thi</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val" id="stat-subjects">0</div>
-      <div class="stat-label">Môn học</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val">⭐ 4.9</div>
-      <div class="stat-label">Đánh giá</div>
-    </div>
+    <div class="stat"><div class="stat-val" id="stat-total">0</div><div class="stat-label">Đề thi</div></div>
+    <div class="stat"><div class="stat-val" id="stat-subjects">0</div><div class="stat-label">Môn học</div></div>
+    <div class="stat"><div class="stat-val">⭐ 4.9</div><div class="stat-label">Đánh giá</div></div>
   </div>
 
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Tìm kiếm đề thi, môn học…" oninput="renderTable()"/>
+  <div class="search-bar">
+    <span class="icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Tìm kiếm đề thi, môn học..." oninput="renderTable()"/>
   </div>
 
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>#</th>
+          <th>STT</th>
           <th>Đề Thi / Môn</th>
           <th>Người Tạo</th>
           <th>Giá</th>
-          <th>Truy Cập</th>
+          <th>Xem Ngay</th>
         </tr>
       </thead>
       <tbody id="user-tbody">
-        <tr><td colspan="5" class="empty-row">Đang tải…</td></tr>
+        <tr><td colspan="5" class="empty-state">Đang tải dữ liệu...</td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- =====================================================================
-     ADMIN LOGIN
-===================================================================== -->
+<!-- ===================== ADMIN LOGIN ===================== -->
 <div class="page" id="page-login">
-  <nav>
-    <div class="brand" onclick="showPage('page-user')">
-      <div class="brand-icon">B</div>
-      <span class="brand-name">Bio Công Thành</span>
-    </div>
-    <div class="nav-actions">
-      <button class="theme-btn" onclick="toggleTheme()">🌙</button>
-    </div>
-  </nav>
-  <div class="login-screen">
+  <div class="login-wrap">
     <div class="login-card">
-      <div class="login-top">
+      <div class="login-logo">
         <div class="brand-icon">B</div>
         <h2>Đăng nhập Admin</h2>
         <p>Chỉ dành cho quản trị viên hệ thống</p>
       </div>
-      <div class="field">
+      <div class="form-group">
         <label>Email</label>
         <input type="email" id="login-email" placeholder="admin@email.com" value="bioverify@googlegroups.com"/>
       </div>
-      <div class="field">
+      <div class="form-group">
         <label>Mật khẩu</label>
-        <input type="password" id="login-pass" placeholder="••••••••" value="Thanh123@"
-               onkeydown="if(event.key==='Enter')doLogin()"/>
+        <input type="password" id="login-pass" placeholder="••••••••" value="Thanh123@"/>
       </div>
-      <button class="btn-login-submit" onclick="doLogin()">Đăng nhập →</button>
+      <button class="btn-login" onclick="doLogin()">Đăng nhập →</button>
       <div class="login-err" id="login-err"></div>
-      <span class="back-link" onclick="showPage('page-user')">← Về trang chủ</span>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-nav" onclick="showPage('page-user')" style="font-size:.82rem;">← Về trang chủ</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- =====================================================================
-     ADMIN DASHBOARD
-===================================================================== -->
+<!-- ===================== ADMIN DASHBOARD ===================== -->
 <div class="page" id="page-admin">
-  <div class="admin-bar">
-    <div class="brand" onclick="showPage('page-user')">
-      <div class="brand-icon" style="width:30px;height:30px;font-size:13px;">B</div>
+  <div class="admin-nav">
+    <div class="brand">
+      <div class="brand-icon" style="width:32px;height:32px;font-size:14px;">B</div>
       <span class="brand-name" style="font-size:1rem;">Bio Công Thành</span>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span class="admin-tag">ADMIN</span>
-      <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="admin-badge">ADMIN</span>
       <button class="btn-nav" onclick="doLogout()">Đăng xuất</button>
     </div>
   </div>
 
-  <div class="admin-body">
-
+  <div class="admin-content">
     <!-- ADD FORM -->
-    <div class="panel">
-      <div class="panel-title">➕ Thêm đề thi mới</div>
-      <div class="form-grid">
+    <div class="admin-section">
+      <h3>➕ Thêm đề thi mới</h3>
+      <div class="form-row triple">
         <div>
-          <div class="a-label">Tên đề thi / Môn học</div>
-          <input class="a-input" id="a-name" placeholder="VD: Đề Sinh HK1 2024"/>
+          <div class="admin-label">Tên đề thi / Môn học</div>
+          <input class="admin-input" id="a-name" placeholder="VD: Đề Toán HK1 2024"/>
         </div>
         <div>
-          <div class="a-label">Người tạo</div>
-          <input class="a-input" id="a-creator" placeholder="Huỳnh Công Thành" value="Huỳnh Công Thành"/>
+          <div class="admin-label">Người tạo</div>
+          <input class="admin-input" id="a-creator" placeholder="VD: Huỳnh Công Thành" value="Huỳnh Công Thành"/>
         </div>
         <div>
-          <div class="a-label">Giá (VNĐ)</div>
-          <input class="a-input" type="number" id="a-price" placeholder="35000"/>
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div>
-          <div class="a-label">Link xem thử</div>
-          <input class="a-input" id="a-preview" placeholder="https://…"/>
-        </div>
-        <div>
-          <div class="a-label">Link tải về</div>
-          <input class="a-input" id="a-download" placeholder="https://…"/>
+          <div class="admin-label">Giá (VNĐ)</div>
+          <input class="admin-input" id="a-price" type="number" placeholder="35000"/>
         </div>
       </div>
-      <div class="form-grid-code">
+      <div class="form-row" style="margin-top:12px;">
         <div>
-          <div class="a-label">🔑 Mã truy cập (Access Code) — user nhập sau khi chuyển khoản</div>
-          <input class="a-input" id="a-code" placeholder="VD: BIO2024HK1  (để trống = không cần mã)"/>
+          <div class="admin-label">Link xem thử (tùy chọn)</div>
+          <input class="admin-input" id="a-preview" placeholder="https://..."/>
+        </div>
+        <div>
+          <div class="admin-label">Link tải về (tùy chọn)</div>
+          <input class="admin-input" id="a-download" placeholder="https://..."/>
         </div>
       </div>
       <button class="btn-add" onclick="addItem()">✅ Thêm đề thi</button>
     </div>
 
     <!-- TABLE -->
-    <div class="panel admin-tbl-wrap">
-      <div class="panel-title">📋 Danh sách đề thi (<span id="admin-count">0</span>)</div>
+    <div class="admin-section admin-table-wrap">
+      <h3>📋 Danh sách đề thi (<span id="admin-count">0</span>)</h3>
       <table>
         <thead>
           <tr>
-            <th>#</th><th>Tên đề thi</th><th>Người tạo</th>
-            <th>Giá</th><th>Mã truy cập</th><th>Thao tác</th>
+            <th>STT</th><th>Tên đề thi</th><th>Người tạo</th><th>Giá</th><th>Thao tác</th>
           </tr>
         </thead>
         <tbody id="admin-tbody">
-          <tr><td colspan="6" class="empty-row">Chưa có đề thi nào.</td></tr>
+          <tr><td colspan="5" class="empty-state">Chưa có đề thi nào.</td></tr>
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 
-<!-- =====================================================================
-     PAYMENT MODAL
-===================================================================== -->
-<div class="overlay" id="pay-overlay" onclick="overlayClick(event)">
+<!-- ===================== PAYMENT MODAL ===================== -->
+<div class="overlay" id="pay-overlay">
   <div class="modal" id="pay-modal">
-    <div class="modal-head">
+    <div class="modal-header">
       <span class="modal-title" id="pay-title">Thanh toán</span>
       <button class="btn-close" onclick="closeModal()">✕</button>
     </div>
-    <div id="pay-body"></div>
+    <div id="pay-body"><!-- dynamic --></div>
   </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- =====================================================================
-     SCRIPTS
-===================================================================== -->
 <script type="module">
-import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, push, remove, update }
-                            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey:            "AIzaSyDtAU-Iqn-u39_mgkxRZ3fIF_Kyxqn-Gyg",
-  authDomain:        "csdl-bio.firebaseapp.com",
-  databaseURL:       "https://csdl-bio-default-rtdb.firebaseio.com",
-  projectId:         "csdl-bio",
-  storageBucket:     "csdl-bio.firebasestorage.app",
-  messagingSenderId: "568258817515",
-  appId:             "1:568258817515:web:a0af432de5aafe79a63dae",
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDtAU-Iqn-u39_mgkxRZ3fIF_Kyxqn-Gyg",
+    authDomain: "csdl-bio.firebaseapp.com",
+    databaseURL: "https://csdl-bio-default-rtdb.firebaseio.com",
+    projectId: "csdl-bio",
+    storageBucket: "csdl-bio.firebasestorage.app",
+    messagingSenderId: "568258817515",
+    appId: "1:568258817515:web:a0af432de5aafe79a63dae",
+    measurementId: "G-YVTQ7QTHVB"
+  };
 
-const app       = initializeApp(firebaseConfig);
-const db        = getDatabase(app);
-const itemsRef  = ref(db, 'dethi');
-let   items     = {};
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const itemsRef = ref(db, 'dethi');
 
-// ── Real-time sync ──────────────────────────────────────────
-onValue(itemsRef, (snap) => {
-  items = snap.val() || {};
-  renderTable();
-  renderAdminTable();
-  updateStats();
-});
+  let items = {};
 
-// ── Expose globals ───────────────────────────────────────────
-window._items   = () => items;
-window._db      = { db, itemsRef, ref, push, remove, update };
-
-// ════════════════════════════════════════════════════════════
-//  ADMIN CRUD
-// ════════════════════════════════════════════════════════════
-window.addItem = function () {
-  const name     = g('a-name').value.trim();
-  const creator  = g('a-creator').value.trim();
-  const price    = parseInt(g('a-price').value) || 0;
-  const preview  = g('a-preview').value.trim();
-  const download = g('a-download').value.trim();
-  const code     = g('a-code').value.trim().toUpperCase();
-
-  if (!name || !creator) { toast('Vui lòng nhập đủ thông tin!', 'err'); return; }
-  push(itemsRef, { name, creator, price, preview, download, code, createdAt: Date.now() });
-  ['a-name','a-price','a-preview','a-download','a-code'].forEach(id => g(id).value = '');
-  toast('Đã thêm đề thi thành công!', 'ok');
-};
-
-window.deleteItem = function (key) {
-  if (!confirm('Xóa đề thi này?')) return;
-  remove(ref(db, 'dethi/' + key));
-  toast('Đã xóa!', 'ok');
-};
-
-window.editItem = function (key) {
-  const it      = items[key];
-  const newName = prompt('Tên đề thi:', it.name);
-  if (newName === null) return;
-  const newPrice    = parseInt(prompt('Giá (VNĐ):', it.price)) || 0;
-  const newCreator  = prompt('Người tạo:', it.creator) || it.creator;
-  const newPreview  = prompt('Link xem thử:', it.preview || '') ?? it.preview;
-  const newDownload = prompt('Link tải về:', it.download || '') ?? it.download;
-  const newCode     = (prompt('Mã truy cập (để trống = không cần mã):', it.code || '') ?? it.code || '').toUpperCase().trim();
-
-  if (!newName || !newCreator) { toast('Dữ liệu không hợp lệ!', 'err'); return; }
-  update(ref(db, 'dethi/' + key), {
-    name: newName, price: newPrice, creator: newCreator,
-    preview: newPreview, download: newDownload, code: newCode
-  });
-  toast('Đã cập nhật!', 'ok');
-};
-
-// ════════════════════════════════════════════════════════════
-//  RENDER — USER TABLE
-// ════════════════════════════════════════════════════════════
-window.renderTable = function () {
-  const q       = (g('search-input')?.value || '').toLowerCase();
-  const data    = Object.entries(window._items());
-  const filtered = q
-    ? data.filter(([,v]) => v.name?.toLowerCase().includes(q) || v.creator?.toLowerCase().includes(q))
-    : data;
-
-  const tbody = g('user-tbody');
-  if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-row">Không tìm thấy đề thi nào.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = filtered.map(([key, it], i) => `
-    <tr>
-      <td>${i+1}</td>
-      <td>
-        <div class="subject-name">${esc(it.name)}</div>
-        <div class="subject-sub">Đề thi</div>
-      </td>
-      <td><span class="creator-chip">👤 ${esc(it.creator)}</span></td>
-      <td><span class="${it.price ? 'price-tag' : 'price-free'}">${it.price ? fmt(it.price) : 'Miễn phí'}</span></td>
-      <td>
-        <button class="btn-xem" onclick="openPayment('${key}')">🔓 Mở tài liệu</button>
-      </td>
-    </tr>
-  `).join('');
-};
-
-// ════════════════════════════════════════════════════════════
-//  RENDER — ADMIN TABLE
-// ════════════════════════════════════════════════════════════
-window.renderAdminTable = function () {
-  const data  = Object.entries(window._items());
-  g('admin-count').textContent = data.length;
-  const tbody = g('admin-tbody');
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-row">Chưa có đề thi nào.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(([key, it], i) => `
-    <tr>
-      <td style="text-align:center;color:var(--muted);font-size:.8rem">${i+1}</td>
-      <td><span class="subject-name">${esc(it.name)}</span></td>
-      <td><span class="creator-chip" style="font-size:.75rem">👤 ${esc(it.creator)}</span></td>
-      <td><span class="price-tag">${it.price ? fmt(it.price) : 'Miễn phí'}</span></td>
-      <td>${it.code ? `<span class="code-chip">${esc(it.code)}</span>` : '<span style="color:var(--muted);font-size:.78rem">—</span>'}</td>
-      <td>
-        <button class="act-btn act-edit" onclick="editItem('${key}')">✏️ Sửa</button>
-        <button class="act-btn act-del"  onclick="deleteItem('${key}')">🗑 Xóa</button>
-      </td>
-    </tr>
-  `).join('');
-};
-
-// ════════════════════════════════════════════════════════════
-//  STATS
-// ════════════════════════════════════════════════════════════
-window.updateStats = function () {
-  const data = Object.values(window._items());
-  g('stat-total').textContent = data.length;
-  const subj = new Set(data.map(v => v.name?.split(' ')[0])).size;
-  g('stat-subjects').textContent = subj || data.length;
-};
-
-// ════════════════════════════════════════════════════════════
-//  PAYMENT FLOW
-// ════════════════════════════════════════════════════════════
-let payTimer = null;
-let currentKey = null;
-
-window.openPayment = function (key) {
-  currentKey = key;
-  const it = window._items()[key];
-  if (!it) return;
-  g('pay-title').textContent = esc(it.name);
-  showPayStep(it);
-  g('pay-overlay').classList.add('open');
-};
-
-function showPayStep (it) {
-  clearInterval(payTimer);
-  let secs = 600;
-  const qrUrl = buildQR(it.price, it.name);
-  const needCode = it.code && it.code.trim() !== '';
-
-  g('pay-body').innerHTML = `
-    <div class="pay-amount">${it.price ? fmt(it.price) : 'Miễn phí'}</div>
-    <div class="pay-info">Quét mã QR để thanh toán<br/><strong>${esc(it.name)}</strong></div>
-    <div class="qr-box"><img src="${qrUrl}" alt="QR"/></div>
-    <div class="pay-info">
-      Ngân hàng: <strong>Vietcombank</strong> · STK: <strong>7876159680</strong><br/>
-      Chủ TK: <strong>HUYNH CONG THANH</strong>
-    </div>
-    <div class="timer-row">⏱ Hết hạn sau: <span class="timer-val" id="ptimer">${fmtT(secs)}</span></div>
-
-    ${needCode ? `
-    <hr class="divider"/>
-    <div class="code-section">
-      <span class="code-label">🔑 Nhập mã truy cập sau khi chuyển khoản</span>
-      <div class="code-row">
-        <input class="code-input" id="code-inp" placeholder="VD: BIO2024HK1"
-               maxlength="30" onkeydown="if(event.key==='Enter')checkCode('${currentKey}')"/>
-        <button class="btn-unlock" onclick="checkCode('${currentKey}')">Mở khóa</button>
-      </div>
-      <div class="code-err" id="code-err"></div>
-    </div>
-    ` : `
-    <hr class="divider"/>
-    <div style="text-align:center;">
-      <button class="btn-retry" onclick="showSuccess('${currentKey}')">✅ Xác nhận đã thanh toán</button>
-    </div>
-    `}
-  `;
-
-  payTimer = setInterval(() => {
-    secs--;
-    const el = g('ptimer');
-    if (!el) { clearInterval(payTimer); return; }
-    if (secs <= 0) { clearInterval(payTimer); showExpired(it); }
-    else el.textContent = fmtT(secs);
-  }, 1000);
-}
-
-window.checkCode = function (key) {
-  const it       = window._items()[key];
-  const entered  = (g('code-inp')?.value || '').trim().toUpperCase();
-  const correct  = (it?.code || '').trim().toUpperCase();
-  const errEl    = g('code-err');
-  const inpEl    = g('code-inp');
-
-  if (!entered) {
-    errEl.textContent = 'Vui lòng nhập mã truy cập.';
-    inpEl.classList.add('error'); return;
-  }
-  if (entered !== correct) {
-    errEl.textContent = '❌ Mã không đúng. Vui lòng kiểm tra lại.';
-    inpEl.classList.add('error');
-    inpEl.value = '';
-    setTimeout(() => { inpEl.classList.remove('error'); }, 1500);
-    return;
-  }
-  // correct!
-  showSuccess(key);
-};
-
-window.showSuccess = function (key) {
-  clearInterval(payTimer);
-  const it = window._items()[key];
-  const hasPreview  = it?.preview && it.preview.trim();
-  const hasDownload = it?.download && it.download.trim();
-
-  g('pay-body').innerHTML = `
-    <div class="state-success">
-      <span class="icon-big">🎉</span>
-      <h3>Mở khóa thành công!</h3>
-      <p>Cảm ơn bạn đã sử dụng tài liệu của Bio Công Thành.</p>
-      ${hasPreview ? `
-        <div class="link-box">
-          <span>🔍 Xem thử tài liệu</span>
-          <a class="btn-open" href="${esc(it.preview)}" target="_blank" rel="noopener">Xem ngay →</a>
-        </div>` : ''}
-      ${hasDownload ? `
-        <div class="link-box" style="margin-top:10px;">
-          <span>⬇️ Tải tài liệu về máy</span>
-          <a class="btn-open" href="${esc(it.download)}" target="_blank" rel="noopener">Tải về →</a>
-        </div>` : ''}
-      ${!hasPreview && !hasDownload ? `
-        <div style="margin-top:16px;color:var(--muted);font-size:.85rem;">
-          Tài liệu sẽ được gửi qua liên hệ với admin.
-        </div>` : ''}
-      <button class="btn-retry" style="margin-top:20px;" onclick="closeModal()">Đóng</button>
-    </div>
-  `;
-};
-
-function showExpired (it) {
-  g('pay-body').innerHTML = `
-    <div class="state-expired">
-      <div style="font-size:2.5rem">⏰</div>
-      <h3>Phiên thanh toán hết hạn</h3>
-      <p>Mã QR mới sẽ được tạo. Vui lòng thanh toán lại.</p>
-      <button class="btn-retry" onclick="showPayStep(${JSON.stringify(it).replace(/"/g,'&quot;')})">🔄 Tạo mã mới</button>
-    </div>
-  `;
-}
-
-function buildQR (amount, desc) {
-  return `https://img.vietqr.io/image/VCB-7876159680-compact.png?`
-    + new URLSearchParams({ amount: amount || 0, addInfo: 'Thanh toan ' + (desc||''), accountName: 'HUYNH CONG THANH' });
-}
-
-window.closeModal = function () {
-  clearInterval(payTimer);
-  g('pay-overlay').classList.remove('open');
-};
-
-window.overlayClick = function (e) {
-  if (e.target === g('pay-overlay')) closeModal();
-};
-
-// ════════════════════════════════════════════════════════════
-//  AUTH
-// ════════════════════════════════════════════════════════════
-const ADMIN_EMAIL = 'bioverify@googlegroups.com';
-const ADMIN_PASS  = 'Thanh123@';
-
-window.doLogin = function () {
-  const email = g('login-email').value.trim();
-  const pass  = g('login-pass').value;
-  if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
-    showPage('page-admin');
+  // ---- Real-time listener ----
+  onValue(itemsRef, (snap) => {
+    items = snap.val() || {};
+    renderTable();
     renderAdminTable();
-  } else {
-    g('login-err').textContent = '❌ Sai tài khoản hoặc mật khẩu!';
-  }
-};
-window.doLogout = function () { showPage('page-user'); };
-
-// ════════════════════════════════════════════════════════════
-//  THEME
-// ════════════════════════════════════════════════════════════
-window.toggleTheme = function () {
-  const html = document.documentElement;
-  const isDark = html.dataset.theme === 'dark';
-  html.dataset.theme = isDark ? 'light' : 'dark';
-  localStorage.setItem('bct-theme', html.dataset.theme);
-  document.querySelectorAll('.theme-btn').forEach(b => {
-    b.textContent = isDark ? '🌙' : '☀️';
+    updateStats();
   });
-};
 
-// init theme
-(function () {
-  const saved = localStorage.getItem('bct-theme') || 'light';
-  document.documentElement.dataset.theme = saved;
-  const icon = saved === 'dark' ? '☀️' : '🌙';
-  document.querySelectorAll('.theme-btn').forEach(b => b.textContent = icon);
-})();
+  // ---- Expose to window ----
+  window._db = { db, itemsRef, ref, push, remove, update };
+  window._items = () => items;
 
-// ════════════════════════════════════════════════════════════
-//  HELPERS
-// ════════════════════════════════════════════════════════════
-window.showPage = function (id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  g(id).classList.add('active');
-  window.scrollTo(0,0);
-};
-function g(id) { return document.getElementById(id); }
-function fmt(n) { return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND'}).format(n); }
-function fmtT(s) {
-  return `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
-}
-function esc(s) {
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-window.showToast = function(msg,type='ok'){ toast(msg,type); };
-function toast(msg, type='ok') {
-  const el = g('toast');
-  el.textContent = msg;
-  el.className = 'toast show ' + type;
-  clearTimeout(window._tt);
-  window._tt = setTimeout(() => el.classList.remove('show'), 3200);
-}
+  window.addItem = function() {
+    const name = document.getElementById('a-name').value.trim();
+    const creator = document.getElementById('a-creator').value.trim();
+    const price = parseInt(document.getElementById('a-price').value) || 0;
+    const preview = document.getElementById('a-preview').value.trim();
+    const download = document.getElementById('a-download').value.trim();
+    if (!name || !creator) { showToast('Vui lòng nhập đầy đủ thông tin!', 'err'); return; }
+    push(itemsRef, { name, creator, price, preview, download, createdAt: Date.now() });
+    ['a-name','a-price','a-preview','a-download'].forEach(id => document.getElementById(id).value = '');
+    showToast('Đã thêm đề thi thành công!', 'ok');
+  };
+
+  window.deleteItem = function(key) {
+    if (!confirm('Xóa đề thi này?')) return;
+    remove(ref(db, 'dethi/' + key));
+    showToast('Đã xóa đề thi!', 'ok');
+  };
+
+  window.editItem = function(key) {
+    const it = items[key];
+    const newName = prompt('Tên đề thi:', it.name);
+    if (newName === null) return;
+    const newPrice = parseInt(prompt('Giá (VNĐ):', it.price)) || 0;
+    const newCreator = prompt('Người tạo:', it.creator);
+    if (!newName || !newCreator) { showToast('Dữ liệu không hợp lệ!', 'err'); return; }
+    update(ref(db, 'dethi/' + key), { name: newName, price: newPrice, creator: newCreator });
+    showToast('Đã cập nhật!', 'ok');
+  };
+
+  window.renderTable = function() {
+    const q = (document.getElementById('search-input')?.value || '').toLowerCase();
+    const data = Object.entries(window._items());
+    const filtered = q ? data.filter(([,v]) =>
+      v.name?.toLowerCase().includes(q) || v.creator?.toLowerCase().includes(q)
+    ) : data;
+    const tbody = document.getElementById('user-tbody');
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Không tìm thấy đề thi nào.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(([key, it], i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>
+          <div class="subject-name">${esc(it.name)}</div>
+          <div class="subject-sub">Đề thi</div>
+        </td>
+        <td><span class="creator-badge">👤 ${esc(it.creator)}</span></td>
+        <td><span class="${it.price ? 'price-tag' : 'price-free'}">${it.price ? fmtPrice(it.price) : 'Miễn phí'}</span></td>
+        <td>
+          <div class="xem-wrap" id="xw-${key}">
+            <button class="btn-xem" onclick="toggleDrop('${key}')">👁 Xem ngay ▾</button>
+            <div class="dropdown" id="dd-${key}" style="display:none">
+              <button onclick="openPayment('${key}','preview')">🔍 Xem thử</button>
+              <button onclick="openPayment('${key}','download')">⬇️ Tải về</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  };
+
+  window.renderAdminTable = function() {
+    const data = Object.entries(window._items());
+    document.getElementById('admin-count').textContent = data.length;
+    const tbody = document.getElementById('admin-tbody');
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Chưa có đề thi nào.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = data.map(([key, it], i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td><span class="subject-name">${esc(it.name)}</span></td>
+        <td><span class="creator-badge" style="font-size:.78rem">👤 ${esc(it.creator)}</span></td>
+        <td><span class="price-tag">${it.price ? fmtPrice(it.price) : 'Miễn phí'}</span></td>
+        <td>
+          <button class="action-btn btn-edit" onclick="editItem('${key}')">✏️ Sửa</button>
+          <button class="action-btn btn-delete" onclick="deleteItem('${key}')">🗑 Xóa</button>
+        </td>
+      </tr>
+    `).join('');
+  };
+
+  window.updateStats = function() {
+    const data = Object.values(window._items());
+    document.getElementById('stat-total').textContent = data.length;
+    const subjects = new Set(data.map(v => v.name?.split(' ')[0])).size;
+    document.getElementById('stat-subjects').textContent = subjects || data.length;
+  };
+
+  // ---- Payment ----
+  let payTimer = null;
+  let currentPayKey = null;
+  let currentAction = null;
+
+  window.openPayment = function(key, action) {
+    closeDropdowns();
+    currentPayKey = key;
+    currentAction = action;
+    const it = window._items()[key];
+    if (!it) return;
+    document.getElementById('pay-title').textContent = action === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
+    startPayFlow(it);
+    document.getElementById('pay-overlay').classList.add('open');
+  };
+
+  function startPayFlow(it) {
+    clearInterval(payTimer);
+    let secs = 600;
+    const qrUrl = buildQR(it.price, it.name);
+
+    document.getElementById('pay-body').innerHTML = `
+      <div class="payment-amount">${it.price ? fmtPrice(it.price) : 'Miễn phí'}</div>
+      <div class="payment-info">Quét mã QR bên dưới để thanh toán<br/><strong>${esc(it.name)}</strong></div>
+      <div class="qr-box"><img src="${qrUrl}" alt="QR thanh toán" id="qr-img"/></div>
+      <div class="payment-info">Ngân hàng: <strong>Vietcombank</strong> · STK: <strong>7876159680</strong><br/>Chủ TK: <strong>HUYNH CONG THANH</strong></div>
+      <div class="timer-row">⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">${fmtTimer(secs)}</span></div>
+      <div style="text-align:center;">
+        <button class="btn-retry" onclick="simulateApproved('${currentPayKey}','${currentAction}')">✅ Xác nhận đã thanh toán (Demo)</button>
+      </div>
+    `;
+
+    payTimer = setInterval(() => {
+      secs--;
+      const el = document.getElementById('pay-timer');
+      if (!el) { clearInterval(payTimer); return; }
+      if (secs <= 0) {
+        clearInterval(payTimer);
+        showExpired(it);
+      } else {
+        el.textContent = fmtTimer(secs);
+      }
+    }, 1000);
+  }
+
+  window.simulateApproved = function(key, action) {
+    clearInterval(payTimer);
+    const it = window._items()[key];
+    document.getElementById('pay-body').innerHTML = `
+      <div class="status-approved">
+        <span class="icon-ok">✅</span>
+        <h3>Thanh toán thành công!</h3>
+        <p>Cảm ơn bạn đã sử dụng dịch vụ của Bio Công Thành.</p>
+        ${action === 'preview' && it?.preview
+          ? `<div class="preview-area" style="margin-top:16px;"><a href="${esc(it.preview)}" target="_blank" style="color:var(--accent);font-weight:700;">🔗 Nhấn để xem thử</a></div>`
+          : action === 'download' && it?.download
+          ? `<div class="preview-area" style="margin-top:16px;"><a href="${esc(it.download)}" target="_blank" style="color:var(--gold);font-weight:700;">⬇️ Nhấn để tải tài liệu</a></div>`
+          : `<div class="preview-area" style="margin-top:16px;">Tài liệu sẽ được gửi qua liên hệ với admin.</div>`
+        }
+        <button class="btn-retry" style="margin-top:18px;" onclick="closeModal()">Đóng</button>
+      </div>
+    `;
+  };
+
+  function showExpired(it) {
+    document.getElementById('pay-body').innerHTML = `
+      <div class="status-expired">
+        <div style="font-size:2.5rem;margin-bottom:10px;">⏰</div>
+        <h3>Phiên thanh toán đã hết hạn</h3>
+        <p style="color:var(--muted);font-size:.85rem;margin-top:6px;">Mã QR mới đã được tạo. Vui lòng thanh toán lại.</p>
+        <button class="btn-retry" onclick="startPayFlow(${JSON.stringify(it).replace(/"/g,'&quot;')})">🔄 Tạo mã mới</button>
+      </div>
+    `;
+  }
+
+  function buildQR(amount, desc) {
+    const base = 'https://img.vietqr.io/image/VCB-7876159680-compact.png';
+    const params = new URLSearchParams({
+      amount: amount || 0,
+      addInfo: 'Thanh toan ' + (desc || ''),
+      accountName: 'HUYNH CONG THANH'
+    });
+    return `${base}?${params.toString()}`;
+  }
+
+  window.closeModal = function() {
+    clearInterval(payTimer);
+    document.getElementById('pay-overlay').classList.remove('open');
+  };
+
+  window.toggleDrop = function(key) {
+    const dd = document.getElementById('dd-' + key);
+    const wasOpen = dd.style.display === 'block';
+    closeDropdowns();
+    if (!wasOpen) dd.style.display = 'block';
+  };
+
+  window.closeDropdowns = function() {
+    document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+  };
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.xem-wrap')) closeDropdowns();
+  });
+
+  // ---- Auth ----
+  const ADMIN_EMAIL = 'bioverify@googlegroups.com';
+  const ADMIN_PASS = 'Thanh123@';
+
+  window.doLogin = function() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+      showPage('page-admin');
+      renderAdminTable();
+    } else {
+      document.getElementById('login-err').textContent = '❌ Sai tài khoản hoặc mật khẩu!';
+    }
+  };
+
+  window.doLogout = function() {
+    showPage('page-user');
+  };
+
+  // ---- Helpers ----
+  window.showPage = function(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  };
+
+  function fmtPrice(n) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n);
+  }
+
+  function fmtTimer(s) {
+    const m = Math.floor(s/60).toString().padStart(2,'0');
+    const sec = (s%60).toString().padStart(2,'0');
+    return `${m}:${sec}`;
+  }
+
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  window.showToast = function(msg, type='ok') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + type;
+    clearTimeout(window._toastT);
+    window._toastT = setTimeout(() => t.classList.remove('show'), 3000);
+  };
 </script>
 </body>
 </html>
