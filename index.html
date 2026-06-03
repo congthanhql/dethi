@@ -3,585 +3,278 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Bio Verify – Kho Đề Thi</title>
+<title>Bio Công Thành – Kho Đề Thi</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
 <style>
-/* ============================================================
-   DESIGN TOKENS
-   ============================================================ */
 :root {
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
-
-  /* Light theme */
-  --bg:          #f5f4f0;
-  --bg2:         #ece9e3;
-  --surface:     #ffffff;
-  --card:        #ffffff;
-  --border:      #e0dbd3;
-  --border2:     #d0cac0;
-  --text:        #1a1714;
-  --text2:       #5a5550;
-  --text3:       #9a9590;
-  --accent:      #2563eb;
-  --accent-soft: #dbeafe;
-  --accent2:     #7c3aed;
-  --gold:        #b45309;
-  --gold-soft:   #fef3c7;
-  --green:       #15803d;
-  --green-soft:  #dcfce7;
-  --red:         #dc2626;
-  --red-soft:    #fee2e2;
-  --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-  --shadow-md:   0 4px 16px rgba(0,0,0,.10);
-  --shadow-lg:   0 12px 48px rgba(0,0,0,.14);
-  --radius:      14px;
-  --radius-sm:   8px;
+  --bg: #f5f4f0; --bg2: #ece9e3; --surface: #ffffff;
+  --card: #ffffff; --border: #e0dbd3; --border2: #d0cac0;
+  --text: #1a1714; --text2: #5a5550; --text3: #9a9590;
+  --accent: #2563eb; --accent-soft: #dbeafe;
+  --accent2: #7c3aed;
+  --gold: #b45309; --gold-soft: #fef3c7;
+  --green: #15803d; --green-soft: #dcfce7;
+  --red: #dc2626; --red-soft: #fee2e2;
+  --orange: #c2410c; --orange-soft: #fff7ed;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,.14);
+  --radius: 14px; --radius-sm: 8px;
 }
 [data-theme="dark"] {
-  --bg:          #0e0f14;
-  --bg2:         #161820;
-  --surface:     #1c1e28;
-  --card:        #1c1e28;
-  --border:      #2a2d3e;
-  --border2:     #363a52;
-  --text:        #edeef5;
-  --text2:       #9097b8;
-  --text3:       #5a6080;
-  --accent:      #4f8ef7;
-  --accent-soft: rgba(79,142,247,.12);
-  --accent2:     #a78bfa;
-  --gold:        #f5c842;
-  --gold-soft:   rgba(245,200,66,.12);
-  --green:       #22c55e;
-  --green-soft:  rgba(34,197,94,.12);
-  --red:         #f87171;
-  --red-soft:    rgba(239,68,68,.12);
-  --shadow-sm:   0 1px 3px rgba(0,0,0,.3);
-  --shadow-md:   0 4px 16px rgba(0,0,0,.4);
-  --shadow-lg:   0 12px 48px rgba(0,0,0,.6);
+  --bg: #0e0f14; --bg2: #161820; --surface: #1c1e28;
+  --card: #1c1e28; --border: #2a2d3e; --border2: #363a52;
+  --text: #edeef5; --text2: #9097b8; --text3: #5a6080;
+  --accent: #4f8ef7; --accent-soft: rgba(79,142,247,.12);
+  --accent2: #a78bfa;
+  --gold: #f5c842; --gold-soft: rgba(245,200,66,.12);
+  --green: #22c55e; --green-soft: rgba(34,197,94,.12);
+  --red: #f87171; --red-soft: rgba(239,68,68,.12);
+  --orange: #fb923c; --orange-soft: rgba(251,146,60,.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.4);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,.6);
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 
-html { scroll-behavior: smooth; }
+.page{display:none;min-height:100vh}
+.page.active{display:block}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  transition: background .3s, color .3s;
-}
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);transition:background .3s,border-color .3s}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+.brand-name{font-family:var(--font-display);font-size:1.15rem;color:var(--text);white-space:nowrap}
+.nav-right{display:flex;align-items:center;gap:8px}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.theme-btn:hover{border-color:var(--accent)}
+.btn-sm{padding:7px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font-body);font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm.accent{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-sm.accent:hover{opacity:.88}
 
-/* ============================================================
-   PAGES
-   ============================================================ */
-.page { display: none; min-height: 100vh; }
-.page.active { display: block; }
+/* HERO */
+.hero{padding:48px 20px 32px;text-align:center;background:var(--surface);border-bottom:1px solid var(--border);transition:background .3s}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border:1px solid var(--border2);border-radius:999px;font-size:.75rem;font-weight:600;color:var(--text2);background:var(--bg2);margin-bottom:16px;letter-spacing:.04em}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.7rem,6vw,2.8rem);line-height:1.2;margin-bottom:12px;color:var(--text)}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);font-size:.92rem;max-width:480px;margin:0 auto}
+.stats-row{display:flex;justify-content:center;gap:0;border-top:1px solid var(--border);margin-top:28px}
+.stat-item{flex:1;max-width:140px;padding:16px 12px;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-val{font-size:1.5rem;font-weight:700;color:var(--accent);font-family:var(--font-display)}
+.stat-label{font-size:.72rem;color:var(--text3);margin-top:2px;font-weight:500;letter-spacing:.03em}
 
-/* ============================================================
-   NAVBAR
-   ============================================================ */
-nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-  height: 60px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: var(--shadow-sm);
-  transition: background .3s, border-color .3s;
-}
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand-icon {
-  width: 34px; height: 34px; border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;
-  flex-shrink: 0;
-}
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  color: var(--text);
-  white-space: nowrap;
-}
-.nav-right { display: flex; align-items: center; gap: 8px; }
+/* SEARCH */
+.search-wrap{padding:20px 16px 0;max-width:560px;margin:0 auto}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0 14px;box-shadow:var(--shadow-sm);transition:border-color .2s,background .3s}
+.search-box:focus-within{border-color:var(--accent)}
+.search-box svg{color:var(--text3);flex-shrink:0}
+.search-box input{flex:1;padding:12px 0;background:none;border:none;outline:none;font-family:var(--font-body);font-size:.9rem;color:var(--text)}
+.search-box input::placeholder{color:var(--text3)}
 
-/* Theme toggle */
-.theme-btn {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  cursor: pointer; font-size: 16px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .2s; flex-shrink: 0;
+/* CARDS */
+.cards-wrap{padding:16px 12px 80px;max-width:1040px;margin:0 auto}
+@media(min-width:640px){
+  .cards-wrap{padding:20px 24px 80px}
+  .card-table{width:100%;border-collapse:separate;border-spacing:0 8px}
+  .card-table thead th{padding:10px 16px;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+  .card-table thead th:last-child{text-align:center}
+  .card-table tbody tr{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s}
+  .card-table tbody tr:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .card-table tbody td{padding:14px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:middle}
+  .card-table tbody td:first-child{border-left:1px solid var(--border);border-radius:var(--radius) 0 0 var(--radius);color:var(--text3);font-size:.8rem;width:44px}
+  .card-table tbody td:last-child{border-right:1px solid var(--border);border-radius:0 var(--radius) var(--radius) 0;text-align:center}
+  .mobile-cards{display:none}
 }
-.theme-btn:hover { border-color: var(--accent); }
+@media(max-width:639px){
+  .card-table-wrap{display:none}
+  .mobile-cards{display:flex;flex-direction:column;gap:10px}
+  .m-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 14px 12px;box-shadow:var(--shadow-sm)}
+  .m-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
+  .m-card-name{font-weight:600;font-size:.9rem;color:var(--text);line-height:1.3}
+  .m-card-idx{font-size:.72rem;color:var(--text3);margin-top:2px}
+  .m-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+}
+.subject-name{font-weight:600;font-size:.9rem}
+.subject-sub{font-size:.75rem;color:var(--text3);margin-top:1px}
+.creator-chip{display:inline-flex;align-items:center;gap:5px;background:var(--accent-soft);border-radius:6px;padding:3px 9px;font-size:.78rem;color:var(--accent);font-weight:500}
+[data-theme="dark"] .creator-chip{background:rgba(79,142,247,.12)}
+.price-paid{font-weight:700;color:var(--gold);font-size:.9rem}
+.price-free{font-weight:600;color:var(--green);font-size:.9rem}
+.xem-wrap{position:relative;display:inline-block}
+.btn-xem{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-sm);background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-size:.8rem;font-weight:600;transition:opacity .18s,transform .15s;white-space:nowrap}
+.btn-xem:hover{opacity:.88;transform:scale(1.03)}
+.btn-xem:active{transform:scale(.97)}
+.dropdown{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:10px;min-width:154px;box-shadow:var(--shadow-lg);z-index:60;overflow:hidden;animation:fadeDown .15s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.dropdown button{display:flex;align-items:center;gap:8px;width:100%;padding:11px 14px;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.85rem;cursor:pointer;transition:background .15s;text-align:left}
+.dropdown button:hover{background:var(--bg2);color:var(--accent)}
+.dropdown button+button{border-top:1px solid var(--border)}
+.empty-state{text-align:center;color:var(--text3);padding:48px 20px;font-size:.88rem}
+.tag-free{display:inline-block;background:var(--green-soft);color:var(--green);font-size:.7rem;font-weight:700;border-radius:5px;padding:1px 7px}
+[data-theme="dark"] .tag-free{background:rgba(34,197,94,.12)}
 
-.btn-sm {
-  padding: 7px 14px; border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: transparent; color: var(--text2);
-  font-family: var(--font-body); font-size: .82rem; font-weight: 500;
-  cursor: pointer; transition: all .2s; white-space: nowrap;
-}
-.btn-sm:hover { border-color: var(--accent); color: var(--accent); }
-.btn-sm.accent {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
-.btn-sm.accent:hover { opacity: .88; }
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 32px;width:100%;max-width:380px;box-shadow:var(--shadow-lg)}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo .brand-icon{width:50px;height:50px;font-size:22px;margin:0 auto 12px;border-radius:13px}
+.login-logo h2{font-family:var(--font-display);font-size:1.3rem}
+.login-logo p{color:var(--text2);font-size:.82rem;margin-top:4px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.75rem;font-weight:600;color:var(--text2);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+.form-group input{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.9rem;outline:none;transition:border-color .2s,background .3s}
+.form-group input:focus{border-color:var(--accent)}
+.btn-login{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px}
+.btn-login:hover{opacity:.88}
+.login-err{color:var(--red);font-size:.82rem;margin-top:10px;text-align:center;min-height:20px}
 
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  padding: 48px 20px 32px;
-  text-align: center;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  transition: background .3s;
-}
-.hero-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 14px;
-  border: 1px solid var(--border2);
-  border-radius: 999px;
-  font-size: .75rem; font-weight: 600;
-  color: var(--text2);
-  background: var(--bg2);
-  margin-bottom: 16px;
-  letter-spacing: .04em;
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 6vw, 2.8rem);
-  line-height: 1.2;
-  margin-bottom: 12px;
-  color: var(--text);
-}
-.hero h1 em {
-  font-style: italic;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero p { color: var(--text2); font-size: .92rem; max-width: 480px; margin: 0 auto; }
+/* ADMIN */
+.admin-top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;gap:10px;transition:background .3s}
+.admin-badge{background:var(--red-soft);border:1px solid var(--red);color:var(--red);border-radius:6px;padding:2px 10px;font-size:.7rem;font-weight:700;letter-spacing:.06em;flex-shrink:0}
+.admin-body{max-width:960px;margin:0 auto;padding:20px 16px 80px}
+@media(min-width:640px){.admin-body{padding:28px 24px 80px}}
 
-/* STATS */
-.stats-row {
-  display: flex; justify-content: center; gap: 0;
-  border-top: 1px solid var(--border);
-  margin-top: 28px;
-}
-.stat-item {
-  flex: 1; max-width: 140px;
-  padding: 16px 12px;
-  text-align: center;
-  border-right: 1px solid var(--border);
-}
-.stat-item:last-child { border-right: none; }
-.stat-val { font-size: 1.5rem; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
-.stat-label { font-size: .72rem; color: var(--text3); margin-top: 2px; font-weight: 500; letter-spacing: .03em; }
+/* Admin tabs */
+.admin-tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
+.admin-tab{padding:8px 18px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--font-body);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.admin-tab.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-sm)}
+.admin-tab-pane{display:none}
+.admin-tab-pane.active{display:block}
 
-/* ============================================================
-   SEARCH
-   ============================================================ */
-.search-wrap {
-  padding: 20px 16px 0;
-  max-width: 560px; margin: 0 auto;
-}
-.search-box {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0 14px;
-  box-shadow: var(--shadow-sm);
-  transition: border-color .2s, background .3s;
-}
-.search-box:focus-within { border-color: var(--accent); }
-.search-box svg { color: var(--text3); flex-shrink: 0; }
-.search-box input {
-  flex: 1; padding: 12px 0;
-  background: none; border: none; outline: none;
-  font-family: var(--font-body); font-size: .9rem;
-  color: var(--text);
-}
-.search-box input::placeholder { color: var(--text3); }
+.a-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;box-shadow:var(--shadow-sm);transition:background .3s}
+@media(min-width:640px){.a-section{padding:24px}}
+.a-section-title{font-size:.95rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:7px;color:var(--text)}
+.a-grid{display:grid;gap:12px}
+@media(min-width:480px){.a-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:720px){.a-grid.tri{grid-template-columns:1fr 1fr 1fr}}
+.a-label{font-size:.73rem;font-weight:600;color:var(--text2);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase}
+.a-input{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.87rem;outline:none;transition:border-color .2s,background .3s}
+.a-input:focus{border-color:var(--accent)}
+.btn-add{padding:10px 20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.87rem;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:14px}
+.btn-add:hover{opacity:.85}
+.action-btn{padding:5px 10px;border-radius:6px;border:none;font-family:var(--font-body);font-size:.76rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-edit{background:var(--accent-soft);color:var(--accent)}
+[data-theme="dark"] .btn-edit{background:rgba(79,142,247,.15)}
+.btn-delete{background:var(--red-soft);color:var(--red)}
+[data-theme="dark"] .btn-delete{background:rgba(239,68,68,.15)}
+.btn-confirm{background:var(--green-soft);color:var(--green)}
+[data-theme="dark"] .btn-confirm{background:rgba(34,197,94,.12)}
+.btn-reject{background:var(--red-soft);color:var(--red)}
+[data-theme="dark"] .btn-reject{background:rgba(239,68,68,.12)}
+.action-btn:hover{opacity:.75}
 
-/* ============================================================
-   CARD GRID (mobile-first)
-   ============================================================ */
-.cards-wrap {
-  padding: 16px 12px 80px;
-  max-width: 1040px; margin: 0 auto;
-}
+/* Payment request card */
+.pay-req-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;transition:background .3s}
+.pay-req-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.pay-req-name{font-weight:700;font-size:.9rem;color:var(--text)}
+.pay-req-meta{font-size:.75rem;color:var(--text2);line-height:1.8;margin-bottom:10px}
+.pay-req-actions{display:flex;gap:8px}
+.badge-pending{display:inline-block;background:var(--gold-soft);color:var(--gold);border-radius:5px;padding:2px 8px;font-size:.7rem;font-weight:700;border:1px solid var(--gold)}
+[data-theme="dark"] .badge-pending{background:rgba(245,200,66,.12)}
+.badge-confirmed{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+[data-theme="dark"] .badge-confirmed{background:rgba(34,197,94,.12)}
 
-/* Desktop: table */
-@media (min-width: 640px) {
-  .cards-wrap { padding: 20px 24px 80px; }
-  .card-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-  .card-table thead th {
-    padding: 10px 16px; text-align: left;
-    font-size: .7rem; font-weight: 700;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--text3);
-  }
-  .card-table thead th:last-child { text-align: center; }
-  .card-table tbody tr {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow .2s, transform .2s;
-  }
-  .card-table tbody tr:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  .card-table tbody td {
-    padding: 14px 16px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  .card-table tbody td:first-child {
-    border-left: 1px solid var(--border);
-    border-radius: var(--radius) 0 0 var(--radius);
-    color: var(--text3); font-size: .8rem; width: 44px;
-  }
-  .card-table tbody td:last-child {
-    border-right: 1px solid var(--border);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    text-align: center;
-  }
-  .mobile-cards { display: none; }
-}
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:0}
+.overlay.open{display:flex}
+@media(min-width:520px){.overlay{align-items:center;padding:20px}}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-width:440px;box-shadow:var(--shadow-lg);animation:slideUp .25s cubic-bezier(.4,0,.2,1);max-height:92vh;overflow-y:auto;transition:background .3s}
+@media(min-width:520px){.modal{border-radius:20px;padding:28px 24px;animation:modalIn .22s ease}}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.modal-drag{width:36px;height:4px;background:var(--border2);border-radius:999px;margin:0 auto 18px}
+@media(min-width:520px){.modal-drag{display:none}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-title{font-size:1rem;font-weight:700}
+.btn-close{background:var(--bg2);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.btn-close:hover{background:var(--red-soft);color:var(--red);border-color:var(--red)}
 
-/* Mobile: card stacks */
-@media (max-width: 639px) {
-  .card-table-wrap { display: none; }
-  .mobile-cards { display: flex; flex-direction: column; gap: 10px; }
-  .m-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 14px 12px;
-    box-shadow: var(--shadow-sm);
-  }
-  .m-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
-  .m-card-name { font-weight: 600; font-size: .9rem; color: var(--text); line-height: 1.3; }
-  .m-card-idx { font-size: .72rem; color: var(--text3); margin-top: 2px; }
-  .m-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-}
+/* Payment modal */
+.pay-amount{text-align:center;font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:4px}
+.pay-desc{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:16px}
+.qr-wrap{background:#fff;border-radius:14px;padding:12px;width:fit-content;margin:0 auto 14px;box-shadow:var(--shadow-sm)}
+.qr-wrap img{display:block;width:190px;height:190px;border-radius:8px}
+.bank-info{background:var(--bg2);border-radius:10px;padding:12px 14px;font-size:.8rem;color:var(--text2);margin-bottom:14px;line-height:1.8}
+.bank-info strong{color:var(--text)}
+.timer-bar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:var(--text3);margin-bottom:16px}
+.timer-val{color:var(--red);font-weight:700;font-variant-numeric:tabular-nums}
 
-.subject-name { font-weight: 600; font-size: .9rem; }
-.subject-sub { font-size: .75rem; color: var(--text3); margin-top: 1px; }
-.creator-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: var(--accent-soft); border-radius: 6px;
-  padding: 3px 9px; font-size: .78rem; color: var(--accent);
-  font-weight: 500;
-}
-[data-theme="dark"] .creator-chip { background: rgba(79,142,247,.12); }
-.price-paid { font-weight: 700; color: var(--gold); font-size: .9rem; }
-.price-free { font-weight: 600; color: var(--green); font-size: .9rem; }
+/* Waiting for admin */
+.pay-waiting{text-align:center;padding:16px 0}
+.pay-waiting .clock{font-size:3rem;margin-bottom:10px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.pay-waiting h3{font-family:var(--font-display);font-size:1.1rem;color:var(--text);margin-bottom:8px}
+.pay-waiting p{color:var(--text2);font-size:.83rem;line-height:1.7}
+.pay-waiting .contact-box{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:.82rem;color:var(--accent);font-weight:500}
+[data-theme="dark"] .pay-waiting .contact-box{background:rgba(79,142,247,.12)}
+.pay-waiting .contact-box a{color:var(--accent);font-weight:700;text-decoration:none}
+.pay-waiting .contact-box a:hover{text-decoration:underline}
+.code-reveal-box{background:var(--green-soft);border:1px solid var(--green);border-radius:10px;padding:14px;margin-top:12px;text-align:center}
+[data-theme="dark"] .code-reveal-box{background:rgba(34,197,94,.08)}
+.code-reveal-box .code-label{font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.code-reveal-box .code-val{font-size:1.4rem;font-weight:700;color:var(--green);letter-spacing:.15em;font-family:var(--font-display)}
+.code-reveal-box .code-hint{font-size:.75rem;color:var(--text2);margin-top:4px}
 
-/* XEM NGAY */
-.xem-wrap { position: relative; display: inline-block; }
-.btn-xem {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 7px 14px; border-radius: var(--radius-sm);
-  background: var(--accent); color: #fff;
-  border: none; cursor: pointer;
-  font-family: var(--font-body); font-size: .8rem; font-weight: 600;
-  transition: opacity .18s, transform .15s;
-  white-space: nowrap;
-}
-.btn-xem:hover { opacity: .88; transform: scale(1.03); }
-.btn-xem:active { transform: scale(.97); }
-.dropdown {
-  position: absolute; right: 0; top: calc(100% + 6px);
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; min-width: 154px;
-  box-shadow: var(--shadow-lg); z-index: 60; overflow: hidden;
-  animation: fadeDown .15s ease;
-}
-@keyframes fadeDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
-.dropdown button {
-  display: flex; align-items: center; gap: 8px;
-  width: 100%; padding: 11px 14px;
-  background: none; border: none; color: var(--text);
-  font-family: var(--font-body); font-size: .85rem; cursor: pointer;
-  transition: background .15s; text-align: left;
-}
-.dropdown button:hover { background: var(--bg2); color: var(--accent); }
-.dropdown button + button { border-top: 1px solid var(--border); }
+.pay-success{text-align:center;padding:8px 0}
+.pay-success .icon-ok{font-size:3rem;display:block;margin-bottom:10px}
+.pay-success h3{font-family:var(--font-display);font-size:1.3rem;color:var(--green);margin-bottom:6px}
+.pay-success p{color:var(--text2);font-size:.83rem}
+.link-box{display:flex;align-items:center;justify-content:center;margin-top:14px;background:var(--bg2);border-radius:10px;padding:12px 14px}
+.link-box a{color:var(--accent);font-weight:700;font-size:.88rem;text-decoration:none}
+.link-box a:hover{text-decoration:underline}
+.pay-expired{text-align:center;padding:10px 0}
+.pay-expired h3{color:var(--red);font-size:1.1rem;margin-bottom:8px}
+.pay-expired p{color:var(--text2);font-size:.83rem}
+.btn-retry{padding:10px 22px;margin-top:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.87rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-retry:hover{opacity:.85}
 
-.empty-state {
-  text-align: center; color: var(--text3);
-  padding: 48px 20px; font-size: .88rem;
-}
+/* Submitted step info bar */
+.step-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px}
+.step-item{flex:1;padding:8px 6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text3);border-right:1px solid var(--border);transition:all .3s}
+.step-item:last-child{border-right:none}
+.step-item.done{background:var(--green-soft);color:var(--green)}
+[data-theme="dark"] .step-item.done{background:rgba(34,197,94,.1)}
+.step-item.active{background:var(--accent-soft);color:var(--accent)}
+[data-theme="dark"] .step-item.active{background:rgba(79,142,247,.1)}
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
-.login-wrap {
-  min-height: 100vh; display: flex; align-items: center;
-  justify-content: center; padding: 20px;
-  background: var(--bg);
-}
-.login-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 40px 32px;
-  width: 100%; max-width: 380px;
-  box-shadow: var(--shadow-lg);
-}
-.login-logo { text-align: center; margin-bottom: 28px; }
-.login-logo .brand-icon { width: 50px; height: 50px; font-size: 22px; margin: 0 auto 12px; border-radius: 13px; }
-.login-logo h2 { font-family: var(--font-display); font-size: 1.3rem; }
-.login-logo p { color: var(--text2); font-size: .82rem; margin-top: 4px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: .75rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; letter-spacing: .04em; text-transform: uppercase; }
-.form-group input {
-  width: 100%; padding: 11px 13px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text);
-  font-family: var(--font-body); font-size: .9rem; outline: none;
-  transition: border-color .2s, background .3s;
-}
-.form-group input:focus { border-color: var(--accent); }
-.btn-login {
-  width: 100%; padding: 12px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border: none; border-radius: 10px;
-  font-family: var(--font-body); font-size: .95rem; font-weight: 700;
-  cursor: pointer; transition: opacity .2s; margin-top: 6px;
-}
-.btn-login:hover { opacity: .88; }
-.login-err { color: var(--red); font-size: .82rem; margin-top: 10px; text-align: center; min-height: 20px; }
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;white-space:nowrap;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:.85rem;font-weight:600;box-shadow:var(--shadow-lg);display:none;animation:toastIn .2s ease;transition:background .3s}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast.show{display:block}
+.toast.ok{border-left:3px solid var(--green);color:var(--green)}
+.toast.err{border-left:3px solid var(--red);color:var(--red)}
+.toast.info{border-left:3px solid var(--accent);color:var(--accent)}
 
-/* ============================================================
-   ADMIN
-   ============================================================ */
-.admin-top-nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px; height: 56px;
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100; gap: 10px;
-  transition: background .3s;
-}
-.admin-badge {
-  background: var(--red-soft); border: 1px solid var(--red);
-  color: var(--red); border-radius: 6px;
-  padding: 2px 10px; font-size: .7rem; font-weight: 700; letter-spacing: .06em;
-  flex-shrink: 0;
-}
-.admin-body { max-width: 960px; margin: 0 auto; padding: 20px 16px 80px; }
-@media (min-width: 640px) { .admin-body { padding: 28px 24px 80px; } }
+/* Pay req count badge */
+.notif-badge{display:inline-block;background:var(--red);color:#fff;border-radius:999px;font-size:.65rem;font-weight:700;padding:1px 6px;margin-left:5px;vertical-align:middle}
 
-.a-section {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px;
-  margin-bottom: 20px; box-shadow: var(--shadow-sm);
-  transition: background .3s;
-}
-@media (min-width: 640px) { .a-section { padding: 24px; } }
-.a-section-title {
-  font-size: .95rem; font-weight: 700; margin-bottom: 16px;
-  display: flex; align-items: center; gap: 7px; color: var(--text);
-}
-.a-grid { display: grid; gap: 12px; }
-@media (min-width: 480px) { .a-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 720px) { .a-grid.tri { grid-template-columns: 1fr 1fr 1fr; } }
-.a-label { font-size: .73rem; font-weight: 600; color: var(--text2); margin-bottom: 5px; letter-spacing: .04em; text-transform: uppercase; }
-.a-input {
-  width: 100%; padding: 9px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text);
-  font-family: var(--font-body); font-size: .87rem; outline: none;
-  transition: border-color .2s, background .3s;
-}
-.a-input:focus { border-color: var(--accent); }
-.btn-add {
-  padding: 10px 20px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border: none; border-radius: var(--radius-sm);
-  font-family: var(--font-body); font-size: .87rem; font-weight: 700;
-  cursor: pointer; transition: opacity .2s; margin-top: 14px;
-}
-.btn-add:hover { opacity: .85; }
-.action-btn {
-  padding: 5px 10px; border-radius: 6px; border: none;
-  font-family: var(--font-body); font-size: .76rem; font-weight: 600;
-  cursor: pointer; transition: opacity .2s;
-}
-.btn-edit { background: var(--accent-soft); color: var(--accent); }
-[data-theme="dark"] .btn-edit { background: rgba(79,142,247,.15); }
-.btn-delete { background: var(--red-soft); color: var(--red); }
-[data-theme="dark"] .btn-delete { background: rgba(239,68,68,.15); }
-.action-btn:hover { opacity: .75; }
+@media(max-width:380px){.brand-name{display:none}}
 
-/* ============================================================
-   MODAL
-   ============================================================ */
-.overlay {
-  display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,.5);
-  backdrop-filter: blur(6px);
-  align-items: flex-end; justify-content: center;
-  padding: 0;
-}
-.overlay.open { display: flex; }
-@media (min-width: 520px) {
-  .overlay { align-items: center; padding: 20px; }
-}
-.modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px 20px 0 0;
-  padding: 24px 20px 32px;
-  width: 100%; max-width: 420px;
-  box-shadow: var(--shadow-lg);
-  animation: slideUp .25s cubic-bezier(.4,0,.2,1);
-  max-height: 92vh; overflow-y: auto;
-  transition: background .3s;
-}
-@media (min-width: 520px) {
-  .modal {
-    border-radius: 20px;
-    padding: 28px 24px;
-    animation: modalIn .22s ease;
-  }
-}
-@keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(10px); } to { opacity: 1; transform: none; } }
-
-.modal-drag { width: 36px; height: 4px; background: var(--border2); border-radius: 999px; margin: 0 auto 18px; }
-@media (min-width: 520px) { .modal-drag { display: none; } }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.modal-title { font-size: 1rem; font-weight: 700; }
-.btn-close {
-  background: var(--bg2); border: 1px solid var(--border);
-  color: var(--text2); width: 30px; height: 30px;
-  border-radius: 50%; font-size: 1rem; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s; flex-shrink: 0;
-}
-.btn-close:hover { background: var(--red-soft); color: var(--red); border-color: var(--red); }
-
-/* Payment modal content */
-.pay-amount {
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 1.8rem; font-weight: 700;
-  color: var(--gold); margin-bottom: 4px;
-}
-.pay-desc { text-align: center; font-size: .82rem; color: var(--text2); margin-bottom: 16px; }
-.qr-wrap {
-  background: #fff; border-radius: 14px; padding: 12px;
-  width: fit-content; margin: 0 auto 14px;
-  box-shadow: var(--shadow-sm);
-}
-.qr-wrap img { display: block; width: 190px; height: 190px; border-radius: 8px; }
-.bank-info {
-  background: var(--bg2); border-radius: 10px; padding: 12px 14px;
-  font-size: .8rem; color: var(--text2); margin-bottom: 14px;
-  line-height: 1.8;
-}
-.bank-info strong { color: var(--text); }
-.timer-bar {
-  display: flex; align-items: center; justify-content: center;
-  gap: 6px; font-size: .8rem; color: var(--text3); margin-bottom: 16px;
-}
-.timer-val { color: var(--red); font-weight: 700; font-variant-numeric: tabular-nums; }
-
-/* Payment status */
-.pay-verifying {
-  text-align: center; padding: 16px 0;
-}
-.pay-verifying .spin {
-  width: 36px; height: 36px; border: 3px solid var(--border);
-  border-top-color: var(--accent); border-radius: 50%;
-  animation: spin .7s linear infinite; margin: 0 auto 12px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.pay-verifying p { color: var(--text2); font-size: .85rem; }
-.pay-success { text-align: center; padding: 8px 0; }
-.pay-success .icon-ok { font-size: 3rem; display: block; margin-bottom: 10px; }
-.pay-success h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--green); margin-bottom: 6px; }
-.pay-success p { color: var(--text2); font-size: .83rem; }
-.link-box {
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 14px;
-  background: var(--bg2); border-radius: 10px; padding: 12px 14px;
-}
-.link-box a { color: var(--accent); font-weight: 700; font-size: .88rem; text-decoration: none; }
-.link-box a:hover { text-decoration: underline; }
-.pay-expired { text-align: center; padding: 10px 0; }
-.pay-expired h3 { color: var(--red); font-size: 1.1rem; margin-bottom: 8px; }
-.pay-expired p { color: var(--text2); font-size: .83rem; }
-.btn-retry {
-  padding: 10px 22px; margin-top: 14px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border: none; border-radius: var(--radius-sm);
-  font-family: var(--font-body); font-size: .87rem; font-weight: 700;
-  cursor: pointer; transition: opacity .2s;
-}
-.btn-retry:hover { opacity: .85; }
-
-/* ============================================================
-   TOAST
-   ============================================================ */
-.toast {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-  z-index: 999; white-space: nowrap;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 10px; padding: 12px 20px;
-  font-size: .85rem; font-weight: 600;
-  box-shadow: var(--shadow-lg);
-  display: none; animation: toastIn .2s ease;
-  transition: background .3s;
-}
-@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-.toast.show { display: block; }
-.toast.ok { border-left: 3px solid var(--green); color: var(--green); }
-.toast.err { border-left: 3px solid var(--red); color: var(--red); }
-
-/* ============================================================
-   MISC
-   ============================================================ */
-.tag-free {
-  display: inline-block; background: var(--green-soft);
-  color: var(--green); font-size: .7rem; font-weight: 700;
-  border-radius: 5px; padding: 1px 7px;
-}
-[data-theme="dark"] .tag-free { background: rgba(34,197,94,.12); }
-
-@media (max-width: 380px) {
-  .brand-name { display: none; }
-}
+/* confirm code input in admin */
+.code-input-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.code-input-row .a-input{flex:1}
+.btn-send-code{padding:9px 14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.btn-send-code:hover{opacity:.85}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     USER PAGE
-═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ USER PAGE ═══════════ -->
 <div class="page active" id="page-user">
   <nav>
-    <a class="brand" href="#" onclick="showPage('page-user'); return false;">
+    <a class="brand" href="#" onclick="showPage('page-user');return false">
       <div class="brand-icon">B</div>
       <span class="brand-name">Bio Công Thành</span>
     </a>
     <div class="nav-right">
-      <button class="theme-btn" id="theme-toggle" title="Đổi giao diện" onclick="toggleTheme()">🌙</button>
+      <button class="theme-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
       <button class="btn-sm accent" onclick="showPage('page-login')">🔐 Admin</button>
     </div>
   </nav>
@@ -605,16 +298,11 @@ nav {
   </div>
 
   <div class="cards-wrap">
-    <!-- Desktop table -->
     <div class="card-table-wrap">
       <table class="card-table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Đề Thi / Môn</th>
-            <th>Người Tạo</th>
-            <th>Giá</th>
-            <th>Xem Ngay</th>
+            <th>#</th><th>Đề Thi / Môn</th><th>Người Tạo</th><th>Giá</th><th>Xem Ngay</th>
           </tr>
         </thead>
         <tbody id="user-tbody">
@@ -622,19 +310,16 @@ nav {
         </tbody>
       </table>
     </div>
-    <!-- Mobile cards -->
     <div class="mobile-cards" id="mobile-cards">
       <div class="empty-state">Đang tải…</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     LOGIN
-═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ LOGIN ═══════════ -->
 <div class="page" id="page-login">
   <nav>
-    <a class="brand" href="#" onclick="showPage('page-user'); return false;">
+    <a class="brand" href="#" onclick="showPage('page-user');return false">
       <div class="brand-icon">B</div>
       <span class="brand-name">Bio Công Thành</span>
     </a>
@@ -656,27 +341,25 @@ nav {
       <div class="form-group">
         <label>Mật khẩu</label>
         <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
-               onkeydown="if(event.key==='Enter') doLogin()"/>
+               onkeydown="if(event.key==='Enter')doLogin()"/>
       </div>
       <button class="btn-login" onclick="doLogin()">Đăng nhập →</button>
       <div class="login-err" id="login-err"></div>
-      <div style="text-align:center;margin-top:20px;">
+      <div style="text-align:center;margin-top:20px">
         <button class="btn-sm" onclick="showPage('page-user')">← Về trang chủ</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     ADMIN
-═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ ADMIN ═══════════ -->
 <div class="page" id="page-admin">
   <div class="admin-top-nav">
     <div class="brand">
-      <div class="brand-icon" style="width:30px;height:30px;font-size:13px;">B</div>
-      <span class="brand-name" style="font-size:1rem;">Bio Công Thành</span>
+      <div class="brand-icon" style="width:30px;height:30px;font-size:13px">B</div>
+      <span class="brand-name" style="font-size:1rem">Bio Công Thành</span>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;">
+    <div style="display:flex;align-items:center;gap:8px">
       <span class="admin-badge">ADMIN</span>
       <button class="theme-btn" onclick="toggleTheme()">🌙</button>
       <button class="btn-sm" onclick="doLogout()">Đăng xuất</button>
@@ -684,56 +367,87 @@ nav {
   </div>
 
   <div class="admin-body">
-    <div class="a-section">
-      <div class="a-section-title">➕ Thêm đề thi mới</div>
-      <div class="a-grid tri">
-        <div>
-          <div class="a-label">Tên đề thi / Môn học *</div>
-          <input class="a-input" id="a-name" placeholder="VD: Đề Sinh HK1 2024"/>
-        </div>
-        <div>
-          <div class="a-label">Người tạo *</div>
-          <input class="a-input" id="a-creator" placeholder="Huỳnh Công Thành" value="Huỳnh Công Thành"/>
-        </div>
-        <div>
-          <div class="a-label">Giá (VNĐ)</div>
-          <input class="a-input" id="a-price" type="number" placeholder="35000"/>
-        </div>
-      </div>
-      <div class="a-grid" style="margin-top:10px;">
-        <div>
-          <div class="a-label">Link xem thử (tuỳ chọn)</div>
-          <input class="a-input" id="a-preview" placeholder="https://..."/>
-        </div>
-        <div>
-          <div class="a-label">Link tải về (tuỳ chọn)</div>
-          <input class="a-input" id="a-download" placeholder="https://..."/>
-        </div>
-      </div>
-      <button class="btn-add" onclick="addItem()">✅ Thêm đề thi</button>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('tab-dethi',this)">📋 Đề thi</button>
+      <button class="admin-tab" onclick="switchAdminTab('tab-payment',this)" id="tab-payment-btn">
+        💳 Xác nhận TT <span class="notif-badge" id="pay-notif" style="display:none">0</span>
+      </button>
     </div>
 
-    <div class="a-section">
-      <div class="a-section-title">📋 Danh sách (<span id="admin-count">0</span> đề thi)</div>
-      <div style="overflow-x:auto;">
-        <table class="card-table" style="min-width:500px;">
-          <thead>
-            <tr>
-              <th>#</th><th>Tên đề thi</th><th>Người tạo</th><th>Giá</th><th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody id="admin-tbody">
-            <tr><td colspan="5" class="empty-state">Chưa có đề thi.</td></tr>
-          </tbody>
-        </table>
+    <!-- TAB: ĐỀ THI -->
+    <div class="admin-tab-pane active" id="tab-dethi">
+      <div class="a-section">
+        <div class="a-section-title">➕ Thêm đề thi mới</div>
+        <div class="a-grid tri">
+          <div>
+            <div class="a-label">Tên đề thi / Môn học *</div>
+            <input class="a-input" id="a-name" placeholder="VD: Đề Sinh HK1 2024"/>
+          </div>
+          <div>
+            <div class="a-label">Người tạo *</div>
+            <input class="a-input" id="a-creator" placeholder="Huỳnh Công Thành" value="Huỳnh Công Thành"/>
+          </div>
+          <div>
+            <div class="a-label">Giá (VNĐ)</div>
+            <input class="a-input" id="a-price" type="number" placeholder="35000"/>
+          </div>
+        </div>
+        <div class="a-grid" style="margin-top:10px">
+          <div>
+            <div class="a-label">Link xem thử (tuỳ chọn)</div>
+            <input class="a-input" id="a-preview" placeholder="https://..."/>
+          </div>
+          <div>
+            <div class="a-label">Link tải về (tuỳ chọn)</div>
+            <input class="a-input" id="a-download" placeholder="https://..."/>
+          </div>
+        </div>
+        <div class="a-grid" style="margin-top:10px">
+          <div>
+            <div class="a-label">🔑 Mã xem thử (tuỳ chọn)</div>
+            <input class="a-input" id="a-code-preview" placeholder="VD: XEMTHU2024"/>
+            <div style="font-size:.72rem;color:var(--text3);margin-top:4px">Admin cấp mã này sau khi xác nhận thanh toán xem thử</div>
+          </div>
+          <div>
+            <div class="a-label">🔑 Mã tải về (tuỳ chọn)</div>
+            <input class="a-input" id="a-code-download" placeholder="VD: TAIVE2024"/>
+            <div style="font-size:.72rem;color:var(--text3);margin-top:4px">Admin cấp mã này sau khi xác nhận thanh toán tải về</div>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addItem()">✅ Thêm đề thi</button>
+      </div>
+
+      <div class="a-section">
+        <div class="a-section-title">📋 Danh sách (<span id="admin-count">0</span> đề thi)</div>
+        <div style="overflow-x:auto">
+          <table class="card-table" style="min-width:560px">
+            <thead>
+              <tr><th>#</th><th>Tên đề thi</th><th>Người tạo</th><th>Giá</th><th>Mã XemThử / TảiVề</th><th>Thao tác</th></tr>
+            </thead>
+            <tbody id="admin-tbody">
+              <tr><td colspan="6" class="empty-state">Chưa có đề thi.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: XÁC NHẬN THANH TOÁN -->
+    <div class="admin-tab-pane" id="tab-payment">
+      <div class="a-section">
+        <div class="a-section-title">💳 Yêu cầu xác nhận thanh toán</div>
+        <p style="font-size:.82rem;color:var(--text2);margin-bottom:16px">
+          Học sinh đã chuyển khoản và gửi yêu cầu. Kiểm tra tài khoản ngân hàng, sau đó xác nhận và cung cấp mã tài liệu.
+        </p>
+        <div id="pay-req-list">
+          <div class="empty-state">Không có yêu cầu nào.</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     PAYMENT MODAL
-═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ PAYMENT MODAL ═══════════ -->
 <div class="overlay" id="pay-overlay" onclick="overlayClick(event)">
   <div class="modal" id="pay-modal">
     <div class="modal-drag"></div>
@@ -747,15 +461,11 @@ nav {
 
 <div class="toast" id="toast"></div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     FIREBASE + APP LOGIC
-═══════════════════════════════════════════════════════════ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, push, remove, update }
+import { getDatabase, ref, onValue, push, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ── Firebase ── */
 const app = initializeApp({
   apiKey: "AIzaSyDtAU-Iqn-u39_mgkxRZ3fIF_Kyxqn-Gyg",
   authDomain: "csdl-bio.firebaseapp.com",
@@ -767,7 +477,10 @@ const app = initializeApp({
 });
 const db = getDatabase(app);
 const itemsRef = ref(db, 'dethi');
+const payReqRef = ref(db, 'payment_requests');
+
 let items = {};
+let payRequests = {};
 
 onValue(itemsRef, (snap) => {
   items = snap.val() || {};
@@ -776,20 +489,15 @@ onValue(itemsRef, (snap) => {
   updateStats();
 });
 
-/* ── Payment state ── */
-let payTimer = null;
-let verifyInterval = null;
-let currentKey = null;
-let currentAction = null;
-let paySession = null; // { orderCode, amount, desc, startTime }
+onValue(payReqRef, (snap) => {
+  payRequests = snap.val() || {};
+  renderPayRequests();
+  updatePayNotif();
+  // If user is waiting and their request got confirmed, update modal
+  checkCurrentPayStatus();
+});
 
-const BANK_NO  = '7876159680';
-const BANK_BIN = 'VCB'; // Vietcombank
-const ACCT_NAME= 'HUYNH CONG THANH';
-
-/* ════════════════════════════════════════════════════
-   RENDER USER TABLE
-════════════════════════════════════════════════════ */
+/* ══════════════════════ RENDER USER TABLE ══════════════════════ */
 window.renderUserTable = function() {
   const q = (document.getElementById('search-input')?.value || '').toLowerCase();
   const data = Object.entries(items);
@@ -797,12 +505,11 @@ window.renderUserTable = function() {
     ? data.filter(([,v]) => v.name?.toLowerCase().includes(q) || v.creator?.toLowerCase().includes(q))
     : data;
 
-  // Desktop table
   const tbody = document.getElementById('user-tbody');
   if (!filtered.length) {
     tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Không tìm thấy đề thi nào.</td></tr>`;
   } else {
-    tbody.innerHTML = filtered.map(([key, it], i) => `
+    tbody.innerHTML = filtered.map(([key,it],i) => `
       <tr>
         <td>${i+1}</td>
         <td>
@@ -810,7 +517,7 @@ window.renderUserTable = function() {
           <div class="subject-sub">Đề thi${it.price ? '' : ' <span class="tag-free">FREE</span>'}</div>
         </td>
         <td><span class="creator-chip">👤 ${esc(it.creator)}</span></td>
-        <td><span class="${it.price ? 'price-paid' : 'price-free'}">${it.price ? fmt(it.price) : 'Miễn phí'}</span></td>
+        <td><span class="${it.price?'price-paid':'price-free'}">${it.price?fmt(it.price):'Miễn phí'}</span></td>
         <td>
           <div class="xem-wrap" id="xw-${key}">
             <button class="btn-xem" onclick="toggleDrop('${key}')">
@@ -827,19 +534,18 @@ window.renderUserTable = function() {
     `).join('');
   }
 
-  // Mobile cards
   const mc = document.getElementById('mobile-cards');
   if (!filtered.length) {
     mc.innerHTML = `<div class="empty-state">Không tìm thấy đề thi nào.</div>`;
   } else {
-    mc.innerHTML = filtered.map(([key, it], i) => `
+    mc.innerHTML = filtered.map(([key,it],i) => `
       <div class="m-card">
         <div class="m-card-top">
           <div>
             <div class="m-card-name">${esc(it.name)}</div>
             <div class="m-card-idx">#${i+1} · <span class="creator-chip" style="font-size:.73rem">👤 ${esc(it.creator)}</span></div>
           </div>
-          <span class="${it.price ? 'price-paid' : 'price-free'}" style="font-size:.85rem;white-space:nowrap">${it.price ? fmt(it.price) : 'Miễn phí'}</span>
+          <span class="${it.price?'price-paid':'price-free'}" style="font-size:.85rem;white-space:nowrap">${it.price?fmt(it.price):'Miễn phí'}</span>
         </div>
         <div class="m-card-bottom">
           <button class="btn-xem" style="font-size:.78rem;padding:7px 12px" onclick="openPay('${key}','preview')">🔍 Xem thử</button>
@@ -850,23 +556,26 @@ window.renderUserTable = function() {
   }
 };
 
-/* ════════════════════════════════════════════════════
-   RENDER ADMIN TABLE
-════════════════════════════════════════════════════ */
+/* ══════════════════════ RENDER ADMIN TABLE ══════════════════════ */
 window.renderAdminTable = function() {
   const data = Object.entries(items);
   document.getElementById('admin-count').textContent = data.length;
   const tbody = document.getElementById('admin-tbody');
   if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Chưa có đề thi.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Chưa có đề thi.</td></tr>`;
     return;
   }
-  tbody.innerHTML = data.map(([key, it], i) => `
+  tbody.innerHTML = data.map(([key,it],i) => `
     <tr>
       <td>${i+1}</td>
       <td><span class="subject-name">${esc(it.name)}</span></td>
       <td><span class="creator-chip" style="font-size:.76rem">👤 ${esc(it.creator)}</span></td>
-      <td><span class="${it.price ? 'price-paid' : 'price-free'}">${it.price ? fmt(it.price) : 'Miễn phí'}</span></td>
+      <td><span class="${it.price?'price-paid':'price-free'}">${it.price?fmt(it.price):'Miễn phí'}</span></td>
+      <td style="font-size:.76rem;color:var(--text2)">
+        ${it.codePreview ? `🔍 <code style="background:var(--bg2);padding:1px 5px;border-radius:4px">${esc(it.codePreview)}</code>` : '<span style="color:var(--text3)">—</span>'}
+        &nbsp;/&nbsp;
+        ${it.codeDownload ? `⬇️ <code style="background:var(--bg2);padding:1px 5px;border-radius:4px">${esc(it.codeDownload)}</code>` : '<span style="color:var(--text3)">—</span>'}
+      </td>
       <td>
         <button class="action-btn btn-edit" onclick="editItem('${key}')">✏️</button>
         <button class="action-btn btn-delete" onclick="deleteItem('${key}')">🗑</button>
@@ -875,18 +584,141 @@ window.renderAdminTable = function() {
   `).join('');
 };
 
-/* ════════════════════════════════════════════════════
-   STATS
-════════════════════════════════════════════════════ */
-window.updateStats = function() {
-  const data = Object.values(items);
-  document.getElementById('stat-total').textContent = data.length;
-  document.getElementById('stat-free').textContent = data.filter(v => !v.price).length;
+/* ══════════════════════ PAYMENT REQUESTS ══════════════════════ */
+window.renderPayRequests = function() {
+  const list = document.getElementById('pay-req-list');
+  const data = Object.entries(payRequests).filter(([,v]) => v.status === 'pending');
+  if (!data.length) {
+    list.innerHTML = `<div class="empty-state">✅ Không có yêu cầu chờ xử lý.</div>`;
+    return;
+  }
+  // Sort newest first
+  data.sort((a,b) => (b[1].createdAt||0) - (a[1].createdAt||0));
+  list.innerHTML = data.map(([reqKey,req]) => {
+    const it = items[req.itemKey] || {};
+    const actionLabel = req.action === 'preview' ? '🔍 Xem thử' : '⬇️ Tải về';
+    const codeKey = req.action === 'preview' ? 'codePreview' : 'codeDownload';
+    const existingCode = it[codeKey] || '';
+    const timeStr = req.createdAt ? new Date(req.createdAt).toLocaleString('vi-VN') : '—';
+    return `
+    <div class="pay-req-card" id="req-${reqKey}">
+      <div class="pay-req-header">
+        <div class="pay-req-name">${esc(it.name||'Đề thi không rõ')}</div>
+        <span class="badge-pending action-btn">⏳ Chờ xác nhận</span>
+      </div>
+      <div class="pay-req-meta">
+        💰 Số tiền: <strong>${fmt(req.amount||0)}</strong> &nbsp;|&nbsp;
+        ${actionLabel} &nbsp;|&nbsp;
+        🕐 ${timeStr}<br/>
+        💬 Nội dung CK: <strong>${esc(req.transferCode||'')}</strong><br/>
+        📞 Liên hệ: <strong>${esc(req.contact||'Chưa cung cấp')}</strong>
+      </div>
+      <div class="a-label" style="margin-bottom:5px">Mã tài liệu sẽ gửi cho học sinh:</div>
+      <div class="code-input-row">
+        <input class="a-input" id="code-inp-${reqKey}" placeholder="${existingCode ? 'Mặc định: '+existingCode : 'Nhập mã tài liệu...'}" value="${esc(existingCode)}"/>
+        <button class="btn-send-code" onclick="confirmPayReq('${reqKey}','${req.itemKey}','${req.action}')">✅ Xác nhận & Gửi mã</button>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px">
+        <button class="action-btn btn-reject" onclick="rejectPayReq('${reqKey}')">❌ Từ chối thanh toán</button>
+      </div>
+    </div>
+  `}).join('');
 };
 
-/* ════════════════════════════════════════════════════
-   PAYMENT FLOW
-════════════════════════════════════════════════════ */
+window.updatePayNotif = function() {
+  const pending = Object.values(payRequests).filter(v => v.status === 'pending').length;
+  const badge = document.getElementById('pay-notif');
+  if (pending > 0) {
+    badge.textContent = pending;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+};
+
+window.confirmPayReq = async function(reqKey, itemKey, action) {
+  const codeEl = document.getElementById('code-inp-'+reqKey);
+  const code = codeEl?.value.trim();
+  if (!code) { showToast('Vui lòng nhập mã tài liệu!','err'); return; }
+
+  const updateData = { status: 'confirmed', confirmedAt: Date.now(), codeProvided: code };
+  await update(ref(db, 'payment_requests/'+reqKey), updateData);
+
+  // Also save code back to item if not set
+  const it = items[itemKey] || {};
+  const codeField = action === 'preview' ? 'codePreview' : 'codeDownload';
+  if (!it[codeField]) {
+    await update(ref(db, 'dethi/'+itemKey), { [codeField]: code });
+  }
+  showToast('Đã xác nhận & gửi mã cho học sinh!','ok');
+};
+
+window.rejectPayReq = async function(reqKey) {
+  if (!confirm('Từ chối yêu cầu này? Học sinh sẽ được thông báo.')) return;
+  await update(ref(db, 'payment_requests/'+reqKey), { status: 'rejected', rejectedAt: Date.now() });
+  showToast('Đã từ chối yêu cầu.','err');
+};
+
+/* ══════════════════════ CHECK CURRENT PAY STATUS (realtime for user) ══════════════════════ */
+let currentReqKey = null;
+
+function checkCurrentPayStatus() {
+  if (!currentReqKey) return;
+  const req = payRequests[currentReqKey];
+  if (!req) return;
+  if (req.status === 'confirmed') {
+    clearTimers();
+    showConfirmedByAdmin(req);
+  } else if (req.status === 'rejected') {
+    clearTimers();
+    showRejectedByAdmin();
+  }
+}
+
+function showConfirmedByAdmin(req) {
+  const it = items[currentKey] || {};
+  document.getElementById('pay-body').innerHTML = `
+    <div class="pay-success">
+      <span class="icon-ok">✅</span>
+      <h3>Thanh toán được xác nhận!</h3>
+      <p>Admin đã xác nhận thanh toán thành công.</p>
+      <div class="code-reveal-box">
+        <div class="code-label">${currentAction === 'preview' ? '🔍 Mã xem thử' : '⬇️ Mã tải về'}</div>
+        <div class="code-val">${esc(req.codeProvided || '—')}</div>
+        <div class="code-hint">Dùng mã này để truy cập tài liệu</div>
+      </div>
+      ${currentAction === 'preview' && it.preview
+        ? `<div class="link-box"><a href="${esc(it.preview)}" target="_blank" rel="noopener">🔗 Xem thử tài liệu</a></div>`
+        : currentAction === 'download' && it.download
+        ? `<div class="link-box"><a href="${esc(it.download)}" target="_blank" rel="noopener">⬇️ Tải tài liệu về máy</a></div>`
+        : ''}
+      <button class="btn-retry" onclick="closeModal()" style="margin-top:16px">Đóng</button>
+    </div>
+  `;
+}
+
+function showRejectedByAdmin() {
+  document.getElementById('pay-body').innerHTML = `
+    <div class="pay-expired">
+      <div style="font-size:2.5rem;margin-bottom:10px">❌</div>
+      <h3 style="color:var(--red)">Yêu cầu bị từ chối</h3>
+      <p>Admin không xác nhận được giao dịch này.<br/>
+      Vui lòng kiểm tra lại thông tin chuyển khoản hoặc liên hệ:<br/>
+      <a href="mailto:bioverify@googlegroups.com" style="color:var(--accent);font-weight:700">bioverify@googlegroups.com</a></p>
+      <button class="btn-retry" onclick="closeModal()">Đóng</button>
+    </div>
+  `;
+}
+
+/* ══════════════════════ PAYMENT FLOW ══════════════════════ */
+let payTimer = null;
+let currentKey = null;
+let currentAction = null;
+
+const BANK_NO   = '7876159680';
+const BANK_BIN  = 'VCB';
+const ACCT_NAME = 'HUYNH CONG THANH';
+
 window.openPay = function(key, action) {
   closeDropdowns();
   currentKey = key;
@@ -894,7 +726,6 @@ window.openPay = function(key, action) {
   const it = items[key];
   if (!it) return;
 
-  // If free → skip payment
   if (!it.price) {
     showDirectAccess(it, action);
     document.getElementById('pay-overlay').classList.add('open');
@@ -907,36 +738,43 @@ window.openPay = function(key, action) {
   document.getElementById('pay-overlay').classList.add('open');
 };
 
-function startPayFlow(it) {
+window.startPayFlow = function(it) {
   clearTimers();
+  currentReqKey = null;
 
-  // Build unique order code: timestamp 6 digits + random 3 digits
   const ts = Date.now();
   const orderCode = (ts % 1000000) * 1000 + Math.floor(Math.random() * 999);
-  const desc = 'BIO' + orderCode; // transfer message (max 25 chars)
-  paySession = { orderCode, amount: it.price, desc, startTime: ts };
-
+  const desc = 'BIO' + orderCode;
   const qrUrl = buildQR(it.price, desc);
 
   document.getElementById('pay-body').innerHTML = `
+    <div class="step-bar">
+      <div class="step-item done">1 · QR</div>
+      <div class="step-item active">2 · Chuyển khoản</div>
+      <div class="step-item">3 · Chờ duyệt</div>
+      <div class="step-item">4 · Nhận mã</div>
+    </div>
     <div class="pay-amount">${fmt(it.price)}</div>
     <div class="pay-desc">${esc(it.name)}</div>
     <div class="qr-wrap"><img src="${qrUrl}" alt="QR thanh toán"/></div>
     <div class="bank-info">
       Ngân hàng: <strong>Vietcombank (VCB)</strong><br/>
       Số TK: <strong>${BANK_NO}</strong> · Chủ TK: <strong>${ACCT_NAME}</strong><br/>
-      Nội dung CK: <strong id="pay-ref">${desc}</strong>
+      Nội dung CK: <strong>${desc}</strong>
     </div>
-    <div class="timer-bar">
-      ⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">10:00</span>
+    <div style="margin-bottom:12px">
+      <div class="a-label" style="margin-bottom:5px">Số điện thoại / Zalo để liên hệ (tuỳ chọn)</div>
+      <input class="a-input" id="user-contact" placeholder="VD: 0901234567" style="font-size:.87rem"/>
     </div>
-    <div class="pay-verifying">
-      <div class="spin"></div>
-      <p id="verify-status">Đang chờ thanh toán…</p>
-    </div>
+    <div class="timer-bar">⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">10:00</span></div>
+    <button class="btn-add" style="width:100%;margin-top:0;padding:12px" onclick="submitPayRequest('${it.price}','${desc}','${it.name || ''}','${currentKey}','${currentAction}')">
+      ✅ Tôi đã chuyển khoản xong – Thông báo Admin
+    </button>
+    <p style="text-align:center;font-size:.75rem;color:var(--text3);margin-top:10px">
+      Sau khi bấm, Admin sẽ xem xét và gửi mã tài liệu cho bạn
+    </p>
   `;
 
-  // Countdown 10 minutes
   let secs = 600;
   payTimer = setInterval(() => {
     secs--;
@@ -945,70 +783,44 @@ function startPayFlow(it) {
     if (secs <= 0) { clearTimers(); showExpired(it); return; }
     el.textContent = fmtTimer(secs);
   }, 1000);
+};
 
-  // Poll payment status every 5 seconds via SePay / Casso public API
-  pollPayment(it);
-  verifyInterval = setInterval(() => pollPayment(it), 5000);
-}
+window.submitPayRequest = async function(amount, transferCode, itemName, itemKey, action) {
+  const contact = document.getElementById('user-contact')?.value.trim() || '';
+  // Save payment request to Firebase
+  const reqRef = await push(payReqRef, {
+    itemKey,
+    itemName,
+    action,
+    amount: Number(amount),
+    transferCode,
+    contact,
+    status: 'pending',
+    createdAt: Date.now()
+  });
+  currentReqKey = reqRef.key;
+  clearTimers();
+  showWaitingForAdmin();
+};
 
-/* ── Real payment verification via SePay ── */
-async function pollPayment(it) {
-  if (!paySession) return;
-  const { desc, amount } = paySession;
-  try {
-    // SePay public webhook endpoint – no auth required for checking transactions by content
-    const url = `https://my.sepay.vn/userapi/transactions/list?account_number=${BANK_NO}&reference_number=${encodeURIComponent(desc)}&limit=20`;
-    const res = await fetch(url, {
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!res.ok) {
-      // SePay requires token; fall back to casso approach
-      await pollViaCasso(it);
-      return;
-    }
-    const json = await res.json();
-    if (json?.transactions?.length) {
-      const match = json.transactions.find(t =>
-        String(t.transaction_content || '').includes(desc) &&
-        Number(t.amount_in) >= amount
-      );
-      if (match) { clearTimers(); showSuccess(it); }
-    }
-  } catch(e) {
-    // Network error – silently retry
-  }
-}
-
-async function pollViaCasso(it) {
-  if (!paySession) return;
-  const { desc, amount } = paySession;
-  try {
-    // casso.vn free tier allows checking latest transactions
-    const url = `https://oauth.casso.vn/v2/transactions?bankSubAccId=&page=1&pageSize=20`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (!res.ok) return;
-    const json = await res.json();
-    const txs = json?.data?.records || [];
-    const match = txs.find(t =>
-      String(t.description || '').includes(desc) && Number(t.amount) >= amount
-    );
-    if (match) { clearTimers(); showSuccess(it); }
-  } catch(e) {}
-}
-
-function showSuccess(it) {
+function showWaitingForAdmin() {
   document.getElementById('pay-body').innerHTML = `
-    <div class="pay-success">
-      <span class="icon-ok">✅</span>
-      <h3>Thanh toán thành công!</h3>
-      <p>Cảm ơn bạn đã sử dụng dịch vụ của Bio Công Thành.</p>
-      ${currentAction === 'preview' && it?.preview
-        ? `<div class="link-box"><a href="${esc(it.preview)}" target="_blank" rel="noopener">🔗 Nhấn để xem thử tài liệu</a></div>`
-        : currentAction === 'download' && it?.download
-        ? `<div class="link-box"><a href="${esc(it.download)}" target="_blank" rel="noopener">⬇️ Nhấn để tải tài liệu về máy</a></div>`
-        : `<div class="link-box" style="color:var(--text2);font-size:.83rem;">Vui lòng liên hệ admin để nhận tài liệu.</div>`
-      }
-      <button class="btn-retry" onclick="closeModal()">Đóng</button>
+    <div class="step-bar">
+      <div class="step-item done">1 · QR</div>
+      <div class="step-item done">2 · Chuyển khoản</div>
+      <div class="step-item active">3 · Chờ duyệt</div>
+      <div class="step-item">4 · Nhận mã</div>
+    </div>
+    <div class="pay-waiting">
+      <div class="clock">⏳</div>
+      <h3>Đã ghi nhận yêu cầu!</h3>
+      <p>Admin đang kiểm tra giao dịch của bạn.<br/>
+         Trang này sẽ tự cập nhật khi được xác nhận.</p>
+      <div class="contact-box">
+        💬 Để nhận mã <strong>nhanh hơn</strong>, liên hệ:<br/>
+        <a href="mailto:bioverify@googlegroups.com">bioverify@googlegroups.com</a>
+      </div>
+      <p style="font-size:.78rem;color:var(--text3)">Thường xử lý trong vòng 5–15 phút</p>
     </div>
   `;
 }
@@ -1024,8 +836,7 @@ function showDirectAccess(it, action) {
         ? `<div class="link-box"><a href="${esc(it.preview)}" target="_blank" rel="noopener">🔗 Xem thử tài liệu</a></div>`
         : action === 'download' && it?.download
         ? `<div class="link-box"><a href="${esc(it.download)}" target="_blank" rel="noopener">⬇️ Tải tài liệu</a></div>`
-        : `<div class="link-box" style="color:var(--text2);font-size:.83rem;">Liên hệ admin để nhận tài liệu.</div>`
-      }
+        : `<div class="link-box" style="color:var(--text2);font-size:.83rem">Liên hệ admin để nhận tài liệu.</div>`}
       <button class="btn-retry" onclick="closeModal()">Đóng</button>
     </div>
   `;
@@ -1034,7 +845,7 @@ function showDirectAccess(it, action) {
 function showExpired(it) {
   document.getElementById('pay-body').innerHTML = `
     <div class="pay-expired">
-      <div style="font-size:2.5rem;margin-bottom:10px;">⏰</div>
+      <div style="font-size:2.5rem;margin-bottom:10px">⏰</div>
       <h3>Phiên thanh toán hết hạn</h3>
       <p>Vui lòng tạo mã QR mới để tiếp tục.</p>
       <button class="btn-retry" onclick="startPayFlow(${JSON.stringify(it).replace(/</g,'\\u003c')})">🔄 Tạo mã mới</button>
@@ -1044,14 +855,12 @@ function showExpired(it) {
 
 function clearTimers() {
   clearInterval(payTimer);
-  clearInterval(verifyInterval);
   payTimer = null;
-  verifyInterval = null;
 }
 
 window.closeModal = function() {
   clearTimers();
-  paySession = null;
+  currentReqKey = null;
   document.getElementById('pay-overlay').classList.remove('open');
 };
 window.overlayClick = function(e) {
@@ -1062,11 +871,16 @@ function buildQR(amount, desc) {
   return `https://img.vietqr.io/image/${BANK_BIN}-${BANK_NO}-compact.png?amount=${amount}&addInfo=${encodeURIComponent(desc)}&accountName=${encodeURIComponent(ACCT_NAME)}`;
 }
 
-/* ════════════════════════════════════════════════════
-   DROPDOWN
-════════════════════════════════════════════════════ */
+/* ══════════════════════ STATS ══════════════════════ */
+window.updateStats = function() {
+  const data = Object.values(items);
+  document.getElementById('stat-total').textContent = data.length;
+  document.getElementById('stat-free').textContent = data.filter(v => !v.price).length;
+};
+
+/* ══════════════════════ DROPDOWN ══════════════════════ */
 window.toggleDrop = function(key) {
-  const dd = document.getElementById('dd-' + key);
+  const dd = document.getElementById('dd-'+key);
   const wasOpen = dd.style.display === 'block';
   closeDropdowns();
   if (!wasOpen) dd.style.display = 'block';
@@ -1078,25 +892,27 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.xem-wrap')) closeDropdowns();
 });
 
-/* ════════════════════════════════════════════════════
-   ADMIN CRUD
-════════════════════════════════════════════════════ */
+/* ══════════════════════ ADMIN CRUD ══════════════════════ */
 window.addItem = function() {
-  const name    = document.getElementById('a-name').value.trim();
-  const creator = document.getElementById('a-creator').value.trim();
-  const price   = parseInt(document.getElementById('a-price').value) || 0;
-  const preview = document.getElementById('a-preview').value.trim();
-  const download= document.getElementById('a-download').value.trim();
-  if (!name || !creator) { showToast('Vui lòng nhập đủ thông tin!', 'err'); return; }
-  push(itemsRef, { name, creator, price, preview, download, createdAt: Date.now() });
-  ['a-name','a-price','a-preview','a-download'].forEach(id => { document.getElementById(id).value = ''; });
-  showToast('Đã thêm đề thi!', 'ok');
+  const name        = document.getElementById('a-name').value.trim();
+  const creator     = document.getElementById('a-creator').value.trim();
+  const price       = parseInt(document.getElementById('a-price').value) || 0;
+  const preview     = document.getElementById('a-preview').value.trim();
+  const download    = document.getElementById('a-download').value.trim();
+  const codePreview = document.getElementById('a-code-preview').value.trim();
+  const codeDownload= document.getElementById('a-code-download').value.trim();
+  if (!name || !creator) { showToast('Vui lòng nhập đủ thông tin!','err'); return; }
+  push(itemsRef, { name, creator, price, preview, download, codePreview, codeDownload, createdAt: Date.now() });
+  ['a-name','a-price','a-preview','a-download','a-code-preview','a-code-download'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  showToast('Đã thêm đề thi!','ok');
 };
 
 window.deleteItem = function(key) {
   if (!confirm('Xóa đề thi này?')) return;
-  remove(ref(db, 'dethi/' + key));
-  showToast('Đã xóa!', 'ok');
+  remove(ref(db, 'dethi/'+key));
+  showToast('Đã xóa!','ok');
 };
 
 window.editItem = function(key) {
@@ -1106,14 +922,27 @@ window.editItem = function(key) {
   const priceStr = prompt('Giá (VNĐ, 0 = miễn phí):', it.price);
   if (priceStr === null) return;
   const creator = prompt('Người tạo:', it.creator);
-  if (!name.trim() || !creator?.trim()) { showToast('Dữ liệu không hợp lệ!', 'err'); return; }
-  update(ref(db, 'dethi/' + key), { name: name.trim(), price: parseInt(priceStr)||0, creator: creator.trim() });
-  showToast('Đã cập nhật!', 'ok');
+  if (!name.trim() || !creator?.trim()) { showToast('Dữ liệu không hợp lệ!','err'); return; }
+  const codeP = prompt('Mã xem thử:', it.codePreview || '');
+  const codeD = prompt('Mã tải về:', it.codeDownload || '');
+  update(ref(db, 'dethi/'+key), {
+    name: name.trim(), price: parseInt(priceStr)||0,
+    creator: creator.trim(),
+    codePreview: codeP?.trim() || '',
+    codeDownload: codeD?.trim() || ''
+  });
+  showToast('Đã cập nhật!','ok');
 };
 
-/* ════════════════════════════════════════════════════
-   AUTH
-════════════════════════════════════════════════════ */
+/* ══════════════════════ ADMIN TABS ══════════════════════ */
+window.switchAdminTab = function(tabId, btn) {
+  document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+};
+
+/* ══════════════════════ AUTH ══════════════════════ */
 const ADMIN_EMAIL = 'bioverify@googlegroups.com';
 const ADMIN_PASS  = 'Thanh123@';
 
@@ -1124,6 +953,7 @@ window.doLogin = function() {
   if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
     showPage('page-admin');
     renderAdminTable();
+    renderPayRequests();
   } else {
     document.getElementById('login-err').textContent = '❌ Sai tài khoản hoặc mật khẩu!';
     document.getElementById('login-pass').value = '';
@@ -1131,9 +961,7 @@ window.doLogin = function() {
 };
 window.doLogout = function() { showPage('page-user'); };
 
-/* ════════════════════════════════════════════════════
-   THEME
-════════════════════════════════════════════════════ */
+/* ══════════════════════ THEME ══════════════════════ */
 window.toggleTheme = function() {
   const html = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
@@ -1142,8 +970,6 @@ window.toggleTheme = function() {
   localStorage.setItem('theme', next);
   document.querySelectorAll('.theme-btn').forEach(b => b.textContent = isDark ? '🌙' : '☀️');
 };
-
-// Init theme – default light
 (function() {
   const saved = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', saved);
@@ -1153,17 +979,14 @@ window.toggleTheme = function() {
   });
 })();
 
-/* ════════════════════════════════════════════════════
-   HELPERS
-════════════════════════════════════════════════════ */
+/* ══════════════════════ HELPERS ══════════════════════ */
 window.showPage = function(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 };
-
 function fmt(n) {
-  return new Intl.NumberFormat('vi-VN', { style:'currency', currency:'VND' }).format(n);
+  return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND'}).format(n);
 }
 function fmtTimer(s) {
   return `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
@@ -1171,13 +994,12 @@ function fmtTimer(s) {
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 window.showToast = function(msg, type='ok') {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show ' + type;
+  t.className = 'toast show '+type;
   clearTimeout(window._tt);
-  window._tt = setTimeout(() => t.classList.remove('show'), 3000);
+  window._tt = setTimeout(()=>t.classList.remove('show'),3000);
 };
 </script>
 </body>
