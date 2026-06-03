@@ -85,8 +85,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
   .card-table{width:100%;border-collapse:separate;border-spacing:0 8px}
   .card-table thead th{padding:10px 16px;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
   .card-table thead th:last-child{text-align:center}
-  .card-table tbody tr{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s}
-  .card-table tbody tr:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .card-table tbody tr{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .2s}
+  /* FIX: removed transform:translateY(-2px) — it creates a stacking context that traps the dropdown */
+  .card-table tbody tr:hover{box-shadow:var(--shadow-md)}
   .card-table tbody td{padding:14px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:middle}
   .card-table tbody td:first-child{border-left:1px solid var(--border);border-radius:var(--radius) 0 0 var(--radius);color:var(--text3);font-size:.8rem;width:44px}
   .card-table tbody td:last-child{border-right:1px solid var(--border);border-radius:0 var(--radius) var(--radius) 0;text-align:center}
@@ -107,11 +108,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 [data-theme="dark"] .creator-chip{background:rgba(79,142,247,.12)}
 .price-paid{font-weight:700;color:var(--gold);font-size:.9rem}
 .price-free{font-weight:600;color:var(--green);font-size:.9rem}
-.xem-wrap{position:relative;display:inline-block}
+
+/* FIX: xem-wrap gets z-index so dropdown can escape above sibling rows */
+.xem-wrap{position:relative;display:inline-block;z-index:10}
+/* Elevate the wrap when its dropdown is open */
+.xem-wrap.open{z-index:9999}
+
 .btn-xem{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-sm);background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-size:.8rem;font-weight:600;transition:opacity .18s,transform .15s;white-space:nowrap}
 .btn-xem:hover{opacity:.88;transform:scale(1.03)}
 .btn-xem:active{transform:scale(.97)}
-.dropdown{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:10px;min-width:154px;box-shadow:var(--shadow-lg);z-index:60;overflow:hidden;animation:fadeDown .15s ease}
+.dropdown{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:10px;min-width:154px;box-shadow:var(--shadow-lg);z-index:9999;overflow:hidden;animation:fadeDown .15s ease}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
 .dropdown button{display:flex;align-items:center;gap:8px;width:100%;padding:11px 14px;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.85rem;cursor:pointer;transition:background .15s;text-align:left}
 .dropdown button:hover{background:var(--bg2);color:var(--accent)}
@@ -507,12 +513,6 @@ let items = {};
 let payRequests = {};
 
 // ══════════════════════ SESSION PERSISTENCE ══════════════════════
-// Keys stored in localStorage:
-//   bio_pending_reqKey   → Firebase key of the pending payment request
-//   bio_pending_itemKey  → item key
-//   bio_pending_action   → 'preview' | 'download'
-//   bio_pending_itemName → display name
-
 function savePendingSession(reqKey, itemKey, action, itemName) {
   localStorage.setItem('bio_pending_reqKey', reqKey);
   localStorage.setItem('bio_pending_itemKey', itemKey);
@@ -544,10 +544,6 @@ function checkResumeBanner() {
   if (!sess) return;
   const req = payRequests[sess.reqKey];
   if (!req) return;
-  // Already resolved — clear session
-  if (req.status === 'confirmed' || req.status === 'rejected') {
-    // Don't auto-clear; let user open modal to see result
-  }
   document.getElementById('resume-banner').style.display = 'flex';
 }
 
@@ -561,7 +557,6 @@ window.resumePendingPayment = function() {
   currentKey    = sess.itemKey;
   currentAction = sess.action;
 
-  const it = items[sess.itemKey] || {};
   const actionLabel = currentAction === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
   document.getElementById('pay-title').textContent = actionLabel;
 
@@ -767,7 +762,6 @@ function checkCurrentPayStatus() {
 }
 
 /* ══════════════════════ STEP 4: CODE-GATED ACCESS ══════════════════════ */
-// Called after admin confirms — shows code + input to unlock link
 function showCodeAndGate(req) {
   const it = items[currentKey] || {};
   const isPreview = currentAction === 'preview';
@@ -806,7 +800,6 @@ function showCodeAndGate(req) {
     ` : `<p style="text-align:center;font-size:.8rem;color:var(--text3);margin-top:14px">Liên hệ admin để nhận link tài liệu.</p>`}
     <button class="btn-retry" onclick="closeModal()" style="margin-top:16px;display:block;margin-left:auto;margin-right:auto">Đóng</button>
   `;
-  // Clear the pending session once confirmed and shown
   clearPendingSession(null);
 }
 
@@ -818,7 +811,6 @@ window.tryUnlock = function(correctCode, targetLink, linkLabel) {
   const expected = correctCode.trim().toUpperCase();
   if (entered === expected) {
     errEl.textContent = '';
-    // Replace the gate with the actual link
     const gate = input.closest('.code-gate');
     if (gate) {
       gate.innerHTML = `
@@ -939,7 +931,6 @@ window.submitPayRequest = async function(amount, transferCode, itemName, itemKey
     createdAt: Date.now()
   });
   currentReqKey = reqRef.key;
-  // Persist session to survive page reload
   savePendingSession(reqRef.key, itemKey, action, itemName);
   clearTimers();
   showWaitingForAdmin();
@@ -1003,7 +994,6 @@ function clearTimers() {
  
 window.closeModal = function() {
   clearTimers();
-  // Do NOT clear currentReqKey here — only clear on explicit dismiss or resolution
   document.getElementById('pay-overlay').classList.remove('open');
 };
 window.overlayClick = function(e) {
@@ -1024,12 +1014,17 @@ window.updateStats = function() {
 /* ══════════════════════ DROPDOWN ══════════════════════ */
 window.toggleDrop = function(key) {
   const dd = document.getElementById('dd-'+key);
+  const wrap = document.getElementById('xw-'+key);
   const wasOpen = dd.style.display === 'block';
   closeDropdowns();
-  if (!wasOpen) dd.style.display = 'block';
+  if (!wasOpen) {
+    dd.style.display = 'block';
+    wrap.classList.add('open');
+  }
 };
 window.closeDropdowns = function() {
   document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+  document.querySelectorAll('.xem-wrap').forEach(w => w.classList.remove('open'));
 };
 document.addEventListener('click', e => {
   if (!e.target.closest('.xem-wrap')) closeDropdowns();
