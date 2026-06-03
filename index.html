@@ -262,6 +262,32 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .code-input-row .a-input{flex:1}
 .btn-send-code{padding:9px 14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s}
 .btn-send-code:hover{opacity:.85}
+
+/* ═══ [NEW] INLINE EDIT FORM in Admin table ═══ */
+.edit-inline-row td{padding:0 !important;border:none !important}
+.edit-inline-form{background:var(--bg2);border:1px solid var(--accent);border-radius:var(--radius);padding:18px 20px;margin:0 0 4px}
+.edit-inline-form .a-grid{margin-bottom:10px}
+.edit-inline-actions{display:flex;gap:8px;margin-top:12px}
+.btn-save{padding:9px 20px;background:linear-gradient(135deg,var(--green),#16a34a);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.85rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-save:hover{opacity:.85}
+.btn-cancel-edit{padding:9px 16px;background:var(--bg);border:1px solid var(--border);color:var(--text2);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.85rem;cursor:pointer;transition:all .2s}
+.btn-cancel-edit:hover{border-color:var(--red);color:var(--red)}
+
+/* ═══ [NEW] CODE ENTRY BOX for user ═══ */
+.code-entry-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.code-entry-title{font-size:.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.code-entry-row{display:flex;gap:8px}
+.code-entry-input{flex:1;padding:10px 13px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.9rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;outline:none;transition:border-color .2s}
+.code-entry-input:focus{border-color:var(--accent)}
+.code-entry-input.valid{border-color:var(--green)!important;background:var(--green-soft)}
+.code-entry-input.invalid{border-color:var(--red)!important;background:var(--red-soft)}
+.btn-enter-code{padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.83rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.btn-enter-code:hover{opacity:.85}
+.code-err{font-size:.76rem;color:var(--red);margin-top:5px;min-height:18px}
+
+/* ═══ [NEW] Pending banner for user ═══ */
+.pending-banner{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:.82rem;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:8px}
+[data-theme="dark"] .pending-banner{background:rgba(245,200,66,.12)}
 </style>
 </head>
 <body>
@@ -420,7 +446,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
       <div class="a-section">
         <div class="a-section-title">📋 Danh sách (<span id="admin-count">0</span> đề thi)</div>
         <div style="overflow-x:auto">
-          <table class="card-table" style="min-width:560px">
+          <table class="card-table" style="min-width:560px" id="admin-main-table">
             <thead>
               <tr><th>#</th><th>Tên đề thi</th><th>Người tạo</th><th>Giá</th><th>Mã XemThử / TảiVề</th><th>Thao tác</th></tr>
             </thead>
@@ -481,20 +507,103 @@ const payReqRef = ref(db, 'payment_requests');
  
 let items = {};
 let payRequests = {};
+
+/* ══════════════════════════════════════════════════════════════
+   [FEATURE 1] LOCALSTORAGE: Lưu trạng thái thanh toán của user
+   Kể cả reload trang vẫn giữ nguyên trạng thái chờ duyệt
+══════════════════════════════════════════════════════════════ */
+const LS_KEY = 'bio_pending_req';
+
+function savePendingToLS(reqKey, itemKey, action) {
+  localStorage.setItem(LS_KEY, JSON.stringify({ reqKey, itemKey, action, savedAt: Date.now() }));
+}
+
+function loadPendingFromLS() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    // Expire after 24h
+    if (Date.now() - obj.savedAt > 86400000) { clearPendingLS(); return null; }
+    return obj;
+  } catch { return null; }
+}
+
+function clearPendingLS() {
+  localStorage.removeItem(LS_KEY);
+}
+
+// On page load, check if user had a pending request
+function checkRestoredPending() {
+  const saved = loadPendingFromLS();
+  if (!saved) return;
+  // Show floating banner on user page
+  showRestoredBanner(saved);
+}
+
+function showRestoredBanner(saved) {
+  // Remove existing banner
+  document.getElementById('restored-banner')?.remove();
+  const it = items[saved.itemKey];
+  if (!it) return;
+  const banner = document.createElement('div');
+  banner.id = 'restored-banner';
+  banner.style.cssText = 'position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:500;max-width:380px;width:calc(100% - 32px)';
+  banner.innerHTML = `
+    <div style="background:var(--surface);border:1.5px solid var(--gold);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;font-size:.82rem">
+      <span style="font-size:1.4rem">⏳</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;color:var(--text);font-size:.85rem">Yêu cầu đang chờ duyệt</div>
+        <div style="color:var(--text2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(it.name||'')}</div>
+      </div>
+      <button onclick="reopenPendingModal()" style="padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-family:var(--font-body);font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap">Xem lại</button>
+      <button onclick="document.getElementById('restored-banner').remove();clearPendingLS()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.1rem;padding:2px 4px;line-height:1">✕</button>
+    </div>
+  `;
+  document.body.appendChild(banner);
+}
+
+window.clearPendingLS = clearPendingLS;
+
+window.reopenPendingModal = function() {
+  const saved = loadPendingFromLS();
+  if (!saved) return;
+  currentKey = saved.itemKey;
+  currentAction = saved.action;
+  currentReqKey = saved.reqKey;
+  const req = payRequests[saved.reqKey];
+  document.getElementById('pay-title').textContent =
+    saved.action === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
+  document.getElementById('pay-overlay').classList.add('open');
+  if (req) {
+    if (req.status === 'confirmed') {
+      showConfirmedByAdmin(req);
+    } else if (req.status === 'rejected') {
+      showRejectedByAdmin();
+    } else {
+      showWaitingForAdmin();
+    }
+  } else {
+    showWaitingForAdmin();
+  }
+};
  
 onValue(itemsRef, (snap) => {
   items = snap.val() || {};
   renderUserTable();
   renderAdminTable();
   updateStats();
+  checkRestoredPending();
 });
  
 onValue(payReqRef, (snap) => {
   payRequests = snap.val() || {};
   renderPayRequests();
   updatePayNotif();
-  // If user is waiting and their request got confirmed, update modal
   checkCurrentPayStatus();
+  // Also update restored banner
+  const saved = loadPendingFromLS();
+  if (saved) showRestoredBanner(saved);
 });
  
 /* ══════════════════════ RENDER USER TABLE ══════════════════════ */
@@ -557,6 +666,8 @@ window.renderUserTable = function() {
 };
  
 /* ══════════════════════ RENDER ADMIN TABLE ══════════════════════ */
+let editingKey = null;
+
 window.renderAdminTable = function() {
   const data = Object.entries(items);
   document.getElementById('admin-count').textContent = data.length;
@@ -565,8 +676,16 @@ window.renderAdminTable = function() {
     tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Chưa có đề thi.</td></tr>`;
     return;
   }
-  tbody.innerHTML = data.map(([key,it],i) => `
-    <tr>
+  tbody.innerHTML = data.map(([key,it],i) => buildAdminRow(key, it, i)).join('');
+  // If there was an open edit, restore it
+  if (editingKey && items[editingKey]) {
+    insertEditForm(editingKey);
+  }
+};
+
+function buildAdminRow(key, it, i) {
+  return `
+    <tr id="admin-row-${key}">
       <td>${i+1}</td>
       <td><span class="subject-name">${esc(it.name)}</span></td>
       <td><span class="creator-chip" style="font-size:.76rem">👤 ${esc(it.creator)}</span></td>
@@ -577,13 +696,106 @@ window.renderAdminTable = function() {
         ${it.codeDownload ? `⬇️ <code style="background:var(--bg2);padding:1px 5px;border-radius:4px">${esc(it.codeDownload)}</code>` : '<span style="color:var(--text3)">—</span>'}
       </td>
       <td>
-        <button class="action-btn btn-edit" onclick="editItem('${key}')">✏️</button>
+        <button class="action-btn btn-edit" onclick="toggleEditForm('${key}')">✏️ Sửa</button>
         <button class="action-btn btn-delete" onclick="deleteItem('${key}')">🗑</button>
       </td>
     </tr>
-  `).join('');
+  `;
+}
+
+/* ═══ [FEATURE 3] Inline Edit Form ═══ */
+window.toggleEditForm = function(key) {
+  const existingRow = document.getElementById('edit-row-'+key);
+  if (existingRow) {
+    // Close it
+    existingRow.remove();
+    editingKey = null;
+    return;
+  }
+  // Close any other open form
+  document.querySelectorAll('[id^="edit-row-"]').forEach(r => r.remove());
+  editingKey = key;
+  insertEditForm(key);
 };
- 
+
+function insertEditForm(key) {
+  const it = items[key];
+  if (!it) return;
+  const mainRow = document.getElementById('admin-row-'+key);
+  if (!mainRow) return;
+  // Remove existing edit row if present
+  document.getElementById('edit-row-'+key)?.remove();
+
+  const editRow = document.createElement('tr');
+  editRow.id = 'edit-row-'+key;
+  editRow.className = 'edit-inline-row';
+  editRow.innerHTML = `
+    <td colspan="6" style="padding:0 !important;border:none !important">
+      <div class="edit-inline-form">
+        <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:6px">
+          ✏️ Chỉnh sửa: <span style="color:var(--text)">${esc(it.name)}</span>
+        </div>
+        <div class="a-grid tri">
+          <div>
+            <div class="a-label">Tên đề thi *</div>
+            <input class="a-input" id="ei-name-${key}" value="${esc(it.name)}" placeholder="Tên đề thi"/>
+          </div>
+          <div>
+            <div class="a-label">Người tạo *</div>
+            <input class="a-input" id="ei-creator-${key}" value="${esc(it.creator)}" placeholder="Người tạo"/>
+          </div>
+          <div>
+            <div class="a-label">Giá (VNĐ)</div>
+            <input class="a-input" id="ei-price-${key}" type="number" value="${it.price||0}" placeholder="0"/>
+          </div>
+        </div>
+        <div class="a-grid" style="margin-top:10px">
+          <div>
+            <div class="a-label">Link xem thử</div>
+            <input class="a-input" id="ei-preview-${key}" value="${esc(it.preview||'')}" placeholder="https://..."/>
+          </div>
+          <div>
+            <div class="a-label">Link tải về</div>
+            <input class="a-input" id="ei-download-${key}" value="${esc(it.download||'')}" placeholder="https://..."/>
+          </div>
+        </div>
+        <div class="a-grid" style="margin-top:10px">
+          <div>
+            <div class="a-label">🔑 Mã xem thử</div>
+            <input class="a-input" id="ei-cprev-${key}" value="${esc(it.codePreview||'')}" placeholder="VD: XEMTHU2024"/>
+          </div>
+          <div>
+            <div class="a-label">🔑 Mã tải về</div>
+            <input class="a-input" id="ei-cdl-${key}" value="${esc(it.codeDownload||'')}" placeholder="VD: TAIVE2024"/>
+          </div>
+        </div>
+        <div class="edit-inline-actions">
+          <button class="btn-save" onclick="saveEditItem('${key}')">💾 Lưu thay đổi</button>
+          <button class="btn-cancel-edit" onclick="toggleEditForm('${key}')">Huỷ</button>
+        </div>
+      </div>
+    </td>
+  `;
+  mainRow.insertAdjacentElement('afterend', editRow);
+  // Focus first input
+  setTimeout(() => document.getElementById('ei-name-'+key)?.focus(), 50);
+}
+
+window.saveEditItem = function(key) {
+  const name     = document.getElementById('ei-name-'+key)?.value.trim();
+  const creator  = document.getElementById('ei-creator-'+key)?.value.trim();
+  const price    = parseInt(document.getElementById('ei-price-'+key)?.value) || 0;
+  const preview  = document.getElementById('ei-preview-'+key)?.value.trim();
+  const download = document.getElementById('ei-download-'+key)?.value.trim();
+  const codeP    = document.getElementById('ei-cprev-'+key)?.value.trim();
+  const codeD    = document.getElementById('ei-cdl-'+key)?.value.trim();
+  if (!name || !creator) { showToast('Vui lòng nhập đủ thông tin!','err'); return; }
+  update(ref(db, 'dethi/'+key), { name, creator, price, preview, download, codePreview: codeP, codeDownload: codeD });
+  editingKey = null;
+  document.getElementById('edit-row-'+key)?.remove();
+  showToast('Đã cập nhật đề thi!','ok');
+};
+
 /* ══════════════════════ PAYMENT REQUESTS ══════════════════════ */
 window.renderPayRequests = function() {
   const list = document.getElementById('pay-req-list');
@@ -592,7 +804,6 @@ window.renderPayRequests = function() {
     list.innerHTML = `<div class="empty-state">✅ Không có yêu cầu chờ xử lý.</div>`;
     return;
   }
-  // Sort newest first
   data.sort((a,b) => (b[1].createdAt||0) - (a[1].createdAt||0));
   list.innerHTML = data.map(([reqKey,req]) => {
     const it = items[req.itemKey] || {};
@@ -640,11 +851,8 @@ window.confirmPayReq = async function(reqKey, itemKey, action) {
   const codeEl = document.getElementById('code-inp-'+reqKey);
   const code = codeEl?.value.trim();
   if (!code) { showToast('Vui lòng nhập mã tài liệu!','err'); return; }
- 
   const updateData = { status: 'confirmed', confirmedAt: Date.now(), codeProvided: code };
   await update(ref(db, 'payment_requests/'+reqKey), updateData);
- 
-  // Also save code back to item if not set
   const it = items[itemKey] || {};
   const codeField = action === 'preview' ? 'codePreview' : 'codeDownload';
   if (!it[codeField]) {
@@ -659,7 +867,7 @@ window.rejectPayReq = async function(reqKey) {
   showToast('Đã từ chối yêu cầu.','err');
 };
  
-/* ══════════════════════ CHECK CURRENT PAY STATUS (realtime for user) ══════════════════════ */
+/* ══════════════════════ CHECK CURRENT PAY STATUS ══════════════════════ */
 let currentReqKey = null;
  
 function checkCurrentPayStatus() {
@@ -668,9 +876,13 @@ function checkCurrentPayStatus() {
   if (!req) return;
   if (req.status === 'confirmed') {
     clearTimers();
+    clearPendingLS();
+    document.getElementById('restored-banner')?.remove();
     showConfirmedByAdmin(req);
   } else if (req.status === 'rejected') {
     clearTimers();
+    clearPendingLS();
+    document.getElementById('restored-banner')?.remove();
     showRejectedByAdmin();
   }
 }
@@ -685,18 +897,90 @@ function showConfirmedByAdmin(req) {
       <div class="code-reveal-box">
         <div class="code-label">${currentAction === 'preview' ? '🔍 Mã xem thử' : '⬇️ Mã tải về'}</div>
         <div class="code-val">${esc(req.codeProvided || '—')}</div>
-        <div class="code-hint">Dùng mã này để truy cập tài liệu</div>
+        <div class="code-hint">Dùng mã này để truy cập tài liệu bên dưới</div>
       </div>
-      ${currentAction === 'preview' && it.preview
-        ? `<div class="link-box"><a href="${esc(it.preview)}" target="_blank" rel="noopener">🔗 Xem thử tài liệu</a></div>`
-        : currentAction === 'download' && it.download
-        ? `<div class="link-box"><a href="${esc(it.download)}" target="_blank" rel="noopener">⬇️ Tải tài liệu về máy</a></div>`
-        : ''}
+      ${buildCodeEntryBox(it, currentAction, req.codeProvided)}
       <button class="btn-retry" onclick="closeModal()" style="margin-top:16px">Đóng</button>
     </div>
   `;
 }
- 
+
+/* ═══ [FEATURE 2] Build code entry box for accessing document ═══ */
+function buildCodeEntryBox(it, action, prefilledCode) {
+  const linkUrl = action === 'preview' ? it.preview : it.download;
+  const linkLabel = action === 'preview' ? '🔍 Xem thử tài liệu' : '⬇️ Tải tài liệu về máy';
+  const correctCode = action === 'preview' ? it.codePreview : it.codeDownload;
+  if (!correctCode && !linkUrl) return '';
+
+  const uid = 'ce_' + Math.random().toString(36).slice(2);
+  // If there's a code needed, show entry box; else direct link
+  if (correctCode) {
+    return `
+      <div class="code-entry-wrap" style="margin-top:14px;text-align:left">
+        <div class="code-entry-title">🔑 Nhập mã để mở tài liệu</div>
+        <div class="code-entry-row">
+          <input class="code-entry-input" id="${uid}-inp" placeholder="NHẬP MÃ TẠI ĐÂY" value="${esc(prefilledCode||'')}" oninput="this.value=this.value.toUpperCase()"/>
+          <button class="btn-enter-code" onclick="checkCodeAndOpen('${uid}','${esc(correctCode)}','${esc(linkUrl||'')}','${esc(linkLabel)}')">Mở</button>
+        </div>
+        <div class="code-err" id="${uid}-err"></div>
+        <div id="${uid}-link" style="margin-top:8px"></div>
+      </div>
+    `;
+  } else if (linkUrl) {
+    return `<div class="link-box" style="margin-top:14px"><a href="${esc(linkUrl)}" target="_blank" rel="noopener">${linkLabel}</a></div>`;
+  }
+  return '';
+}
+
+window.checkCodeAndOpen = function(uid, correctCode, linkUrl, linkLabel) {
+  const input = document.getElementById(uid+'-inp');
+  const errEl = document.getElementById(uid+'-err');
+  const linkEl = document.getElementById(uid+'-link');
+  const entered = input?.value.trim().toUpperCase();
+  const correct = correctCode.trim().toUpperCase();
+  if (entered === correct) {
+    input.classList.add('valid');
+    input.classList.remove('invalid');
+    errEl.textContent = '';
+    if (linkUrl) {
+      linkEl.innerHTML = `<div class="link-box"><a href="${esc(linkUrl)}" target="_blank" rel="noopener">${linkLabel}</a></div>`;
+      // Auto-open
+      window.open(linkUrl, '_blank', 'noopener');
+    } else {
+      linkEl.innerHTML = `<div style="color:var(--green);font-size:.82rem;font-weight:600;padding:6px 0">✅ Mã đúng! Liên hệ admin để nhận link tài liệu.</div>`;
+    }
+  } else {
+    input.classList.add('invalid');
+    input.classList.remove('valid');
+    errEl.textContent = '❌ Mã không đúng. Vui lòng kiểm tra lại.';
+    linkEl.innerHTML = '';
+  }
+};
+
+/* ═══ Code entry box for direct "Xem thử" flow (paid + already have code) ═══ */
+function showCodeEntryModal(it, action) {
+  document.getElementById('pay-title').textContent =
+    action === 'preview' ? '🔍 Nhập mã xem thử' : '⬇️ Nhập mã tải về';
+  const uid = 'ce_direct_' + Math.random().toString(36).slice(2);
+  const correctCode = action === 'preview' ? it.codePreview : it.codeDownload;
+  const linkUrl = action === 'preview' ? it.preview : it.download;
+  const linkLabel = action === 'preview' ? '🔍 Xem thử tài liệu' : '⬇️ Tải tài liệu về máy';
+  document.getElementById('pay-body').innerHTML = `
+    <p style="font-size:.85rem;color:var(--text2);margin-bottom:16px">Bạn đã có mã truy cập? Nhập vào đây để mở tài liệu ngay.</p>
+    <div class="code-entry-wrap">
+      <div class="code-entry-title">🔑 Nhập mã tài liệu</div>
+      <div class="code-entry-row">
+        <input class="code-entry-input" id="${uid}-inp" placeholder="NHẬP MÃ TẠI ĐÂY" oninput="this.value=this.value.toUpperCase()"/>
+        <button class="btn-enter-code" onclick="checkCodeAndOpen('${uid}','${esc(correctCode||'')}','${esc(linkUrl||'')}','${linkLabel}')">Mở</button>
+      </div>
+      <div class="code-err" id="${uid}-err"></div>
+      <div id="${uid}-link"></div>
+    </div>
+    <div style="text-align:center;margin-top:6px;font-size:.78rem;color:var(--text3)">Chưa có mã? Tiến hành thanh toán để nhận mã.</div>
+    <button class="btn-add" style="width:100%;margin-top:12px" onclick="startPayFlow(${JSON.stringify(it).replace(/</g,'\\u003c').replace(/'/g,"&#39;")})">💳 Thanh toán để nhận mã</button>
+  `;
+}
+
 function showRejectedByAdmin() {
   document.getElementById('pay-body').innerHTML = `
     <div class="pay-expired">
@@ -728,6 +1012,14 @@ window.openPay = function(key, action) {
  
   if (!it.price) {
     showDirectAccess(it, action);
+    document.getElementById('pay-overlay').classList.add('open');
+    return;
+  }
+
+  // [FEATURE 2] If item has a code configured, show code-entry option first
+  const codeKey = action === 'preview' ? 'codePreview' : 'codeDownload';
+  if (it[codeKey]) {
+    showCodeEntryModal(it, action);
     document.getElementById('pay-overlay').classList.add('open');
     return;
   }
@@ -767,7 +1059,7 @@ window.startPayFlow = function(it) {
       <input class="a-input" id="user-contact" placeholder="VD: 0901234567" style="font-size:.87rem"/>
     </div>
     <div class="timer-bar">⏱ Hết hạn sau: <span class="timer-val" id="pay-timer">10:00</span></div>
-    <button class="btn-add" style="width:100%;margin-top:0;padding:12px" onclick="submitPayRequest('${it.price}','${desc}','${it.name || ''}','${currentKey}','${currentAction}')">
+    <button class="btn-add" style="width:100%;margin-top:0;padding:12px" onclick="submitPayRequest('${it.price}','${desc}','${esc(it.name||'')}','${currentKey}','${currentAction}')">
       ✅ Tôi đã chuyển khoản xong – Thông báo Admin
     </button>
     <p style="text-align:center;font-size:.75rem;color:var(--text3);margin-top:10px">
@@ -787,7 +1079,6 @@ window.startPayFlow = function(it) {
  
 window.submitPayRequest = async function(amount, transferCode, itemName, itemKey, action) {
   const contact = document.getElementById('user-contact')?.value.trim() || '';
-  // Save payment request to Firebase
   const reqRef = await push(payReqRef, {
     itemKey,
     itemName,
@@ -799,6 +1090,8 @@ window.submitPayRequest = async function(amount, transferCode, itemName, itemKey
     createdAt: Date.now()
   });
   currentReqKey = reqRef.key;
+  // [FEATURE 1] Save to localStorage so reload doesn't lose state
+  savePendingToLS(reqRef.key, itemKey, action);
   clearTimers();
   showWaitingForAdmin();
 };
@@ -815,7 +1108,8 @@ function showWaitingForAdmin() {
       <div class="clock">⏳</div>
       <h3>Đã ghi nhận yêu cầu!</h3>
       <p>Admin đang kiểm tra giao dịch của bạn.<br/>
-         Trang này sẽ tự cập nhật khi được xác nhận.</p>
+         Trang này sẽ tự cập nhật khi được xác nhận.<br/>
+         <span style="font-size:.76rem;color:var(--text3)">Đóng trang rồi quay lại vẫn giữ nguyên trạng thái.</span></p>
       <div class="contact-box">
         💬 Để nhận mã <strong>nhanh hơn</strong>, liên hệ:<br/>
         <a href="mailto:bioverify@googlegroups.com">bioverify@googlegroups.com</a>
@@ -848,7 +1142,7 @@ function showExpired(it) {
       <div style="font-size:2.5rem;margin-bottom:10px">⏰</div>
       <h3>Phiên thanh toán hết hạn</h3>
       <p>Vui lòng tạo mã QR mới để tiếp tục.</p>
-      <button class="btn-retry" onclick="startPayFlow(${JSON.stringify(it).replace(/</g,'\\u003c')})">🔄 Tạo mã mới</button>
+      <button class="btn-retry" onclick="startPayFlow(${JSON.stringify(it).replace(/</g,'\\u003c').replace(/'/g,"&#39;")})">🔄 Tạo mã mới</button>
     </div>
   `;
 }
@@ -911,27 +1205,9 @@ window.addItem = function() {
  
 window.deleteItem = function(key) {
   if (!confirm('Xóa đề thi này?')) return;
+  if (editingKey === key) { editingKey = null; }
   remove(ref(db, 'dethi/'+key));
   showToast('Đã xóa!','ok');
-};
- 
-window.editItem = function(key) {
-  const it = items[key];
-  const name = prompt('Tên đề thi:', it.name);
-  if (name === null) return;
-  const priceStr = prompt('Giá (VNĐ, 0 = miễn phí):', it.price);
-  if (priceStr === null) return;
-  const creator = prompt('Người tạo:', it.creator);
-  if (!name.trim() || !creator?.trim()) { showToast('Dữ liệu không hợp lệ!','err'); return; }
-  const codeP = prompt('Mã xem thử:', it.codePreview || '');
-  const codeD = prompt('Mã tải về:', it.codeDownload || '');
-  update(ref(db, 'dethi/'+key), {
-    name: name.trim(), price: parseInt(priceStr)||0,
-    creator: creator.trim(),
-    codePreview: codeP?.trim() || '',
-    codeDownload: codeD?.trim() || ''
-  });
-  showToast('Đã cập nhật!','ok');
 };
  
 /* ══════════════════════ ADMIN TABS ══════════════════════ */
