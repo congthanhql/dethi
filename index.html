@@ -6,60 +6,69 @@
 <title>Bio Công Thành – Kho Đề Thi</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
 <style>
-/* ============================================================
-   DESIGN TOKENS
-   ============================================================ */
-:root {
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+/* Fix font và màu chữ cho Light/Dark Mode */
 
-  /* Light theme */
-  --bg:          #f5f4f0;
-  --bg2:         #ece9e3;
-  --surface:     #ffffff;
-  --card:        #ffffff;
-  --border:      #e0dbd3;
-  --border2:     #d0cac0;
-  --text:        #1a1714;
-  --text2:       #5a5550;
-  --text3:       #9a9590;
-  --accent:      #2563eb;
-  --accent-soft: #dbeafe;
-  --accent2:     #7c3aed;
-  --gold:        #b45309;
-  --gold-soft:   #fef3c7;
-  --green:       #15803d;
-  --green-soft:  #dcfce7;
-  --red:         #dc2626;
-  --red-soft:    #fee2e2;
-  --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-  --shadow-md:   0 4px 16px rgba(0,0,0,.10);
-  --shadow-lg:   0 12px 48px rgba(0,0,0,.14);
-  --radius:      14px;
-  --radius-sm:   8px;
+body{
+    color: var(--text);
+    background: var(--bg);
 }
-[data-theme="dark"] {
-  --bg:          #0e0f14;
-  --bg2:         #161820;
-  --surface:     #1c1e28;
-  --card:        #1c1e28;
-  --border:      #2a2d3e;
-  --border2:     #363a52;
-  --text:        #edeef5;
-  --text2:       #9097b8;
-  --text3:       #5a6080;
-  --accent:      #4f8ef7;
-  --accent-soft: rgba(79,142,247,.12);
-  --accent2:     #a78bfa;
-  --gold:        #f5c842;
-  --gold-soft:   rgba(245,200,66,.12);
-  --green:       #22c55e;
-  --green-soft:  rgba(34,197,94,.12);
-  --red:         #f87171;
-  --red-soft:    rgba(239,68,68,.12);
-  --shadow-sm:   0 1px 3px rgba(0,0,0,.3);
-  --shadow-md:   0 4px 16px rgba(0,0,0,.4);
-  --shadow-lg:   0 12px 48px rgba(0,0,0,.6);
+
+table,
+input,
+button,
+textarea,
+select{
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.subject-name,
+.modal-title,
+.login-logo h2,
+.admin-section h3,
+.brand-name{
+    color: var(--text);
+}
+
+.admin-input,
+.form-group input,
+.search-bar input{
+    background: var(--card);
+    color: var(--text);
+}
+
+.admin-input::placeholder,
+.form-group input::placeholder,
+.search-bar input::placeholder{
+    color: var(--muted);
+}
+
+tbody td,
+thead th{
+    color: var(--text);
+}
+
+.creator-badge{
+    color: #8b5cf6;
+}
+
+.dropdown button{
+    color: var(--text);
+}
+
+.preview-area{
+    color: var(--text);
+}
+
+/* Fix nền navbar */
+nav,
+.admin-nav{
+    background: rgba(255,255,255,.9);
+}
+
+[data-theme="dark"] nav,
+[data-theme="dark"] .admin-nav{
+    background: rgba(20,23,38,.9);
 }
 
 /* ============================================================
