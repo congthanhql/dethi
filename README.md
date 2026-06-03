@@ -6,36 +6,20 @@
 <title>Bio Công Thành – Tài Liệu</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 <style>
-  :root{
-  /* LIGHT MODE (Mặc định) */
-  --bg:#f6f8fc;
-  --surface:#ffffff;
-  --card:#ffffff;
-  --border:#dbe3f0;
-  --accent:#4f8ef7;
-  --accent2:#7c5cfc;
-  --gold:#d97706;
-  --text:#111827;
-  --muted:#6b7280;
-  --success:#16a34a;
-  --danger:#dc2626;
-  --radius:14px;
-}
-
-/* DARK MODE */
-[data-theme="dark"]{
-  --bg:#0d0f1a;
-  --surface:#141726;
-  --card:#1a1f35;
-  --border:#2a3050;
-  --accent:#4f8ef7;
-  --accent2:#7c5cfc;
-  --gold:#f5c842;
-  --text:#e8ecf5;
-  --muted:#8a93b0;
-  --success:#22c55e;
-  --danger:#ef4444;
-}
+  :root {
+    --bg: #0d0f1a;
+    --surface: #141726;
+    --card: #1a1f35;
+    --border: #2a3050;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --gold: #f5c842;
+    --text: #e8ecf5;
+    --muted: #8a93b0;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --radius: 14px;
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: var(--bg);
@@ -414,15 +398,9 @@
       <div class="brand-icon">B</div>
       <span class="brand-name">Bio Công Thành</span>
     </div>
-   <div class="nav-right">
-  <button class="btn-nav" onclick="toggleTheme()" id="themeBtn">
-    🌙 Tối
-  </button>
-
-  <button class="btn-nav primary" onclick="showPage('page-login')">
-    🔐 Admin
-  </button>
-</div>
+    <div class="nav-right">
+      <button class="btn-nav primary" onclick="showPage('page-login')">🔐 Admin</button>
+    </div>
   </nav>
 
   <div class="hero">
@@ -494,13 +472,9 @@
       <span class="brand-name" style="font-size:1rem;">Bio Công Thành</span>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
-  <button class="btn-nav" onclick="toggleTheme()" id="themeBtnAdmin">
-    🌙 Tối
-  </button>
-
-  <span class="admin-badge">ADMIN</span>
-  <button class="btn-nav" onclick="doLogout()">Đăng xuất</button>
-</div>
+      <span class="admin-badge">ADMIN</span>
+      <button class="btn-nav" onclick="doLogout()">Đăng xuất</button>
+    </div>
   </div>
 
   <div class="admin-content">
@@ -841,44 +815,6 @@
     clearTimeout(window._toastT);
     window._toastT = setTimeout(() => t.classList.remove('show'), 3000);
   };
-</script>
-// ===== Theme System =====
-
-function updateThemeButtons(){
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-  const text = dark ? '☀️ Sáng' : '🌙 Tối';
-
-  const btn1 = document.getElementById('themeBtn');
-  const btn2 = document.getElementById('themeBtnAdmin');
-
-  if(btn1) btn1.textContent = text;
-  if(btn2) btn2.textContent = text;
-}
-
-window.toggleTheme = function(){
-  const current = document.documentElement.getAttribute('data-theme');
-
-  if(current === 'dark'){
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('theme','light');
-  }else{
-    document.documentElement.setAttribute('data-theme','dark');
-    localStorage.setItem('theme','dark');
-  }
-
-  updateThemeButtons();
-};
-
-(function(){
-  const savedTheme = localStorage.getItem('theme') || 'light';
-
-  if(savedTheme === 'dark'){
-    document.documentElement.setAttribute('data-theme','dark');
-  }
-
-  updateThemeButtons();
-})();
 </script>
 </body>
 </html>
