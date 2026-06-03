@@ -37,14 +37,14 @@
   --shadow-md: 0 4px 16px rgba(0,0,0,.4);
   --shadow-lg: 0 12px 48px rgba(0,0,0,.6);
 }
-
+ 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
-
+ 
 .page{display:none;min-height:100vh}
 .page.active{display:block}
-
+ 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);transition:background .3s,border-color .3s}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -57,7 +57,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .btn-sm:hover{border-color:var(--accent);color:var(--accent)}
 .btn-sm.accent{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-sm.accent:hover{opacity:.88}
-
+ 
 /* HERO */
 .hero{padding:48px 20px 32px;text-align:center;background:var(--surface);border-bottom:1px solid var(--border);transition:background .3s}
 .hero-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border:1px solid var(--border2);border-radius:999px;font-size:.75rem;font-weight:600;color:var(--text2);background:var(--bg2);margin-bottom:16px;letter-spacing:.04em}
@@ -69,7 +69,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .stat-item:last-child{border-right:none}
 .stat-val{font-size:1.5rem;font-weight:700;color:var(--accent);font-family:var(--font-display)}
 .stat-label{font-size:.72rem;color:var(--text3);margin-top:2px;font-weight:500;letter-spacing:.03em}
-
+ 
 /* SEARCH */
 .search-wrap{padding:20px 16px 0;max-width:560px;margin:0 auto}
 .search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0 14px;box-shadow:var(--shadow-sm);transition:border-color .2s,background .3s}
@@ -77,7 +77,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .search-box svg{color:var(--text3);flex-shrink:0}
 .search-box input{flex:1;padding:12px 0;background:none;border:none;outline:none;font-family:var(--font-body);font-size:.9rem;color:var(--text)}
 .search-box input::placeholder{color:var(--text3)}
-
+ 
 /* CARDS */
 .cards-wrap{padding:16px 12px 80px;max-width:1040px;margin:0 auto}
 @media(min-width:640px){
@@ -119,7 +119,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .empty-state{text-align:center;color:var(--text3);padding:48px 20px;font-size:.88rem}
 .tag-free{display:inline-block;background:var(--green-soft);color:var(--green);font-size:.7rem;font-weight:700;border-radius:5px;padding:1px 7px}
 [data-theme="dark"] .tag-free{background:rgba(34,197,94,.12)}
-
+ 
 /* LOGIN */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
 .login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 32px;width:100%;max-width:380px;box-shadow:var(--shadow-lg)}
@@ -134,20 +134,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .btn-login{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px}
 .btn-login:hover{opacity:.88}
 .login-err{color:var(--red);font-size:.82rem;margin-top:10px;text-align:center;min-height:20px}
-
+ 
 /* ADMIN */
 .admin-top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;gap:10px;transition:background .3s}
 .admin-badge{background:var(--red-soft);border:1px solid var(--red);color:var(--red);border-radius:6px;padding:2px 10px;font-size:.7rem;font-weight:700;letter-spacing:.06em;flex-shrink:0}
 .admin-body{max-width:960px;margin:0 auto;padding:20px 16px 80px}
 @media(min-width:640px){.admin-body{padding:28px 24px 80px}}
-
+ 
 /* Admin tabs */
 .admin-tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
 .admin-tab{padding:8px 18px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--font-body);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 .admin-tab.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-sm)}
 .admin-tab-pane{display:none}
 .admin-tab-pane.active{display:block}
-
+ 
 .a-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;box-shadow:var(--shadow-sm);transition:background .3s}
 @media(min-width:640px){.a-section{padding:24px}}
 .a-section-title{font-size:.95rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:7px;color:var(--text)}
@@ -169,7 +169,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .btn-reject{background:var(--red-soft);color:var(--red)}
 [data-theme="dark"] .btn-reject{background:rgba(239,68,68,.12)}
 .action-btn:hover{opacity:.75}
-
+ 
 /* Payment request card */
 .pay-req-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;transition:background .3s}
 .pay-req-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
@@ -180,7 +180,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 [data-theme="dark"] .badge-pending{background:rgba(245,200,66,.12)}
 .badge-confirmed{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
 [data-theme="dark"] .badge-confirmed{background:rgba(34,197,94,.12)}
-
+ 
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:0}
 .overlay.open{display:flex}
@@ -195,7 +195,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .modal-title{font-size:1rem;font-weight:700}
 .btn-close{background:var(--bg2);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
 .btn-close:hover{background:var(--red-soft);color:var(--red);border-color:var(--red)}
-
+ 
 /* Payment modal */
 .pay-amount{text-align:center;font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:4px}
 .pay-desc{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:16px}
@@ -205,7 +205,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .bank-info strong{color:var(--text)}
 .timer-bar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:var(--text3);margin-bottom:16px}
 .timer-val{color:var(--red);font-weight:700;font-variant-numeric:tabular-nums}
-
+ 
 /* Waiting for admin */
 .pay-waiting{text-align:center;padding:16px 0}
 .pay-waiting .clock{font-size:3rem;margin-bottom:10px;animation:pulse 2s ease-in-out infinite}
@@ -221,7 +221,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .code-reveal-box .code-label{font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .code-reveal-box .code-val{font-size:1.4rem;font-weight:700;color:var(--green);letter-spacing:.15em;font-family:var(--font-display)}
 .code-reveal-box .code-hint{font-size:.75rem;color:var(--text2);margin-top:4px}
-
+ 
 .pay-success{text-align:center;padding:8px 0}
 .pay-success .icon-ok{font-size:3rem;display:block;margin-bottom:10px}
 .pay-success h3{font-family:var(--font-display);font-size:1.3rem;color:var(--green);margin-bottom:6px}
@@ -234,7 +234,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .pay-expired p{color:var(--text2);font-size:.83rem}
 .btn-retry{padding:10px 22px;margin-top:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.87rem;font-weight:700;cursor:pointer;transition:opacity .2s}
 .btn-retry:hover{opacity:.85}
-
+ 
 /* Submitted step info bar */
 .step-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px}
 .step-item{flex:1;padding:8px 6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text3);border-right:1px solid var(--border);transition:all .3s}
@@ -243,7 +243,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 [data-theme="dark"] .step-item.done{background:rgba(34,197,94,.1)}
 .step-item.active{background:var(--accent-soft);color:var(--accent)}
 [data-theme="dark"] .step-item.active{background:rgba(79,142,247,.1)}
-
+ 
 /* TOAST */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;white-space:nowrap;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:.85rem;font-weight:600;box-shadow:var(--shadow-lg);display:none;animation:toastIn .2s ease;transition:background .3s}
 @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
@@ -251,12 +251,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 .toast.ok{border-left:3px solid var(--green);color:var(--green)}
 .toast.err{border-left:3px solid var(--red);color:var(--red)}
 .toast.info{border-left:3px solid var(--accent);color:var(--accent)}
-
+ 
 /* Pay req count badge */
 .notif-badge{display:inline-block;background:var(--red);color:#fff;border-radius:999px;font-size:.65rem;font-weight:700;padding:1px 6px;margin-left:5px;vertical-align:middle}
-
+ 
 @media(max-width:380px){.brand-name{display:none}}
-
+ 
 /* confirm code input in admin */
 .code-input-row{display:flex;gap:8px;align-items:center;margin-top:8px}
 .code-input-row .a-input{flex:1}
@@ -265,7 +265,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
 </style>
 </head>
 <body>
-
+ 
 <!-- ═══════════ USER PAGE ═══════════ -->
 <div class="page active" id="page-user">
   <nav>
@@ -278,7 +278,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
       <button class="btn-sm accent" onclick="showPage('page-login')">🔐 Admin</button>
     </div>
   </nav>
-
+ 
   <div class="hero">
     <div class="hero-pill">📚 Tài liệu chính thức</div>
     <h1>Kho Đề Thi<br/><em>Bio Công Thành</em></h1>
@@ -289,14 +289,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
       <div class="stat-item"><div class="stat-val">4.9 ⭐</div><div class="stat-label">Đánh giá</div></div>
     </div>
   </div>
-
+ 
   <div class="search-wrap">
     <div class="search-box">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="search" id="search-input" placeholder="Tìm đề thi, môn học…" oninput="renderUserTable()" autocomplete="off"/>
     </div>
   </div>
-
+ 
   <div class="cards-wrap">
     <div class="card-table-wrap">
       <table class="card-table">
@@ -315,7 +315,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════ LOGIN ═══════════ -->
 <div class="page" id="page-login">
   <nav>
@@ -351,7 +351,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════ ADMIN ═══════════ -->
 <div class="page" id="page-admin">
   <div class="admin-top-nav">
@@ -365,7 +365,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
       <button class="btn-sm" onclick="doLogout()">Đăng xuất</button>
     </div>
   </div>
-
+ 
   <div class="admin-body">
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="switchAdminTab('tab-dethi',this)">📋 Đề thi</button>
@@ -373,7 +373,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
         💳 Xác nhận TT <span class="notif-badge" id="pay-notif" style="display:none">0</span>
       </button>
     </div>
-
+ 
     <!-- TAB: ĐỀ THI -->
     <div class="admin-tab-pane active" id="tab-dethi">
       <div class="a-section">
@@ -416,7 +416,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
         </div>
         <button class="btn-add" onclick="addItem()">✅ Thêm đề thi</button>
       </div>
-
+ 
       <div class="a-section">
         <div class="a-section-title">📋 Danh sách (<span id="admin-count">0</span> đề thi)</div>
         <div style="overflow-x:auto">
@@ -431,7 +431,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
         </div>
       </div>
     </div>
-
+ 
     <!-- TAB: XÁC NHẬN THANH TOÁN -->
     <div class="admin-tab-pane" id="tab-payment">
       <div class="a-section">
@@ -446,7 +446,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════ PAYMENT MODAL ═══════════ -->
 <div class="overlay" id="pay-overlay" onclick="overlayClick(event)">
   <div class="modal" id="pay-modal">
@@ -458,14 +458,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px
     <div id="pay-body"></div>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, push, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
+ 
 const app = initializeApp({
   apiKey: "AIzaSyDtAU-Iqn-u39_mgkxRZ3fIF_Kyxqn-Gyg",
   authDomain: "csdl-bio.firebaseapp.com",
@@ -478,17 +478,17 @@ const app = initializeApp({
 const db = getDatabase(app);
 const itemsRef = ref(db, 'dethi');
 const payReqRef = ref(db, 'payment_requests');
-
+ 
 let items = {};
 let payRequests = {};
-
+ 
 onValue(itemsRef, (snap) => {
   items = snap.val() || {};
   renderUserTable();
   renderAdminTable();
   updateStats();
 });
-
+ 
 onValue(payReqRef, (snap) => {
   payRequests = snap.val() || {};
   renderPayRequests();
@@ -496,7 +496,7 @@ onValue(payReqRef, (snap) => {
   // If user is waiting and their request got confirmed, update modal
   checkCurrentPayStatus();
 });
-
+ 
 /* ══════════════════════ RENDER USER TABLE ══════════════════════ */
 window.renderUserTable = function() {
   const q = (document.getElementById('search-input')?.value || '').toLowerCase();
@@ -504,7 +504,7 @@ window.renderUserTable = function() {
   const filtered = q
     ? data.filter(([,v]) => v.name?.toLowerCase().includes(q) || v.creator?.toLowerCase().includes(q))
     : data;
-
+ 
   const tbody = document.getElementById('user-tbody');
   if (!filtered.length) {
     tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Không tìm thấy đề thi nào.</td></tr>`;
@@ -533,7 +533,7 @@ window.renderUserTable = function() {
       </tr>
     `).join('');
   }
-
+ 
   const mc = document.getElementById('mobile-cards');
   if (!filtered.length) {
     mc.innerHTML = `<div class="empty-state">Không tìm thấy đề thi nào.</div>`;
@@ -555,7 +555,7 @@ window.renderUserTable = function() {
     `).join('');
   }
 };
-
+ 
 /* ══════════════════════ RENDER ADMIN TABLE ══════════════════════ */
 window.renderAdminTable = function() {
   const data = Object.entries(items);
@@ -583,7 +583,7 @@ window.renderAdminTable = function() {
     </tr>
   `).join('');
 };
-
+ 
 /* ══════════════════════ PAYMENT REQUESTS ══════════════════════ */
 window.renderPayRequests = function() {
   const list = document.getElementById('pay-req-list');
@@ -624,7 +624,7 @@ window.renderPayRequests = function() {
     </div>
   `}).join('');
 };
-
+ 
 window.updatePayNotif = function() {
   const pending = Object.values(payRequests).filter(v => v.status === 'pending').length;
   const badge = document.getElementById('pay-notif');
@@ -635,15 +635,15 @@ window.updatePayNotif = function() {
     badge.style.display = 'none';
   }
 };
-
+ 
 window.confirmPayReq = async function(reqKey, itemKey, action) {
   const codeEl = document.getElementById('code-inp-'+reqKey);
   const code = codeEl?.value.trim();
   if (!code) { showToast('Vui lòng nhập mã tài liệu!','err'); return; }
-
+ 
   const updateData = { status: 'confirmed', confirmedAt: Date.now(), codeProvided: code };
   await update(ref(db, 'payment_requests/'+reqKey), updateData);
-
+ 
   // Also save code back to item if not set
   const it = items[itemKey] || {};
   const codeField = action === 'preview' ? 'codePreview' : 'codeDownload';
@@ -652,16 +652,16 @@ window.confirmPayReq = async function(reqKey, itemKey, action) {
   }
   showToast('Đã xác nhận & gửi mã cho học sinh!','ok');
 };
-
+ 
 window.rejectPayReq = async function(reqKey) {
   if (!confirm('Từ chối yêu cầu này? Học sinh sẽ được thông báo.')) return;
   await update(ref(db, 'payment_requests/'+reqKey), { status: 'rejected', rejectedAt: Date.now() });
   showToast('Đã từ chối yêu cầu.','err');
 };
-
+ 
 /* ══════════════════════ CHECK CURRENT PAY STATUS (realtime for user) ══════════════════════ */
 let currentReqKey = null;
-
+ 
 function checkCurrentPayStatus() {
   if (!currentReqKey) return;
   const req = payRequests[currentReqKey];
@@ -674,7 +674,7 @@ function checkCurrentPayStatus() {
     showRejectedByAdmin();
   }
 }
-
+ 
 function showConfirmedByAdmin(req) {
   const it = items[currentKey] || {};
   document.getElementById('pay-body').innerHTML = `
@@ -696,7 +696,7 @@ function showConfirmedByAdmin(req) {
     </div>
   `;
 }
-
+ 
 function showRejectedByAdmin() {
   document.getElementById('pay-body').innerHTML = `
     <div class="pay-expired">
@@ -709,44 +709,44 @@ function showRejectedByAdmin() {
     </div>
   `;
 }
-
+ 
 /* ══════════════════════ PAYMENT FLOW ══════════════════════ */
 let payTimer = null;
 let currentKey = null;
 let currentAction = null;
-
+ 
 const BANK_NO   = '7876159680';
 const BANK_BIN  = 'VCB';
 const ACCT_NAME = 'HUYNH CONG THANH';
-
+ 
 window.openPay = function(key, action) {
   closeDropdowns();
   currentKey = key;
   currentAction = action;
   const it = items[key];
   if (!it) return;
-
+ 
   if (!it.price) {
     showDirectAccess(it, action);
     document.getElementById('pay-overlay').classList.add('open');
     return;
   }
-
+ 
   document.getElementById('pay-title').textContent =
     action === 'preview' ? '🔍 Xem thử – Thanh toán' : '⬇️ Tải về – Thanh toán';
   startPayFlow(it);
   document.getElementById('pay-overlay').classList.add('open');
 };
-
+ 
 window.startPayFlow = function(it) {
   clearTimers();
   currentReqKey = null;
-
+ 
   const ts = Date.now();
   const orderCode = (ts % 1000000) * 1000 + Math.floor(Math.random() * 999);
   const desc = 'BIO' + orderCode;
   const qrUrl = buildQR(it.price, desc);
-
+ 
   document.getElementById('pay-body').innerHTML = `
     <div class="step-bar">
       <div class="step-item done">1 · QR</div>
@@ -774,7 +774,7 @@ window.startPayFlow = function(it) {
       Sau khi bấm, Admin sẽ xem xét và gửi mã tài liệu cho bạn
     </p>
   `;
-
+ 
   let secs = 600;
   payTimer = setInterval(() => {
     secs--;
@@ -784,7 +784,7 @@ window.startPayFlow = function(it) {
     el.textContent = fmtTimer(secs);
   }, 1000);
 };
-
+ 
 window.submitPayRequest = async function(amount, transferCode, itemName, itemKey, action) {
   const contact = document.getElementById('user-contact')?.value.trim() || '';
   // Save payment request to Firebase
@@ -802,7 +802,7 @@ window.submitPayRequest = async function(amount, transferCode, itemName, itemKey
   clearTimers();
   showWaitingForAdmin();
 };
-
+ 
 function showWaitingForAdmin() {
   document.getElementById('pay-body').innerHTML = `
     <div class="step-bar">
@@ -824,7 +824,7 @@ function showWaitingForAdmin() {
     </div>
   `;
 }
-
+ 
 function showDirectAccess(it, action) {
   document.getElementById('pay-title').textContent = '🎁 Tài liệu miễn phí';
   document.getElementById('pay-body').innerHTML = `
@@ -841,7 +841,7 @@ function showDirectAccess(it, action) {
     </div>
   `;
 }
-
+ 
 function showExpired(it) {
   document.getElementById('pay-body').innerHTML = `
     <div class="pay-expired">
@@ -852,12 +852,12 @@ function showExpired(it) {
     </div>
   `;
 }
-
+ 
 function clearTimers() {
   clearInterval(payTimer);
   payTimer = null;
 }
-
+ 
 window.closeModal = function() {
   clearTimers();
   currentReqKey = null;
@@ -866,18 +866,18 @@ window.closeModal = function() {
 window.overlayClick = function(e) {
   if (e.target === document.getElementById('pay-overlay')) closeModal();
 };
-
+ 
 function buildQR(amount, desc) {
   return `https://img.vietqr.io/image/${BANK_BIN}-${BANK_NO}-compact.png?amount=${amount}&addInfo=${encodeURIComponent(desc)}&accountName=${encodeURIComponent(ACCT_NAME)}`;
 }
-
+ 
 /* ══════════════════════ STATS ══════════════════════ */
 window.updateStats = function() {
   const data = Object.values(items);
   document.getElementById('stat-total').textContent = data.length;
   document.getElementById('stat-free').textContent = data.filter(v => !v.price).length;
 };
-
+ 
 /* ══════════════════════ DROPDOWN ══════════════════════ */
 window.toggleDrop = function(key) {
   const dd = document.getElementById('dd-'+key);
@@ -891,7 +891,7 @@ window.closeDropdowns = function() {
 document.addEventListener('click', e => {
   if (!e.target.closest('.xem-wrap')) closeDropdowns();
 });
-
+ 
 /* ══════════════════════ ADMIN CRUD ══════════════════════ */
 window.addItem = function() {
   const name        = document.getElementById('a-name').value.trim();
@@ -908,13 +908,13 @@ window.addItem = function() {
   });
   showToast('Đã thêm đề thi!','ok');
 };
-
+ 
 window.deleteItem = function(key) {
   if (!confirm('Xóa đề thi này?')) return;
   remove(ref(db, 'dethi/'+key));
   showToast('Đã xóa!','ok');
 };
-
+ 
 window.editItem = function(key) {
   const it = items[key];
   const name = prompt('Tên đề thi:', it.name);
@@ -933,7 +933,7 @@ window.editItem = function(key) {
   });
   showToast('Đã cập nhật!','ok');
 };
-
+ 
 /* ══════════════════════ ADMIN TABS ══════════════════════ */
 window.switchAdminTab = function(tabId, btn) {
   document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
@@ -941,11 +941,11 @@ window.switchAdminTab = function(tabId, btn) {
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
 };
-
+ 
 /* ══════════════════════ AUTH ══════════════════════ */
 const ADMIN_EMAIL = 'bioverify@googlegroups.com';
 const ADMIN_PASS  = 'Thanh123@';
-
+ 
 window.doLogin = function() {
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
@@ -960,7 +960,7 @@ window.doLogin = function() {
   }
 };
 window.doLogout = function() { showPage('page-user'); };
-
+ 
 /* ══════════════════════ THEME ══════════════════════ */
 window.toggleTheme = function() {
   const html = document.documentElement;
@@ -978,7 +978,7 @@ window.toggleTheme = function() {
     document.querySelectorAll('.theme-btn').forEach(b => b.textContent = icon);
   });
 })();
-
+ 
 /* ══════════════════════ HELPERS ══════════════════════ */
 window.showPage = function(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
